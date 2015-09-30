@@ -2,124 +2,68 @@
 
 <Workspace>
   <ConfigDictionary>
-    <CurrentConfigs>
-      <Project>EVBMM-2412_Templete_IAR/Debug</Project>
-    </CurrentConfigs>
-  </ConfigDictionary>
+    
+  <CurrentConfigs><Project>EVBMM-2412_Templete_IAR/Debug</Project></CurrentConfigs></ConfigDictionary>
   <Desktop>
     <Static>
       <Build>
         <PreferedWindows>
-          <Position>3</Position>
-          <ScreenPosX>0</ScreenPosX>
-          <ScreenPosY>0</ScreenPosY>
-          <Windows/>
-        </PreferedWindows>
-        <ColumnWidth0>18</ColumnWidth0>
-        <ColumnWidth1>981</ColumnWidth1>
-        <ColumnWidth2>261</ColumnWidth2>
-        <ColumnWidth3>65</ColumnWidth3>
-      </Build>
+          
+          
+          
+          
+        <Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows>
+        
+        
+        
+        
+      <ColumnWidth0>18</ColumnWidth0><ColumnWidth1>981</ColumnWidth1><ColumnWidth2>261</ColumnWidth2><ColumnWidth3>65</ColumnWidth3></Build>
       <Workspace>
         <ColumnWidths>
-          <Column0>249</Column0>
-          <Column1>27</Column1>
-          <Column2>27</Column2>
-          <Column3>27</Column3>
-        </ColumnWidths>
+          
+          
+          
+          
+        <Column0>249</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
       </Workspace>
       <TerminalIO/>
       <WATCH_1>
         <PreferedWindows>
-          <Position>4</Position>
-          <ScreenPosX>800</ScreenPosX>
-          <ScreenPosY>260</ScreenPosY>
-          <Windows/>
-        </PreferedWindows>
+          
+          
+          
+          
+        <Position>4</Position><ScreenPosX>800</ScreenPosX><ScreenPosY>260</ScreenPosY><Windows/></PreferedWindows>
       </WATCH_1>
     </Static>
     <Windows>
-      <Wnd3>
+      
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-3537-25051</Identity>
             <TabName>Workspace</TabName>
             <Factory>Workspace</Factory>
             <Session>
-              <NodeDict>
-                <ExpandedNode>EVBMM-2412_Templete_IAR</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/common</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/cpu</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/cpu/headers</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/linker_files</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/platform</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/users</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/users/inc</ExpandedNode>
-                <ExpandedNode>EVBMM-2412_Templete_IAR/users/src</ExpandedNode>
-              </NodeDict>
-            </Session>
+              
+            <NodeDict><ExpandedNode>EVBMM-2412_Templete_IAR</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/common</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/cpu</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/cpu/headers</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/linker_files</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/platform</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/users</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/users/inc</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/users/src</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
-        <SelectedTab>0</SelectedTab>
-      </Wnd3>
-    </Windows>
+        
+      <SelectedTab>0</SelectedTab></Wnd0></Windows>
     <Editor>
-      <Pane/>
-      <ActivePane>0</ActivePane>
-      <Sizes>
-        <Pane>
-          <X>1000000</X>
-          <Y>1000000</Y>
-        </Pane>
-      </Sizes>
-      <SplitMode>1</SplitMode>
-    </Editor>
+      
+      
+      
+      
+    <Pane/><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
-      <Top>
-        <Row0>
-          <Sizes>
-            <Toolbar-00E9A980>
-              <key>iaridepm.enu1</key>
-            </Toolbar-00E9A980>
-          </Sizes>
-        </Row0>
-      </Top>
-      <Left>
-        <Row0>
-          <Sizes>
-            <Wnd3>
-              <Rect>
-                <Top>-2</Top>
-                <Left>-2</Left>
-                <Bottom>641</Bottom>
-                <Right>340</Right>
-                <x>-2</x>
-                <y>-2</y>
-                <xscreen>200</xscreen>
-                <yscreen>200</yscreen>
-                <sizeHorzCX>146413</sizeHorzCX>
-                <sizeHorzCY>291545</sizeHorzCY>
-                <sizeVertCX>250366</sizeVertCX>
-                <sizeVertCY>937318</sizeVertCY>
-              </Rect>
-            </Wnd3>
-          </Sizes>
-        </Row0>
-      </Left>
-      <Right>
-        <Row0>
-          <Sizes/>
-        </Row0>
-      </Right>
-      <Bottom>
-        <Row0>
-          <Sizes/>
-        </Row0>
-      </Bottom>
-      <Float>
-        <Sizes/>
-      </Float>
-    </Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-025CAC40><key>iaridepm.enu1</key></Toolbar-025CAC40></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>641</Bottom><Right>340</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>146413</sizeHorzCX><sizeHorzCY>291545</sizeHorzCY><sizeVertCX>250366</sizeVertCX><sizeVertCY>937318</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

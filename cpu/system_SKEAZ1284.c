@@ -152,24 +152,27 @@ void SystemInit(void)
   
 	
 #elif (CLOCK_SETUP == 1)
-	/* SIM->CLKDIV: ??=0,??=0,OUTDIV1=0,??=0,??=0,??=0,OUTDIV2=1,??=0,??=0,??=0,OUTDIV3=1,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
-	SIM->CLKDIV = SIM_CLKDIV_OUTDIV1(0x00); /* Update system prescalers */
+	/* SIM->CLKDIV: OUTDIV1=0, OUTDIV2=1, OUTDIV3=1, core clock = ICSOUTCLK = 40MHz, bus/flash clock = 20MHz, FTM clock = 20MHz */
+	SIM->CLKDIV = (SIM_CLKDIV_OUTDIV1(0x00) | SIM_CLKDIV_OUTDIV2_MASK | SIM_CLKDIV_OUTDIV3_MASK); /* Update system prescalers */
 
 	/* Switch to FEE Mode */
 	/* ICS->C2: BDIV=0,LP=0 */
 	ICS->C2 &= (uint8_t)~(uint8_t)((ICS_C2_BDIV(0x07) | ICS_C2_LP_MASK));
 
-	/* OSC->CR: OSCEN=1,??=0,OSCSTEN=0,OSCOS=1,??=0,RANGE=1,HGO=0,OSCINIT=0 */
-	OSC->CR = (OSC_CR_OSCEN_MASK | OSC_CR_OSCOS_MASK | OSC_CR_RANGE_MASK);
+	/* OSC->CR: OSCEN=1, OSCSTEN=0, OSCOS=1, RANGE=1, HGO=1, OSCINIT=0 */
+	OSC->CR = (OSC_CR_OSCEN_MASK | OSC_CR_OSCOS_MASK | OSC_CR_RANGE_MASK | OSC_CR_HGO_MASK);
 
-	/* ICS->C1: CLKS=0,RDIV=3,IREFS=0,IRCLKEN=1,IREFSTEN=0 */
+	/* ICS->C1: CLKS=0,RDIV=3,IREFS=0,IRCLKEN=1,IREFSTEN=0, Core Clock = (8MHz(OSC_Frequency) / 256) * 1280(FLL self multiple) = 40MHz. */
 	ICS->C1 = (ICS_C1_CLKS(0x00) | ICS_C1_RDIV(0x03) | ICS_C1_IRCLKEN_MASK);
+	
+	/* Select the external reference clock as the clock source of FLL. */
+	ICS->C1 &= ~ICS_C1_IREFS_MASK;
 
 	/* Check that the source of the FLL reference clock is the external reference clock. */
 	while((ICS->S & ICS_S_IREFST_MASK) != 0x00U){;}
 
 	/* Wait until output of the FLL is selected */
-	while((ICS->S & 0x0CU) != 0x00U){;}
+	while((ICS->S & ICS_S_CLKST_MASK) != 0x00U){;}
   
 	
 #elif (CLOCK_SETUP == 2)

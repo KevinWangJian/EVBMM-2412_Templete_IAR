@@ -2035,11 +2035,17 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\inc\GPIO_Driver.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\peripher_drivers\inc\Systick_Driver.h</name>
       </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\src\GPIO_Driver.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\Systick_Driver.c</name>
       </file>

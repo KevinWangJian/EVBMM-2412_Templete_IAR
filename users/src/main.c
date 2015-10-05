@@ -29,20 +29,20 @@
 
 #include <stdint.h>
 #include "Systick_Driver.h"
+#include "GPIO_Driver.h"
+
 
 
 int main(void)
 {
 	Systick_Init(_1ms_perticks);
-	
-	GPIOA->PDDR |= 1 << 16;
-	
-	GPIOA->PSOR |= 1 << 16;
+
+	GPIO_PinInit(GPIO_PTC1, GPIO_PinOutput);
 
 	while (1)
 	{
-		GPIOA->PTOR |= 1 << 16;
-		
+		GPIO_PinToggle(GPIO_PTC1);
+	
 		Delay1ms(1000);
 	}
 }

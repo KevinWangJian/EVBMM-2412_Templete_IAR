@@ -57,6 +57,8 @@ typedef unsigned short  word;
 /* 
  * Include the platform specific header file 
  */
+
+
 #if (defined(TRK_KEA8))
  #include  "kea8_config.h"
 #elif (defined(TRK_KEA64))
@@ -66,6 +68,7 @@ typedef unsigned short  word;
 #else
   #error "No valid board defined"
 #endif
+
 
 /* 
  * Include the cpu specific header file 
@@ -114,5 +117,6 @@ typedef unsigned short  word;
 #include "intrinsics.h"
 #endif
 /********************************************************************/
+
 
 #endif /* _COMMON_H_ */

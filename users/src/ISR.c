@@ -1,9 +1,10 @@
 /**
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
-  * @file name: main.c
+  * @file name: ISR.c
   * @author: Wangjian
-  * @Descriptiuon: System main loop function.
+  * @Descriptiuon: System interrupt service routines which provides peripheral
+  *                modules interrupt program by users.
   * @Others:  None
   * @History: 1. Created by Wangjian.
   * @version: V1.0.0
@@ -27,24 +28,19 @@
   ******************************************************************************
   */
 
-#include <stdint.h>
+#include "ISR.h"
 #include "Systick_Driver.h"
 
 
-int main(void)
-{
-	Systick_Init(_1ms_perticks);
-	
-	GPIOA->PDDR |= 1 << 16;
-	
-	GPIOA->PSOR |= 1 << 16;
 
-	while (1)
-	{
-		GPIOA->PTOR |= 1 << 16;
-		
-		Delay1ms(1000);
-	}
+/*
+* @brief    Systick timer interrupt service routines.
+* @param    None.
+* @returns  None.
+*/
+void SysTick_Handler(void)
+{
+	TimeDelay_Decrement();
 }
 
-/***********************************  End Of File  *****************************/
+/*****************************END OF FILE**************************************/

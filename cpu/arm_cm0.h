@@ -35,6 +35,8 @@
 #ifndef _CPU_ARM_CM0_H
 #define _CPU_ARM_CM0_H
 
+
+
 /*ARM Cortex M0 implementation for interrupt priority shift*/
 #define ARM_INTERRUPT_LEVEL_BITS          2
 
@@ -95,6 +97,49 @@
 #define DISABLE  (0)
 
 
+typedef enum
+{
+    /******  Cortex-M0+ Processor Exceptions Numbers ****************************************************************/
+    NonMaskableInt_VECTORn          = 2 ,       /*!< 2 Non Maskable Interrupt                                       */
+    HardFault_VECTORn               = 3 ,       /*!< 3 Hard Fault                                                   */
+    SVCall_VECTORn                  = 11,       /*!< 11 Cortex-M4 SV Call Interrupt                                 */
+    PendSV_VECTORn                  = 14,       /*!< 14 Cortex-M4 Pend SV Interrupt                                 */
+    SysTick_VECTORn                 = 15,       /*!< 15 Cortex-M4 System Tick Interrupt                             */
+    /******  Kinetis KEA/KE specific Interrupt Numbers **************************************************************/
+    Reserved16_VECTORn                  ,       
+    Reserved17_VECTORn                  ,
+    Reserved18_VECTORn                  ,
+    Reserved19_VECTORn                  ,
+    Reserved20_VECTORn                  ,
+    FTMRE_VECTORn                       ,       
+    LVD_LVW_VECTORn                     ,       
+    IRQ_VECTORn                         ,       
+    I2C0_VECTORn                        ,       
+    I2C1_VECTORn                        ,       
+    SPI0_VECTORn                        ,     
+    SPI1_VECTORn                        ,     
+    UART0_VECTORn                       ,       
+    UART1_VECTORn                       ,      
+    UART2_VECTORn                       ,     
+    ADC0_VECTORn                        ,      
+    ACMP0_VECTORn                       ,       
+    FTM0_VECTORn                        ,     
+    FTM1_VECTORn                        ,      
+    FTM2_VECTORn                        ,       
+    RTC_VECTORn                         ,       
+    ACMP1_VECTORn                       ,     
+    PIT_CH0_VECTORn                     ,       
+    PIT_CH1_VECTORn                     ,      
+    KBI0_VECTORn                        ,       
+    KBI1_VECTORn                        ,      
+    Reserved42_VECTORn                  ,       
+    ICS_VECTORn                         ,       
+    Watchdog_VECTORn                    ,      
+    PWT_VECTORn                         ,      
+    MSCAN_RX_VECTORn                    ,       
+    MSCAN_TX_VECTORn                    ,      
+} VECTORn_t;
+
 /***********************************************************************/
 /*
  * The basic data types
@@ -119,9 +164,10 @@ typedef volatile uint32		vuint32; /* 32 bits */
 int main(void);
 /***********************************************************************/
 // function prototypes for arm_cm0.c
-void stop (void);
-void wait (void);
-void write_vtor (int);
+void stop(void);
+void wait(void);
+void write_vtor(int);
+void Set_Vector_Handler(VECTORn_t vector , void pfunc_handler(void));
 
 /***********************************************************************/
 #endif	/* _CPU_ARM_CM4_H */

@@ -595,6 +595,7 @@ printk (PRINTK_INFO *info, const char *fmt, va_list ap)
     return count;
 }
 
+#if 0
 /********************************************************************/
 int
 printf (const char *fmt, ...)
@@ -617,6 +618,8 @@ printf (const char *fmt, ...)
     va_end(ap);
     return rvalue;
 }
+
+#endif
 
 /********************************************************************/
 int

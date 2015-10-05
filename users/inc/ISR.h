@@ -1,9 +1,10 @@
 /**
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
-  * @file name: main.c
+  * @file name: ISR.h
   * @author: Wangjian
-  * @Descriptiuon: System main loop function.
+  * @Descriptiuon: System interrupt service routines which provides peripheral
+  *                modules interrupt program by users.
   * @Others:  None
   * @History: 1. Created by Wangjian.
   * @version: V1.0.0
@@ -26,25 +27,28 @@
   *
   ******************************************************************************
   */
+#ifndef  __ISR_H
+#define  __ISR_H
 
 #include <stdint.h>
-#include "Systick_Driver.h"
+#include "SKEAZ1284.h"
 
 
-int main(void)
-{
-	Systick_Init(_1ms_perticks);
-	
-	GPIOA->PDDR |= 1 << 16;
-	
-	GPIOA->PSOR |= 1 << 16;
+/* Exported types ------------------------------------------------------------*/
 
-	while (1)
-	{
-		GPIOA->PTOR |= 1 << 16;
-		
-		Delay1ms(1000);
-	}
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Exported functions ------------------------------------------------------- */
+
+void SysTick_Handler(void);
+
+
+#ifdef __cplusplus
 }
+#endif
 
-/***********************************  End Of File  *****************************/
+#endif
+/*****************************END OF FILE**************************************/

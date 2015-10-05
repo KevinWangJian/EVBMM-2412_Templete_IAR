@@ -102,5 +102,17 @@ void write_vtor (int vtor)
         SCB->VTOR = vtor;	
 }
 
+
+
+void Set_Vector_Handler(VECTORn_t vector , void pfunc_handler(void))
+{
+	extern uint32 __VECTOR_RAM[];
+	
+	ASSERT(SCB->VTOR == (uint32)__VECTOR_RAM);
+	
+	__VECTOR_RAM[vector] = (uint32)pfunc_handler;
+}
+
+
 /***********************************************************************/
 

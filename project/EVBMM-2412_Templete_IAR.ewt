@@ -2209,18 +2209,30 @@
     <name>peripher_drivers</name>
     <group>
       <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\inc\Systick_Driver.h</name>
+      </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\src\Systick_Driver.c</name>
+      </file>
     </group>
   </group>
   <group>
     <name>users</name>
     <group>
       <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\..\users\inc\ISR.h</name>
+      </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\users\src\ISR.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\main.c</name>
       </file>

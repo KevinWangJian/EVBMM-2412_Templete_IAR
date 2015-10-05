@@ -49,7 +49,7 @@
         </option>
         <option>
           <name>RunToEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>RunToName</name>
@@ -1090,7 +1090,7 @@
         </option>
         <option>
           <name>CCPEMicroJtagSpeed</name>
-          <state>#UNINITIALIZED#</state>
+          <state>5000</state>
         </option>
         <option>
           <name>CCJPEMicroShowSettings</name>
@@ -1128,7 +1128,7 @@
         </option>
         <option>
           <name>CCSTLinkInterfaceRadio</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCSTLinkInterfaceCmdLine</name>

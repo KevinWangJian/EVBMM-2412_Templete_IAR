@@ -38,7 +38,7 @@ TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000000
 [DebugChecksum]
-Checksum=-345689339
+Checksum=-1100482364
 [CodeCoverage]
 Enabled=_ 0
 [Exceptions]
@@ -73,7 +73,8 @@ ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 1 "EMUL_DATA" "MSCAN_Init" 0 0 0 0 4294967295
+Count=1
 [Aliases]
 Count=0
 SuppressDialog=0

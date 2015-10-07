@@ -28,22 +28,74 @@
   */
 
 #include <stdint.h>
+#include "arm_cm0.h"
 #include "Systick_Driver.h"
 #include "GPIO_Driver.h"
-
+#include "MSCAN_Driver.h"
+#include "ISR.h"
 
 
 int main(void)
 {
+	MSCAN_ParametersConfig CAN_Property;
+	
+	MSCAN_FilterConfigure CAN_FILTER;
+	
+	MSCAN_Message_TypeDef W_Message;
+	
 	Systick_Init(_1ms_perticks);
 
 	GPIO_PinInit(GPIO_PTC1, GPIO_PinOutput);
+	GPIO_PinInit(GPIO_PTG0, GPIO_PinOutput);
+	
+	GPIO_PinClear(GPIO_PTC1);
+	GPIO_PinClear(GPIO_PTG0);
+	
+	CAN_Property.baudrate                   = MSCAN_Baudrate_250K;
+	CAN_Property.MSCAN_SignalPinsRemap      = 0;
+	CAN_Property.MSCAN_StopInWaitMode       = 1;
+	CAN_Property.MSCAN_TimeStampEnable      = 0;
+	CAN_Property.MSCAN_WakeUpEnable         = 0;
+	CAN_Property.MSCAN_ClockSource          = 1;
+	CAN_Property.MSCAN_LoopbackMode         = 0;
+	CAN_Property.MSCAN_ListenOnlyMode       = 0;
+	CAN_Property.MSCAN_BusoffRecoveryMode   = 0;
+	CAN_Property.MSCAN_WakeUpMode           = 0;
+	CAN_Property.MSCAN_WakeUpINTEnable      = 0;
+	CAN_Property.MSCAN_OverrunINTEnable     = 0;
+	CAN_Property.MSCAN_ReceiveFullINTEnable = 1;
+	CAN_Property.MSCAN_TransEmptyINTEnable  = 0;
+	
+	W_Message.frame_type = DataFrameWithExtendedId;
+	W_Message.frame_id   = 0x12344444u;
+	W_Message.data_length = 8;
+	W_Message.data[0]     = 0x86u;
+	W_Message.data[1]     = 0x86u;
+	W_Message.data[2]     = 0x86u;
+	W_Message.data[3]     = 0x86u;
+	W_Message.data[4]     = 0x86u;
+	W_Message.data[5]     = 0x86u;
+	W_Message.data[6]     = 0x86u;
+	W_Message.data[7]     = 0x86u;
+	
+	CAN_FILTER.Filter_Enable  = 1;			 /* If this value is cleared,the following parameters does not work */
+	CAN_FILTER.Filter_Channel = 0;
+	CAN_FILTER.frame_type     = AcceptBothFrame;
+	CAN_FILTER.id_format      = OnlyAcceptExtendedID;
+	CAN_FILTER.id_mask        = 0xFFFFFFFFu; /* If this value is 0xFFFFFFFF,the id_accept value does not work */
+	CAN_FILTER.id_accept      = 0x18901212u;
+	
+	MSCAN_Init(&CAN_Property, &CAN_FILTER);
+	
+	Set_Vector_Handler(MSCAN_RX_VECTORn, MSCAN_TX_Handler);
+	
+	NVIC_EnableIRQ(MSCAN_RX_IRQn);
 
 	while (1)
 	{
-		GPIO_PinToggle(GPIO_PTC1);
-	
-		Delay1ms(1000);
+		Delay1ms(100);
+		
+		MSCAN_SendFrame(&W_Message);
 	}
 }
 

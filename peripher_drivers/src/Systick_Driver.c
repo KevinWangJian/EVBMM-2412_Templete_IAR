@@ -93,6 +93,8 @@ int32_t Systick_Init(CountPeriodPerTicks Cycle)
 
 	Set_Vector_Handler(SysTick_VECTORn, SysTick_Handler);
 	
+	NVIC_EnableIRQ(SysTick_IRQn);
+	
 	return 0;
 }
 

@@ -24,7 +24,7 @@
           
           
           
-        <Column0>266</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+        <Column0>249</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
       </Workspace>
       <TerminalIO/>
       <WATCH_1>
@@ -38,7 +38,7 @@
     <Debug-Log><PreferedWindows><Position>4</Position><ScreenPosX>610</ScreenPosX><ScreenPosY>357</ScreenPosY><Windows/></PreferedWindows><ColumnWidth0>18</ColumnWidth0><ColumnWidth1>155</ColumnWidth1></Debug-Log></Static>
     <Windows>
       
-    <Wnd0>
+    <Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-3537-25051</Identity>
@@ -46,11 +46,11 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>EVBMM-2412_Templete_IAR</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/platform</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>EVBMM-2412_Templete_IAR</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/cpu</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/cpu/headers</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/linker_files</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/peripher_drivers</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/peripher_drivers/inc</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/peripher_drivers/src</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/platform</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/users</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/users/inc</ExpandedNode><ExpandedNode>EVBMM-2412_Templete_IAR/users/src</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd0></Windows>
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
     <Editor>
       
       
@@ -63,7 +63,7 @@
       
       
       
-    <Top><Row0><Sizes><Toolbar-0272AE60><key>iaridepm.enu1</key></Toolbar-0272AE60></Sizes></Row0><Row1><Sizes/></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>641</Bottom><Right>340</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>146413</sizeHorzCX><sizeHorzCY>291545</sizeHorzCY><sizeVertCX>250366</sizeVertCX><sizeVertCY>937318</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-0272AC40><key>iaridepm.enu1</key></Toolbar-0272AC40></Sizes></Row0></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>641</Bottom><Right>340</Right><x>-2</x><y>-2</y><xscreen>200</xscreen><yscreen>200</yscreen><sizeHorzCX>146413</sizeHorzCX><sizeHorzCY>291545</sizeHorzCY><sizeVertCX>250366</sizeVertCX><sizeVertCY>937318</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes/></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

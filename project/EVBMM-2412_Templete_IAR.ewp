@@ -2041,6 +2041,9 @@
         <name>$PROJ_DIR$\..\peripher_drivers\inc\MSCAN_Driver.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\inc\SPI_Driver.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\peripher_drivers\inc\Systick_Driver.h</name>
       </file>
     </group>
@@ -2051,6 +2054,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\MSCAN_Driver.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\src\SPI_Driver.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\Systick_Driver.c</name>

@@ -2210,6 +2210,9 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\inc\Flash_Driver.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\peripher_drivers\inc\GPIO_Driver.h</name>
       </file>
       <file>
@@ -2224,6 +2227,9 @@
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\src\Flash_Driver.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\GPIO_Driver.c</name>
       </file>

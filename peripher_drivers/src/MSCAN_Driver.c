@@ -29,6 +29,8 @@
   ******************************************************************************
   */
 
+/* Includes ------------------------------------------------------------------*/
+
 #include "arm_cm0.h"
 #include "MSCAN_Driver.h"
 
@@ -401,6 +403,10 @@ int32_t MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Fi
 
 				MSCAN->CANBTR1 = MSCAN_CANBTR1_SAMP_MASK | MSCAN_CANBTR1_TSEG2(0x03)
 				    	  | MSCAN_CANBTR1_TSEG1(0x04);
+//				MSCAN->CANBTR0 = MSCAN_CANBTR0_SJW(0x01) | MSCAN_CANBTR0_BRP(0x05);
+
+//				MSCAN->CANBTR1 = MSCAN_CANBTR1_SAMP_MASK | MSCAN_CANBTR1_TSEG2(0x06)
+//				    	  | MSCAN_CANBTR1_TSEG1(0x07);
 		}
 		break;
 

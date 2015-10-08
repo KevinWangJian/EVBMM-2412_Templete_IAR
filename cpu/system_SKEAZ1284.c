@@ -52,9 +52,9 @@
 #include "system_SKEAZ1284.h"
 
 
-#define DISABLE_WDOG    1
+#define DISABLE_WDOG    0
 
-#define CLOCK_SETUP     1
+#define CLOCK_SETUP     0
 /* Predefined clock setups
    0 ... Internal Clock Source (ICS) in FLL Engaged Internal (FEI) mode
          Default  part configuration.
@@ -79,19 +79,19 @@
  *----------------------------------------------------------------------------*/
 #if (CLOCK_SETUP == 0)
     #define CPU_XTAL_CLK_HZ                 8000000u /* Value of the external crystal or oscillator clock frequency in Hz */
-    #define CPU_INT_CLK_HZ                  32768u   /* Value of the internal oscillator clock frequency in Hz  */
-    #define DEFAULT_SYSTEM_CLOCK            20971520u /* Default System clock value */
+    #define CPU_INT_CLK_HZ                  37500u   /* Value of the internal oscillator clock frequency in Hz  */
+    #define DEFAULT_SYSTEM_CLOCK            48000000u /* Default System clock value */
 #elif (CLOCK_SETUP == 1)
     #define CPU_XTAL_CLK_HZ                 8000000u /* Value of the external crystal or oscillator clock frequency in Hz */
-    #define CPU_INT_CLK_HZ                  32768u   /* Value of the internal oscillator clock frequency in Hz  */
+    #define CPU_INT_CLK_HZ                  37500u   /* Value of the internal oscillator clock frequency in Hz  */
     #define DEFAULT_SYSTEM_CLOCK            40000000u /* Default System clock value */
 #elif (CLOCK_SETUP == 2)
     #define CPU_XTAL_CLK_HZ                 8000000u /* Value of the external crystal or oscillator clock frequency in Hz */
-    #define CPU_INT_CLK_HZ                  32768u   /* Value of the internal oscillator clock frequency in Hz  */
-    #define DEFAULT_SYSTEM_CLOCK            32768u   /* Default System clock value */
+    #define CPU_INT_CLK_HZ                  37500u   /* Value of the internal oscillator clock frequency in Hz  */
+    #define DEFAULT_SYSTEM_CLOCK            37500u   /* Default System clock value */
 #elif (CLOCK_SETUP == 3)
     #define CPU_XTAL_CLK_HZ                 8000000u /* Value of the external crystal or oscillator clock frequency in Hz */
-    #define CPU_INT_CLK_HZ                  32768u   /* Value of the internal oscillator clock frequency in Hz  */
+    #define CPU_INT_CLK_HZ                  37500u   /* Value of the internal oscillator clock frequency in Hz  */
     #define DEFAULT_SYSTEM_CLOCK            8000000u /* Default System clock value */
 #endif /* (CLOCK_SETUP == 4) */
 
@@ -125,11 +125,8 @@ void SystemInit(void)
 	
 	
 #if (CLOCK_SETUP == 0)
-	/* ICS->C2: BDIV|=1 */
-	ICS->C2 |= ICS_C2_BDIV(0x01);         /* Update system prescalers */
-
-	/* SIM->CLKDIV: ??=0,??=0,OUTDIV1=0,??=0,??=0,??=0,OUTDIV2=0,??=0,??=0,??=0,OUTDIV3=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
-	SIM->CLKDIV = SIM_CLKDIV_OUTDIV1(0x00); /* Update system prescalers */
+	/* SIM->CLKDIV: ??=0,??=0,OUTDIV1=0,??=0,??=0,??=0,OUTDIV2=0,??=0,??=0,??=0,OUTDIV3=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 *///	SIM->CLKDIV = SIM_CLKDIV_OUTDIV1(0x00); /* Update system prescalers */
+	SIM->CLKDIV = (SIM_CLKDIV_OUTDIV1(0x00) | SIM_CLKDIV_OUTDIV2_MASK | SIM_CLKDIV_OUTDIV3_MASK); 
 
 	/* Switch to FEI Mode */
 	/* ICS_C1: CLKS=0,RDIV=0,IREFS=1,IRCLKEN=1,IREFSTEN=0 */
@@ -139,8 +136,8 @@ void SystemInit(void)
 			  ICS_C1_IRCLKEN_MASK;
 
 	/* ICS->C2: BDIV=1,LP=0 */
-	ICS->C2 = (uint8_t)((ICS->C2 & (uint8_t)~(uint8_t)(ICS_C2_BDIV(0x06) | ICS_C2_LP_MASK)) | (uint8_t)(ICS_C2_BDIV(0x01)));
-
+	ICS->C2 &= ~(ICS_C2_BDIV_MASK | ICS_C2_LP_MASK);
+	
 	/* OSC->CR: OSCEN=0,??=0,OSCSTEN=0,OSCOS=0,??=0,RANGE=0,HGO=0,OSCINIT=0 */
 	OSC->CR = 0x00U;
 

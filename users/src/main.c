@@ -34,11 +34,12 @@
 #include "GPIO_Driver.h"
 #include "MSCAN_Driver.h"
 #include "CAN_Message.h"
-
+#include "Flash_Driver.h"
 
 
 int main(void)
 {
+//	uint8_t TX_DATA[8] = {0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23};
 	
 	MSCAN_ParametersConfig CAN_Property;
 	
@@ -53,7 +54,6 @@ int main(void)
 	
 	GPIO_PinClear(GPIO_PTC1);
 	GPIO_PinClear(GPIO_PTG0);
-
 	
 	CAN_Property.baudrate                   = MSCAN_Baudrate_250K;
 	CAN_Property.MSCAN_SignalPinsRemap      = 0;
@@ -70,8 +70,8 @@ int main(void)
 	CAN_Property.MSCAN_ReceiveFullINTEnable = 1;
 	CAN_Property.MSCAN_TransEmptyINTEnable  = 0;
 	
-	W_Message.frame_type = DataFrameWithExtendedId;
-	W_Message.frame_id   = 0x12344444u;
+	W_Message.frame_type  = DataFrameWithExtendedId;
+	W_Message.frame_id    = 0x12344444u;
 	W_Message.data_length = 8;
 	W_Message.data[0]     = 0x86u;
 	W_Message.data[1]     = 0x86u;

@@ -187,11 +187,13 @@ int32_t SPI_Init(SPI_Type* SPIx, SPIx_ConfigType *p_Config, SPIxSpeed_Typedef sp
 	*/
 	if (speed_mode == High_Speed)
 	{
-		SPIx->BR = 0x41u;						/* baudrate = 1Mbps */
+//		SPIx->BR = 0x41u;						/* baudrate = 1Mbps(BUS_CLK = 20MHz) */
+		SPIx->BR = 0x51u;						/* baudrate = 1Mbps(BUS_CLK = 24MHz) */
 	}
 	else
 	{
-		SPIx->BR = 0x43u;						/* baudrate = 250Kbps */
+//		SPIx->BR = 0x43u;						/* baudrate = 250Kbps(BUS_CLK = 20MHz) */
+		SPIx->BR = 0x53u;						/* baudrate = 250Kbps(BUS_CLK = 24MHz) */
 	}
 	
 	return 0;

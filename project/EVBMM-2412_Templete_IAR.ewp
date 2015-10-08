@@ -2044,6 +2044,9 @@
         <name>$PROJ_DIR$\..\peripher_drivers\inc\MSCAN_Driver.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\inc\PIT_Driver.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\peripher_drivers\inc\SPI_Driver.h</name>
       </file>
       <file>
@@ -2060,6 +2063,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\MSCAN_Driver.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\src\PIT_Driver.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\SPI_Driver.c</name>

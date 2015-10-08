@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
-  * @file name: Flash_Driver.h
+  * @file name: PIT_Driver.h
   * @author: Wangjian
   * @Descriptiuon: Provides a set of functions about GPIO driver.
   * @Others: None
@@ -29,8 +29,8 @@
 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __FLASH_DRIVER_H
-#define __FLASH_DRIVER_H
+#ifndef __PIT_DRIVER_H
+#define __PIT_DRIVER_H
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -41,8 +41,51 @@
 
 /* Exported types ------------------------------------------------------------*/
 
-#define  __StartOfAppArea   0x00000001u
-#define  __EndOfFlash       0x0001FFFFu
+#define   PIT_DRIVER_VERSION    (100)
+
+
+
+#define   PIT_CHANNEL0    0
+#define   PIT_CHANNEL1    1
+
+
+
+typedef enum
+{
+	PIT_CH0 = 1,
+	PIT_CH1,
+}PIT_Channel_TypeDef;
+
+
+
+typedef enum
+{
+	PIT_FreezeEnable = 1,
+	PIT_FreezeDisable,
+}PIT_FreezeFunc_TypeDef;
+
+
+
+typedef enum
+{
+	PIT_INT_ENABLE = 1,
+	PIT_INT_DISABLE,
+}PIT_InterruptFunc_TypeDef;
+
+
+
+typedef struct
+{
+	PIT_Channel_TypeDef channel;
+	
+	PIT_InterruptFunc_TypeDef INT_Func;
+
+	PIT_FreezeFunc_TypeDef freeze;
+
+	uint32_t loadvalue;
+	
+}PIT_TimebaseInitTypeDef;
+
 
 
 
@@ -53,17 +96,15 @@ extern "C" {
 
 /* Exported functions ------------------------------------------------------- */
 
-/* Function to initializes the flash controller's clock and flash Data Speculation */
-void Flash_Init(void);
 
-/* Function to erase a sector size of flash memory */
-int Flash_EarseSector(uint32_t StartAddrOfSector);
+int32_t PIT_Init(PIT_TimebaseInitTypeDef* TimConfig);
 
-/* Function to write a unit of data to the flash memory */
-int Flash_ProgramUnit(uint32_t StartAddrOfSector, uint8_t *data);
 
-/* Function to write a sector of data to the flash memory */
-int Flash_ProgramSector(uint32_t StartAddrOfSector, uint8_t *data);
+void PIT_EnableModule(uint8_t ch);
+
+
+void PIT_DisableModule(uint8_t ch);
+
 
 
 #ifdef __cplusplus

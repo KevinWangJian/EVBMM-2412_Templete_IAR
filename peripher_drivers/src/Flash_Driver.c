@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
-  * @file name: GPIO_Driver.h
+  * @file name: Flash_Driver.c
   * @author: Wangjian
   * @Descriptiuon: Provides a set of functions about GPIO driver.
   * @Others: None

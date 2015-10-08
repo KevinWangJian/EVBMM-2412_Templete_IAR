@@ -35,17 +35,23 @@
 #include "MSCAN_Driver.h"
 #include "CAN_Message.h"
 #include "Flash_Driver.h"
+#include "PIT_Driver.h"
+
+
 
 
 int main(void)
 {
-//	uint8_t TX_DATA[8] = {0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23};
-	
+#if 0
 	MSCAN_ParametersConfig CAN_Property;
 	
 	MSCAN_FilterConfigure CAN_FILTER;
 	
 	MSCAN_Message_TypeDef W_Message, Rd_Message;
+#endif
+	
+	PIT_TimebaseInitTypeDef PIT_Config;
+	
 	
 	Systick_Init(_1ms_perticks);
 
@@ -54,7 +60,21 @@ int main(void)
 	
 	GPIO_PinClear(GPIO_PTC1);
 	GPIO_PinClear(GPIO_PTG0);
+
+	PIT_Config.channel   = PIT_CH0;
+	PIT_Config.INT_Func  = PIT_INT_ENABLE;
+	PIT_Config.freeze    = PIT_FreezeEnable;
+	PIT_Config.loadvalue = 120000 - 1;           // generate interrupt every 5ms. (5ms * 24000(BUS clock) = 120000)
 	
+	PIT_Init(&PIT_Config);
+	
+	PIT_EnableModule(PIT_CHANNEL0);
+	
+	Set_Vector_Handler(PIT_CH0_VECTORn, PIT_CH0_Handler);
+	
+	NVIC_EnableIRQ(PIT_CH0_IRQn);	
+	
+#if 0
 	CAN_Property.baudrate                   = MSCAN_Baudrate_250K;
 	CAN_Property.MSCAN_SignalPinsRemap      = 0;
 	CAN_Property.MSCAN_StopInWaitMode       = 1;
@@ -94,9 +114,11 @@ int main(void)
 	Set_Vector_Handler(MSCAN_RX_VECTORn, MSCAN_RX_Handler);
 	
 	NVIC_EnableIRQ(MSCAN_RX_IRQn);
-
+#endif
+	
 	while (1)
 	{	
+#if 0
 		if (Check_CANReceiveBuffer(&Rd_Message) == 0)
 		{
 			if (Rd_Message.frame_id == 0x18901212u)
@@ -106,6 +128,8 @@ int main(void)
 				GPIO_PinToggle(GPIO_PTC1);
 			}
 		}
+#endif
+		;
 	}
 }
 

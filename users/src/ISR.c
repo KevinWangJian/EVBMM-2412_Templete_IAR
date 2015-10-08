@@ -66,4 +66,32 @@ void MSCAN_RX_Handler(void)
 	}
 }
 
+
+
+/*
+* @brief    PIT timer channel 0 interrupt service routine.
+* @param    None.
+* @returns  None.
+*/
+void PIT_CH0_Handler(void)
+{
+	static uint16_t Time_Count = 0;
+	
+	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK)
+	{
+		/* Before exit PIT0_IRQHandler,clear PIT_Channel0 interrupt flag TIF */
+		PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+		
+		Time_Count++;
+		
+		if (Time_Count >= 200)
+		{
+			Time_Count = 0;
+			
+			GPIO_PinToggle(GPIO_PTC1);
+		}
+	}
+}
+
+
 /*****************************END OF FILE**************************************/

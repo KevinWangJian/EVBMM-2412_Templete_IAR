@@ -3,15 +3,16 @@
 **     Compilers:           ARM Compiler
 **                          Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
+**                          GNU C Compiler - CodeSourcery Sourcery G++
 **                          IAR ANSI C/C++ Compiler for ARM
 **
-**     Reference manual:    MKE06Z80M48SF0RM, Rev.0.1, July 2013
-**     Version:             rev. 1.0, 2013-07-30
+**     Reference manual:    MKE06P80M48SF0RM, Rev. 1, Dec 2013
+**     Version:             rev. 1.2, 2014-01-10
 **
 **     Abstract:
-**         CMSIS Peripheral Access Layer for MKE06Z4
+**         CMSIS Peripheral Access Layer for SKEAZ1284
 **
-**     Copyright: 1997 - 2013 Freescale, Inc. All Rights Reserved.
+**     Copyright: 1997 - 2014 Freescale, Inc. All Rights Reserved.
 **
 **     http:                 www.freescale.com
 **     mail:                 support@freescale.com
@@ -19,27 +20,55 @@
 **     Revisions:
 **     - rev. 1.0 (2013-07-30)
 **         Initial version.
+**     - rev. 1.1 (2013-10-29)
+**         Definition of BITBAND macros updated to support peripherals with 32-bit acces disabled.
+**     - rev. 1.2 (2014-01-10)
+**         CAN module: corrected address of TSIDR1 register.
+**         CAN module: corrected name of MSCAN_TDLR bit DLC to TDLC.
+**         FTM0 module: added access macro for EXTTRIG register.
+**         NVIC module: registers access macros improved.
+**         SCB module: unused bits removed, mask, shift macros improved.
+**         Defines of interrupt vectors aligned to RM.
 **
 ** ###################################################################
 */
 
 /*!
- * @file MKE06Z4.h
- * @version 1.0
- * @date 2013-07-30
- * @brief CMSIS Peripheral Access Layer for MKE06Z4
+ * @file SKEAZ1284.h
+ * @version 1.2
+ * @date 2014-01-10
+ * @brief CMSIS Peripheral Access Layer for SKEAZ1284
  *
- * CMSIS Peripheral Access Layer for MKE06Z4
+ * CMSIS Peripheral Access Layer for SKEAZ1284
  */
 
 #if !defined(SKEAZ1284_H_)
-#define SKEAZ1284_H_                               /**< Symbol preventing repeated inclusion */
+#define SKEAZ1284_H_                             /**< Symbol preventing repeated inclusion */
+
+#endif  /* #if !defined(SKEAZ1284_H_) */
+
+
+/* ----------------------------------------------------------------------------
+   -- MCU activation
+   ---------------------------------------------------------------------------- */
+
+/* Prevention from multiple including the same memory map */
+#if !defined(MCU_SKEAZ1284)  /* Check if memory map has not been already included */
+#define MCU_SKEAZ1284
+
+/* Check if another memory map has not been also included */
+#if (defined(MCU_ACTIVE))
+  #error SKEAZ1284 memory map: There is already included another memory map. Only one memory map can be included.
+#endif /* (defined(MCU_ACTIVE)) */
+#define MCU_ACTIVE
+
+#include <stdint.h>
 
 /** Memory map major version (memory maps with equal major version number are
  * compatible) */
 #define MCU_MEM_MAP_VERSION 0x0100u
 /** Memory map minor version */
-#define MCU_MEM_MAP_VERSION_MINOR 0x0000u
+#define MCU_MEM_MAP_VERSION_MINOR 0x0002u
 
 
 /* ----------------------------------------------------------------------------
@@ -61,36 +90,36 @@ typedef enum IRQn {
   SysTick_IRQn                 = -1,               /**< Cortex-M0 System Tick Interrupt */
 
   /* Device specific interrupts */
-  Reserved16_IRQn              = 0,                /**< Reserved interrupt 16 */
-  Reserved17_IRQn              = 1,                /**< Reserved interrupt 17 */
-  Reserved18_IRQn              = 2,                /**< Reserved interrupt 18 */
-  Reserved19_IRQn              = 3,                /**< Reserved interrupt 19 */
-  Reserved20_IRQn              = 4,                /**< Reserved interrupt 20 */
-  FTMRE_IRQn                   = 5,                /**< FTMRE command complete/read collision interrupt */
-  LVD_LVW_IRQn                 = 6,                /**< Low Voltage Detect, Low Voltage Warning */
-  IRQ_IRQn                     = 7,                /**< External interrupt */
+  Reserved16_IRQn              = 0,                /**< Reserved interrupt */
+  Reserved17_IRQn              = 1,                /**< Reserved interrupt */
+  Reserved18_IRQn              = 2,                /**< Reserved interrupt */
+  Reserved19_IRQn              = 3,                /**< Reserved interrupt */
+  Reserved20_IRQn              = 4,                /**< Reserved interrupt */
+  FTMRE_IRQn                   = 5,                /**< Command complete and read collision */
+  PMC_IRQn                     = 6,                /**< Low-voltage detect, low-voltage warning */
+  IRQ_IRQn                     = 7,                /**< External Interrupt */
   I2C0_IRQn                    = 8,                /**< I2C0 interrupt */
   I2C1_IRQn                    = 9,                /**< I2C1 interrupt */
-  SPI0_IRQn                    = 10,               /**< SPI0 interrupt */
-  SPI1_IRQn                    = 11,               /**< SPI1 interrupt */
-  UART0_IRQn                   = 12,               /**< UART0 status/error interrupt */
-  UART1_IRQn                   = 13,               /**< UART1 status/error interrupt */
-  UART2_IRQn                   = 14,               /**< UART2 status/error interrupt */
-  ADC0_IRQn                    = 15,               /**< ADC0 interrupt */
+  SPI0_IRQn                    = 10,               /**< SPI0 single interrupt vector for all sources */
+  SPI1_IRQn                    = 11,               /**< SPI1 single interrupt vector for all sources */
+  UART0_IRQn                   = 12,               /**< UART0 status and error */
+  UART1_IRQn                   = 13,               /**< UART1 status and error */
+  UART2_IRQn                   = 14,               /**< UART2 status and error */
+  ADC_IRQn                     = 15,               /**< ADC interrupt */
   ACMP0_IRQn                   = 16,               /**< ACMP0 interrupt */
-  FTM0_IRQn                    = 17,               /**< FTM0 Single interrupt vector for all sources */
-  FTM1_IRQn                    = 18,               /**< FTM1 Single interrupt vector for all sources */
-  FTM2_IRQn                    = 19,               /**< FTM2 Single interrupt vector for all sources */
+  FTM0_IRQn                    = 17,               /**< FTM0 single interrupt vector for all sources */
+  FTM1_IRQn                    = 18,               /**< FTM1 single interrupt vector for all sources */
+  FTM2_IRQn                    = 19,               /**< FTM2 single interrupt vector for all sources */
   RTC_IRQn                     = 20,               /**< RTC overflow */
   ACMP1_IRQn                   = 21,               /**< ACMP1 interrupt */
   PIT_CH0_IRQn                 = 22,               /**< PIT CH0 overflow */
   PIT_CH1_IRQn                 = 23,               /**< PIT CH1 overflow */
-  KBI0_IRQn                    = 24,               /**< Keyboard interrupt 0 */
-  KBI1_IRQn                    = 25,               /**< Keyboard interrupt 1 */
-  Reserved42_IRQn              = 26,               /**< Reserved interrupt 42 */
+  KBI0_IRQn                    = 24,               /**< Keyboard interrupt0(32bit) */
+  KBI1_IRQn                    = 25,               /**< Keyboard interrupt1(32bit) */
+  Reserved42_IRQn              = 26,               /**< Reserved interrupt */
   ICS_IRQn                     = 27,               /**< ICS interrupt */
-  Watchdog_IRQn                = 28,               /**< WDOG Interrupt */
-  PWT_IRQn                     = 29,               /**< Pulse Width Timer Interrupt */
+  WDOG_IRQn                    = 28,               /**< Watchdog timeout */
+  PWT_IRQn                     = 29,               /**< PWT interrupt */
   MSCAN_RX_IRQn                = 30,               /**< MSCAN Rx Interrupt */
   MSCAN_TX_IRQn                = 31                /**< MSCAN Tx, Err and Wake-up interrupt */
 } IRQn_Type;
@@ -116,7 +145,7 @@ typedef enum IRQn {
 #define __Vendor_SysTickConfig         0         /**< Vendor specific implementation of SysTickConfig is defined */
 
 #include "core_cm0plus.h"              /* Core Peripheral Access Layer */
-#include "system_SKEAZ1284.h"            /* Device specific configuration file */
+#include "system_SKEAZ1284.h"          /* Device specific configuration file */
 
 /*!
  * @}
@@ -166,7 +195,28 @@ typedef struct {
   __IO uint8_t C0;                                 /**< ACMP Control Register 0, offset: 0x1 */
   __IO uint8_t C1;                                 /**< ACMP Control Register 1, offset: 0x2 */
   __IO uint8_t C2;                                 /**< ACMP Control Register 2, offset: 0x3 */
-} ACMP_Type;
+} ACMP_Type, *ACMP_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- ACMP - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ACMP_Register_Accessor_Macros ACMP - Register accessor macros
+ * @{
+ */
+
+
+/* ACMP - Register accessors */
+#define ACMP_CS_REG(base)                        ((base)->CS)
+#define ACMP_C0_REG(base)                        ((base)->C0)
+#define ACMP_C1_REG(base)                        ((base)->C1)
+#define ACMP_C2_REG(base)                        ((base)->C2)
+
+/*!
+ * @}
+ */ /* end of group ACMP_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- ACMP Register Masks
@@ -223,12 +273,41 @@ typedef struct {
 #define ACMP0_BASE                               (0x40073000u)
 /** Peripheral ACMP0 base pointer */
 #define ACMP0                                    ((ACMP_Type *)ACMP0_BASE)
+#define ACMP0_BASE_PTR                           (ACMP0)
 /** Peripheral ACMP1 base address */
 #define ACMP1_BASE                               (0x40074000u)
 /** Peripheral ACMP1 base pointer */
 #define ACMP1                                    ((ACMP_Type *)ACMP1_BASE)
+#define ACMP1_BASE_PTR                           (ACMP1)
 /** Array initializer of ACMP peripheral base pointers */
 #define ACMP_BASES                               { ACMP0, ACMP1 }
+
+/* ----------------------------------------------------------------------------
+   -- ACMP - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ACMP_Register_Accessor_Macros ACMP - Register accessor macros
+ * @{
+ */
+
+
+/* ACMP - Register instance definitions */
+/* ACMP0 */
+#define ACMP0_CS                                 ACMP_CS_REG(ACMP0)
+#define ACMP0_C0                                 ACMP_C0_REG(ACMP0)
+#define ACMP0_C1                                 ACMP_C1_REG(ACMP0)
+#define ACMP0_C2                                 ACMP_C2_REG(ACMP0)
+/* ACMP1 */
+#define ACMP1_CS                                 ACMP_CS_REG(ACMP1)
+#define ACMP1_C0                                 ACMP_C0_REG(ACMP1)
+#define ACMP1_C1                                 ACMP_C1_REG(ACMP1)
+#define ACMP1_C2                                 ACMP_C2_REG(ACMP1)
+
+/*!
+ * @}
+ */ /* end of group ACMP_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -254,7 +333,32 @@ typedef struct {
   __IO uint32_t CV;                                /**< Compare Value Register, offset: 0x14 */
   __IO uint32_t APCTL1;                            /**< Pin Control 1 Register, offset: 0x18 */
   __IO uint32_t SC5;                               /**< Status and Control Register 5, offset: 0x1C */
-} ADC_Type;
+} ADC_Type, *ADC_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- ADC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ADC_Register_Accessor_Macros ADC - Register accessor macros
+ * @{
+ */
+
+
+/* ADC - Register accessors */
+#define ADC_SC1_REG(base)                        ((base)->SC1)
+#define ADC_SC2_REG(base)                        ((base)->SC2)
+#define ADC_SC3_REG(base)                        ((base)->SC3)
+#define ADC_SC4_REG(base)                        ((base)->SC4)
+#define ADC_R_REG(base)                          ((base)->R)
+#define ADC_CV_REG(base)                         ((base)->CV)
+#define ADC_APCTL1_REG(base)                     ((base)->APCTL1)
+#define ADC_SC5_REG(base)                        ((base)->SC5)
+
+/*!
+ * @}
+ */ /* end of group ADC_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- ADC Register Masks
@@ -343,8 +447,35 @@ typedef struct {
 #define ADC_BASE                                 (0x4003B000u)
 /** Peripheral ADC base pointer */
 #define ADC                                      ((ADC_Type *)ADC_BASE)
+#define ADC_BASE_PTR                             (ADC)
 /** Array initializer of ADC peripheral base pointers */
 #define ADC_BASES                                { ADC }
+
+/* ----------------------------------------------------------------------------
+   -- ADC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ADC_Register_Accessor_Macros ADC - Register accessor macros
+ * @{
+ */
+
+
+/* ADC - Register instance definitions */
+/* ADC */
+#define ADC_SC1                                  ADC_SC1_REG(ADC)
+#define ADC_SC2                                  ADC_SC2_REG(ADC)
+#define ADC_SC3                                  ADC_SC3_REG(ADC)
+#define ADC_SC4                                  ADC_SC4_REG(ADC)
+#define ADC_R                                    ADC_R_REG(ADC)
+#define ADC_CV                                   ADC_CV_REG(ADC)
+#define ADC_APCTL1                               ADC_APCTL1_REG(ADC)
+#define ADC_SC5                                  ADC_SC5_REG(ADC)
+
+/*!
+ * @}
+ */ /* end of group ADC_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -395,7 +526,40 @@ typedef struct {
       __IO uint8_t CTRLHU;                             /**< CRC_CTRLHU register., offset: 0xB */
     } CTRL_ACCESS8BIT;
   };
-} CRC_Type;
+} CRC_Type, *CRC_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- CRC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup CRC_Register_Accessor_Macros CRC - Register accessor macros
+ * @{
+ */
+
+
+/* CRC - Register accessors */
+#define CRC_DATAL_REG(base)                      ((base)->ACCESS16BIT.DATAL)
+#define CRC_DATAH_REG(base)                      ((base)->ACCESS16BIT.DATAH)
+#define CRC_DATA_REG(base)                       ((base)->DATA)
+#define CRC_DATALL_REG(base)                     ((base)->ACCESS8BIT.DATALL)
+#define CRC_DATALU_REG(base)                     ((base)->ACCESS8BIT.DATALU)
+#define CRC_DATAHL_REG(base)                     ((base)->ACCESS8BIT.DATAHL)
+#define CRC_DATAHU_REG(base)                     ((base)->ACCESS8BIT.DATAHU)
+#define CRC_GPOLYL_REG(base)                     ((base)->GPOLY_ACCESS16BIT.GPOLYL)
+#define CRC_GPOLYH_REG(base)                     ((base)->GPOLY_ACCESS16BIT.GPOLYH)
+#define CRC_GPOLY_REG(base)                      ((base)->GPOLY)
+#define CRC_GPOLYLL_REG(base)                    ((base)->GPOLY_ACCESS8BIT.GPOLYLL)
+#define CRC_GPOLYLU_REG(base)                    ((base)->GPOLY_ACCESS8BIT.GPOLYLU)
+#define CRC_GPOLYHL_REG(base)                    ((base)->GPOLY_ACCESS8BIT.GPOLYHL)
+#define CRC_GPOLYHU_REG(base)                    ((base)->GPOLY_ACCESS8BIT.GPOLYHU)
+#define CRC_CTRL_REG(base)                       ((base)->CTRL)
+#define CRC_CTRLHU_REG(base)                     ((base)->CTRL_ACCESS8BIT.CTRLHU)
+
+/*!
+ * @}
+ */ /* end of group CRC_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- CRC Register Masks
@@ -511,8 +675,43 @@ typedef struct {
 #define CRC_BASE                                 (0x40032000u)
 /** Peripheral CRC base pointer */
 #define CRC0                                     ((CRC_Type *)CRC_BASE)
+#define CRC_BASE_PTR                             (CRC0)
 /** Array initializer of CRC peripheral base pointers */
 #define CRC_BASES                                { CRC0 }
+
+/* ----------------------------------------------------------------------------
+   -- CRC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup CRC_Register_Accessor_Macros CRC - Register accessor macros
+ * @{
+ */
+
+
+/* CRC - Register instance definitions */
+/* CRC */
+#define CRC_DATA                                 CRC_DATA_REG(CRC0)
+#define CRC_DATAL                                CRC_DATAL_REG(CRC0)
+#define CRC_DATALL                               CRC_DATALL_REG(CRC0)
+#define CRC_DATALU                               CRC_DATALU_REG(CRC0)
+#define CRC_DATAH                                CRC_DATAH_REG(CRC0)
+#define CRC_DATAHL                               CRC_DATAHL_REG(CRC0)
+#define CRC_DATAHU                               CRC_DATAHU_REG(CRC0)
+#define CRC_GPOLY                                CRC_GPOLY_REG(CRC0)
+#define CRC_GPOLYL                               CRC_GPOLYL_REG(CRC0)
+#define CRC_GPOLYLL                              CRC_GPOLYLL_REG(CRC0)
+#define CRC_GPOLYLU                              CRC_GPOLYLU_REG(CRC0)
+#define CRC_GPOLYH                               CRC_GPOLYH_REG(CRC0)
+#define CRC_GPOLYHL                              CRC_GPOLYHL_REG(CRC0)
+#define CRC_GPOLYHU                              CRC_GPOLYHU_REG(CRC0)
+#define CRC_CTRL                                 CRC_CTRL_REG(CRC0)
+#define CRC_CTRLHU                               CRC_CTRLHU_REG(CRC0)
+
+/*!
+ * @}
+ */ /* end of group CRC_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -537,7 +736,31 @@ typedef struct {
   __I  uint32_t PDIR;                              /**< Port Data Input Register, offset: 0x10 */
   __IO uint32_t PDDR;                              /**< Port Data Direction Register, offset: 0x14 */
   __IO uint32_t PIDR;                              /**< Port Input Disable Register, offset: 0x18 */
-} FGPIO_Type;
+} FGPIO_Type, *FGPIO_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- FGPIO - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup FGPIO_Register_Accessor_Macros FGPIO - Register accessor macros
+ * @{
+ */
+
+
+/* FGPIO - Register accessors */
+#define FGPIO_PDOR_REG(base)                     ((base)->PDOR)
+#define FGPIO_PSOR_REG(base)                     ((base)->PSOR)
+#define FGPIO_PCOR_REG(base)                     ((base)->PCOR)
+#define FGPIO_PTOR_REG(base)                     ((base)->PTOR)
+#define FGPIO_PDIR_REG(base)                     ((base)->PDIR)
+#define FGPIO_PDDR_REG(base)                     ((base)->PDDR)
+#define FGPIO_PIDR_REG(base)                     ((base)->PIDR)
+
+/*!
+ * @}
+ */ /* end of group FGPIO_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- FGPIO Register Masks
@@ -587,16 +810,60 @@ typedef struct {
 #define FGPIOA_BASE                              (0xF8000000u)
 /** Peripheral FGPIOA base pointer */
 #define FGPIOA                                   ((FGPIO_Type *)FGPIOA_BASE)
+#define FGPIOA_BASE_PTR                          (FGPIOA)
 /** Peripheral FGPIOB base address */
 #define FGPIOB_BASE                              (0xF8000040u)
 /** Peripheral FGPIOB base pointer */
 #define FGPIOB                                   ((FGPIO_Type *)FGPIOB_BASE)
+#define FGPIOB_BASE_PTR                          (FGPIOB)
 /** Peripheral FGPIOC base address */
 #define FGPIOC_BASE                              (0xF8000080u)
 /** Peripheral FGPIOC base pointer */
 #define FGPIOC                                   ((FGPIO_Type *)FGPIOC_BASE)
+#define FGPIOC_BASE_PTR                          (FGPIOC)
 /** Array initializer of FGPIO peripheral base pointers */
 #define FGPIO_BASES                              { FGPIOA, FGPIOB, FGPIOC }
+
+/* ----------------------------------------------------------------------------
+   -- FGPIO - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup FGPIO_Register_Accessor_Macros FGPIO - Register accessor macros
+ * @{
+ */
+
+
+/* FGPIO - Register instance definitions */
+/* FGPIOA */
+#define FGPIOA_PDOR                              FGPIO_PDOR_REG(FGPIOA)
+#define FGPIOA_PSOR                              FGPIO_PSOR_REG(FGPIOA)
+#define FGPIOA_PCOR                              FGPIO_PCOR_REG(FGPIOA)
+#define FGPIOA_PTOR                              FGPIO_PTOR_REG(FGPIOA)
+#define FGPIOA_PDIR                              FGPIO_PDIR_REG(FGPIOA)
+#define FGPIOA_PDDR                              FGPIO_PDDR_REG(FGPIOA)
+#define FGPIOA_PIDR                              FGPIO_PIDR_REG(FGPIOA)
+/* FGPIOB */
+#define FGPIOB_PDOR                              FGPIO_PDOR_REG(FGPIOB)
+#define FGPIOB_PSOR                              FGPIO_PSOR_REG(FGPIOB)
+#define FGPIOB_PCOR                              FGPIO_PCOR_REG(FGPIOB)
+#define FGPIOB_PTOR                              FGPIO_PTOR_REG(FGPIOB)
+#define FGPIOB_PDIR                              FGPIO_PDIR_REG(FGPIOB)
+#define FGPIOB_PDDR                              FGPIO_PDDR_REG(FGPIOB)
+#define FGPIOB_PIDR                              FGPIO_PIDR_REG(FGPIOB)
+/* FGPIOC */
+#define FGPIOC_PDOR                              FGPIO_PDOR_REG(FGPIOC)
+#define FGPIOC_PSOR                              FGPIO_PSOR_REG(FGPIOC)
+#define FGPIOC_PCOR                              FGPIO_PCOR_REG(FGPIOC)
+#define FGPIOC_PTOR                              FGPIO_PTOR_REG(FGPIOC)
+#define FGPIOC_PDIR                              FGPIO_PDIR_REG(FGPIOC)
+#define FGPIOC_PDDR                              FGPIO_PDDR_REG(FGPIOC)
+#define FGPIOC_PIDR                              FGPIO_PIDR_REG(FGPIOC)
+
+/*!
+ * @}
+ */ /* end of group FGPIO_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -642,7 +909,48 @@ typedef struct {
   __IO uint32_t INVCTRL;                           /**< FTM Inverting Control, offset: 0x90 */
   __IO uint32_t SWOCTRL;                           /**< FTM Software Output Control, offset: 0x94 */
   __IO uint32_t PWMLOAD;                           /**< FTM PWM Load, offset: 0x98 */
-} FTM_Type;
+} FTM_Type, *FTM_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- FTM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup FTM_Register_Accessor_Macros FTM - Register accessor macros
+ * @{
+ */
+
+
+/* FTM - Register accessors */
+#define FTM_SC_REG(base)                         ((base)->SC)
+#define FTM_CNT_REG(base)                        ((base)->CNT)
+#define FTM_MOD_REG(base)                        ((base)->MOD)
+#define FTM_CnSC_REG(base,index)                 ((base)->CONTROLS[index].CnSC)
+#define FTM_CnV_REG(base,index)                  ((base)->CONTROLS[index].CnV)
+#define FTM_CNTIN_REG(base)                      ((base)->CNTIN)
+#define FTM_STATUS_REG(base)                     ((base)->STATUS)
+#define FTM_MODE_REG(base)                       ((base)->MODE)
+#define FTM_SYNC_REG(base)                       ((base)->SYNC)
+#define FTM_OUTINIT_REG(base)                    ((base)->OUTINIT)
+#define FTM_OUTMASK_REG(base)                    ((base)->OUTMASK)
+#define FTM_COMBINE_REG(base)                    ((base)->COMBINE)
+#define FTM_DEADTIME_REG(base)                   ((base)->DEADTIME)
+#define FTM_EXTTRIG_REG(base)                    ((base)->EXTTRIG)
+#define FTM_POL_REG(base)                        ((base)->POL)
+#define FTM_FMS_REG(base)                        ((base)->FMS)
+#define FTM_FILTER_REG(base)                     ((base)->FILTER)
+#define FTM_FLTCTRL_REG(base)                    ((base)->FLTCTRL)
+#define FTM_CONF_REG(base)                       ((base)->CONF)
+#define FTM_FLTPOL_REG(base)                     ((base)->FLTPOL)
+#define FTM_SYNCONF_REG(base)                    ((base)->SYNCONF)
+#define FTM_INVCTRL_REG(base)                    ((base)->INVCTRL)
+#define FTM_SWOCTRL_REG(base)                    ((base)->SWOCTRL)
+#define FTM_PWMLOAD_REG(base)                    ((base)->PWMLOAD)
+
+/*!
+ * @}
+ */ /* end of group FTM_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- FTM Register Masks
@@ -1048,16 +1356,96 @@ typedef struct {
 #define FTM0_BASE                                (0x40038000u)
 /** Peripheral FTM0 base pointer */
 #define FTM0                                     ((FTM_Type *)FTM0_BASE)
+#define FTM0_BASE_PTR                            (FTM0)
 /** Peripheral FTM1 base address */
 #define FTM1_BASE                                (0x40039000u)
 /** Peripheral FTM1 base pointer */
 #define FTM1                                     ((FTM_Type *)FTM1_BASE)
+#define FTM1_BASE_PTR                            (FTM1)
 /** Peripheral FTM2 base address */
 #define FTM2_BASE                                (0x4003A000u)
 /** Peripheral FTM2 base pointer */
 #define FTM2                                     ((FTM_Type *)FTM2_BASE)
+#define FTM2_BASE_PTR                            (FTM2)
 /** Array initializer of FTM peripheral base pointers */
 #define FTM_BASES                                { FTM0, FTM1, FTM2 }
+
+/* ----------------------------------------------------------------------------
+   -- FTM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup FTM_Register_Accessor_Macros FTM - Register accessor macros
+ * @{
+ */
+
+
+/* FTM - Register instance definitions */
+/* FTM0 */
+#define FTM0_SC                                  FTM_SC_REG(FTM0)
+#define FTM0_CNT                                 FTM_CNT_REG(FTM0)
+#define FTM0_MOD                                 FTM_MOD_REG(FTM0)
+#define FTM0_C0SC                                FTM_CnSC_REG(FTM0,0)
+#define FTM0_C0V                                 FTM_CnV_REG(FTM0,0)
+#define FTM0_C1SC                                FTM_CnSC_REG(FTM0,1)
+#define FTM0_C1V                                 FTM_CnV_REG(FTM0,1)
+#define FTM0_EXTTRIG                             FTM_EXTTRIG_REG(FTM0)
+/* FTM1 */
+#define FTM1_SC                                  FTM_SC_REG(FTM1)
+#define FTM1_CNT                                 FTM_CNT_REG(FTM1)
+#define FTM1_MOD                                 FTM_MOD_REG(FTM1)
+#define FTM1_C0SC                                FTM_CnSC_REG(FTM1,0)
+#define FTM1_C0V                                 FTM_CnV_REG(FTM1,0)
+#define FTM1_C1SC                                FTM_CnSC_REG(FTM1,1)
+#define FTM1_C1V                                 FTM_CnV_REG(FTM1,1)
+/* FTM2 */
+#define FTM2_SC                                  FTM_SC_REG(FTM2)
+#define FTM2_CNT                                 FTM_CNT_REG(FTM2)
+#define FTM2_MOD                                 FTM_MOD_REG(FTM2)
+#define FTM2_C0SC                                FTM_CnSC_REG(FTM2,0)
+#define FTM2_C0V                                 FTM_CnV_REG(FTM2,0)
+#define FTM2_C1SC                                FTM_CnSC_REG(FTM2,1)
+#define FTM2_C1V                                 FTM_CnV_REG(FTM2,1)
+#define FTM2_C2SC                                FTM_CnSC_REG(FTM2,2)
+#define FTM2_C2V                                 FTM_CnV_REG(FTM2,2)
+#define FTM2_C3SC                                FTM_CnSC_REG(FTM2,3)
+#define FTM2_C3V                                 FTM_CnV_REG(FTM2,3)
+#define FTM2_C4SC                                FTM_CnSC_REG(FTM2,4)
+#define FTM2_C4V                                 FTM_CnV_REG(FTM2,4)
+#define FTM2_C5SC                                FTM_CnSC_REG(FTM2,5)
+#define FTM2_C5V                                 FTM_CnV_REG(FTM2,5)
+#define FTM2_CNTIN                               FTM_CNTIN_REG(FTM2)
+#define FTM2_STATUS                              FTM_STATUS_REG(FTM2)
+#define FTM2_MODE                                FTM_MODE_REG(FTM2)
+#define FTM2_SYNC                                FTM_SYNC_REG(FTM2)
+#define FTM2_OUTINIT                             FTM_OUTINIT_REG(FTM2)
+#define FTM2_OUTMASK                             FTM_OUTMASK_REG(FTM2)
+#define FTM2_COMBINE                             FTM_COMBINE_REG(FTM2)
+#define FTM2_DEADTIME                            FTM_DEADTIME_REG(FTM2)
+#define FTM2_EXTTRIG                             FTM_EXTTRIG_REG(FTM2)
+#define FTM2_POL                                 FTM_POL_REG(FTM2)
+#define FTM2_FMS                                 FTM_FMS_REG(FTM2)
+#define FTM2_FILTER                              FTM_FILTER_REG(FTM2)
+#define FTM2_FLTCTRL                             FTM_FLTCTRL_REG(FTM2)
+#define FTM2_CONF                                FTM_CONF_REG(FTM2)
+#define FTM2_FLTPOL                              FTM_FLTPOL_REG(FTM2)
+#define FTM2_SYNCONF                             FTM_SYNCONF_REG(FTM2)
+#define FTM2_INVCTRL                             FTM_INVCTRL_REG(FTM2)
+#define FTM2_SWOCTRL                             FTM_SWOCTRL_REG(FTM2)
+#define FTM2_PWMLOAD                             FTM_PWMLOAD_REG(FTM2)
+
+/* FTM - Register array accessors */
+#define FTM0_CnSC(index)                         FTM_CnSC_REG(FTM0,index)
+#define FTM1_CnSC(index)                         FTM_CnSC_REG(FTM1,index)
+#define FTM2_CnSC(index)                         FTM_CnSC_REG(FTM2,index)
+#define FTM0_CnV(index)                          FTM_CnV_REG(FTM0,index)
+#define FTM1_CnV(index)                          FTM_CnV_REG(FTM1,index)
+#define FTM2_CnV(index)                          FTM_CnV_REG(FTM2,index)
+
+/*!
+ * @}
+ */ /* end of group FTM_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1089,7 +1477,33 @@ typedef struct {
   __IO uint8_t FPROT;                              /**< Flash Protection Register, offset: 0xB */
        uint8_t RESERVED_4[3];
   __I  uint8_t FOPT;                               /**< Flash Option Register, offset: 0xF */
-} FTMRE_Type;
+} FTMRE_Type, *FTMRE_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- FTMRE - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup FTMRE_Register_Accessor_Macros FTMRE - Register accessor macros
+ * @{
+ */
+
+
+/* FTMRE - Register accessors */
+#define FTMRE_FCCOBIX_REG(base)                  ((base)->FCCOBIX)
+#define FTMRE_FSEC_REG(base)                     ((base)->FSEC)
+#define FTMRE_FCLKDIV_REG(base)                  ((base)->FCLKDIV)
+#define FTMRE_FSTAT_REG(base)                    ((base)->FSTAT)
+#define FTMRE_FCNFG_REG(base)                    ((base)->FCNFG)
+#define FTMRE_FCCOBLO_REG(base)                  ((base)->FCCOBLO)
+#define FTMRE_FCCOBHI_REG(base)                  ((base)->FCCOBHI)
+#define FTMRE_FPROT_REG(base)                    ((base)->FPROT)
+#define FTMRE_FOPT_REG(base)                     ((base)->FOPT)
+
+/*!
+ * @}
+ */ /* end of group FTMRE_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- FTMRE Register Masks
@@ -1174,8 +1588,36 @@ typedef struct {
 #define FTMRE_BASE                               (0x40020000u)
 /** Peripheral FTMRE base pointer */
 #define FTMRE                                    ((FTMRE_Type *)FTMRE_BASE)
+#define FTMRE_BASE_PTR                           (FTMRE)
 /** Array initializer of FTMRE peripheral base pointers */
 #define FTMRE_BASES                              { FTMRE }
+
+/* ----------------------------------------------------------------------------
+   -- FTMRE - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup FTMRE_Register_Accessor_Macros FTMRE - Register accessor macros
+ * @{
+ */
+
+
+/* FTMRE - Register instance definitions */
+/* FTMRE */
+#define FTMRE_FCCOBIX                            FTMRE_FCCOBIX_REG(FTMRE)
+#define FTMRE_FSEC                               FTMRE_FSEC_REG(FTMRE)
+#define FTMRE_FCLKDIV                            FTMRE_FCLKDIV_REG(FTMRE)
+#define FTMRE_FSTAT                              FTMRE_FSTAT_REG(FTMRE)
+#define FTMRE_FCNFG                              FTMRE_FCNFG_REG(FTMRE)
+#define FTMRE_FCCOBLO                            FTMRE_FCCOBLO_REG(FTMRE)
+#define FTMRE_FCCOBHI                            FTMRE_FCCOBHI_REG(FTMRE)
+#define FTMRE_FPROT                              FTMRE_FPROT_REG(FTMRE)
+#define FTMRE_FOPT                               FTMRE_FOPT_REG(FTMRE)
+
+/*!
+ * @}
+ */ /* end of group FTMRE_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1200,7 +1642,31 @@ typedef struct {
   __I  uint32_t PDIR;                              /**< Port Data Input Register, offset: 0x10 */
   __IO uint32_t PDDR;                              /**< Port Data Direction Register, offset: 0x14 */
   __IO uint32_t PIDR;                              /**< Port Input Disable Register, offset: 0x18 */
-} GPIO_Type;
+} GPIO_Type, *GPIO_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- GPIO - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup GPIO_Register_Accessor_Macros GPIO - Register accessor macros
+ * @{
+ */
+
+
+/* GPIO - Register accessors */
+#define GPIO_PDOR_REG(base)                      ((base)->PDOR)
+#define GPIO_PSOR_REG(base)                      ((base)->PSOR)
+#define GPIO_PCOR_REG(base)                      ((base)->PCOR)
+#define GPIO_PTOR_REG(base)                      ((base)->PTOR)
+#define GPIO_PDIR_REG(base)                      ((base)->PDIR)
+#define GPIO_PDDR_REG(base)                      ((base)->PDDR)
+#define GPIO_PIDR_REG(base)                      ((base)->PIDR)
+
+/*!
+ * @}
+ */ /* end of group GPIO_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- GPIO Register Masks
@@ -1250,16 +1716,60 @@ typedef struct {
 #define GPIOA_BASE                               (0x400FF000u)
 /** Peripheral GPIOA base pointer */
 #define GPIOA                                    ((GPIO_Type *)GPIOA_BASE)
+#define GPIOA_BASE_PTR                           (GPIOA)
 /** Peripheral GPIOB base address */
 #define GPIOB_BASE                               (0x400FF040u)
 /** Peripheral GPIOB base pointer */
 #define GPIOB                                    ((GPIO_Type *)GPIOB_BASE)
+#define GPIOB_BASE_PTR                           (GPIOB)
 /** Peripheral GPIOC base address */
 #define GPIOC_BASE                               (0x400FF080u)
 /** Peripheral GPIOC base pointer */
 #define GPIOC                                    ((GPIO_Type *)GPIOC_BASE)
+#define GPIOC_BASE_PTR                           (GPIOC)
 /** Array initializer of GPIO peripheral base pointers */
 #define GPIO_BASES                               { GPIOA, GPIOB, GPIOC }
+
+/* ----------------------------------------------------------------------------
+   -- GPIO - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup GPIO_Register_Accessor_Macros GPIO - Register accessor macros
+ * @{
+ */
+
+
+/* GPIO - Register instance definitions */
+/* GPIOA */
+#define GPIOA_PDOR                               GPIO_PDOR_REG(GPIOA)
+#define GPIOA_PSOR                               GPIO_PSOR_REG(GPIOA)
+#define GPIOA_PCOR                               GPIO_PCOR_REG(GPIOA)
+#define GPIOA_PTOR                               GPIO_PTOR_REG(GPIOA)
+#define GPIOA_PDIR                               GPIO_PDIR_REG(GPIOA)
+#define GPIOA_PDDR                               GPIO_PDDR_REG(GPIOA)
+#define GPIOA_PIDR                               GPIO_PIDR_REG(GPIOA)
+/* GPIOB */
+#define GPIOB_PDOR                               GPIO_PDOR_REG(GPIOB)
+#define GPIOB_PSOR                               GPIO_PSOR_REG(GPIOB)
+#define GPIOB_PCOR                               GPIO_PCOR_REG(GPIOB)
+#define GPIOB_PTOR                               GPIO_PTOR_REG(GPIOB)
+#define GPIOB_PDIR                               GPIO_PDIR_REG(GPIOB)
+#define GPIOB_PDDR                               GPIO_PDDR_REG(GPIOB)
+#define GPIOB_PIDR                               GPIO_PIDR_REG(GPIOB)
+/* GPIOC */
+#define GPIOC_PDOR                               GPIO_PDOR_REG(GPIOC)
+#define GPIOC_PSOR                               GPIO_PSOR_REG(GPIOC)
+#define GPIOC_PCOR                               GPIO_PCOR_REG(GPIOC)
+#define GPIOC_PTOR                               GPIO_PTOR_REG(GPIOC)
+#define GPIOC_PDIR                               GPIO_PDIR_REG(GPIOC)
+#define GPIOC_PDDR                               GPIO_PDDR_REG(GPIOC)
+#define GPIOC_PIDR                               GPIO_PIDR_REG(GPIOC)
+
+/*!
+ * @}
+ */ /* end of group GPIO_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1280,7 +1790,7 @@ typedef struct {
   __IO uint8_t A1;                                 /**< I2C Address Register 1, offset: 0x0 */
   __IO uint8_t F;                                  /**< I2C Frequency Divider register, offset: 0x1 */
   __IO uint8_t C1;                                 /**< I2C Control Register 1, offset: 0x2 */
-  __IO uint8_t S;                                  /**< I2C Status register, offset: 0x3 */
+  __IO uint8_t S;                                  /**< I2C Status register 1, offset: 0x3 */
   __IO uint8_t D;                                  /**< I2C Data I/O register, offset: 0x4 */
   __IO uint8_t C2;                                 /**< I2C Control Register 2, offset: 0x5 */
   __IO uint8_t FLT;                                /**< I2C Programmable Input Glitch Filter register, offset: 0x6 */
@@ -1289,7 +1799,36 @@ typedef struct {
   __IO uint8_t A2;                                 /**< I2C Address Register 2, offset: 0x9 */
   __IO uint8_t SLTH;                               /**< I2C SCL Low Timeout Register High, offset: 0xA */
   __IO uint8_t SLTL;                               /**< I2C SCL Low Timeout Register Low, offset: 0xB */
-} I2C_Type;
+} I2C_Type, *I2C_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- I2C - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup I2C_Register_Accessor_Macros I2C - Register accessor macros
+ * @{
+ */
+
+
+/* I2C - Register accessors */
+#define I2C_A1_REG(base)                         ((base)->A1)
+#define I2C_F_REG(base)                          ((base)->F)
+#define I2C_C1_REG(base)                         ((base)->C1)
+#define I2C_S_REG(base)                          ((base)->S)
+#define I2C_D_REG(base)                          ((base)->D)
+#define I2C_C2_REG(base)                         ((base)->C2)
+#define I2C_FLT_REG(base)                        ((base)->FLT)
+#define I2C_RA_REG(base)                         ((base)->RA)
+#define I2C_SMB_REG(base)                        ((base)->SMB)
+#define I2C_A2_REG(base)                         ((base)->A2)
+#define I2C_SLTH_REG(base)                       ((base)->SLTH)
+#define I2C_SLTL_REG(base)                       ((base)->SLTL)
+
+/*!
+ * @}
+ */ /* end of group I2C_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- I2C Register Masks
@@ -1415,12 +1954,57 @@ typedef struct {
 #define I2C0_BASE                                (0x40066000u)
 /** Peripheral I2C0 base pointer */
 #define I2C0                                     ((I2C_Type *)I2C0_BASE)
+#define I2C0_BASE_PTR                            (I2C0)
 /** Peripheral I2C1 base address */
 #define I2C1_BASE                                (0x40067000u)
 /** Peripheral I2C1 base pointer */
 #define I2C1                                     ((I2C_Type *)I2C1_BASE)
+#define I2C1_BASE_PTR                            (I2C1)
 /** Array initializer of I2C peripheral base pointers */
 #define I2C_BASES                                { I2C0, I2C1 }
+
+/* ----------------------------------------------------------------------------
+   -- I2C - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup I2C_Register_Accessor_Macros I2C - Register accessor macros
+ * @{
+ */
+
+
+/* I2C - Register instance definitions */
+/* I2C0 */
+#define I2C0_A1                                  I2C_A1_REG(I2C0)
+#define I2C0_F                                   I2C_F_REG(I2C0)
+#define I2C0_C1                                  I2C_C1_REG(I2C0)
+#define I2C0_S1                                  I2C_S_REG(I2C0)
+#define I2C0_D                                   I2C_D_REG(I2C0)
+#define I2C0_C2                                  I2C_C2_REG(I2C0)
+#define I2C0_FLT                                 I2C_FLT_REG(I2C0)
+#define I2C0_RA                                  I2C_RA_REG(I2C0)
+#define I2C0_SMB                                 I2C_SMB_REG(I2C0)
+#define I2C0_A2                                  I2C_A2_REG(I2C0)
+#define I2C0_SLTH                                I2C_SLTH_REG(I2C0)
+#define I2C0_SLTL                                I2C_SLTL_REG(I2C0)
+/* I2C1 */
+#define I2C1_A1                                  I2C_A1_REG(I2C1)
+#define I2C1_F                                   I2C_F_REG(I2C1)
+#define I2C1_C1                                  I2C_C1_REG(I2C1)
+#define I2C1_S1                                  I2C_S_REG(I2C1)
+#define I2C1_D                                   I2C_D_REG(I2C1)
+#define I2C1_C2                                  I2C_C2_REG(I2C1)
+#define I2C1_FLT                                 I2C_FLT_REG(I2C1)
+#define I2C1_RA                                  I2C_RA_REG(I2C1)
+#define I2C1_SMB                                 I2C_SMB_REG(I2C1)
+#define I2C1_A2                                  I2C_A2_REG(I2C1)
+#define I2C1_SLTH                                I2C_SLTH_REG(I2C1)
+#define I2C1_SLTL                                I2C_SLTL_REG(I2C1)
+
+/*!
+ * @}
+ */ /* end of group I2C_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1442,8 +2026,30 @@ typedef struct {
   __IO uint8_t C2;                                 /**< ICS Control Register 2, offset: 0x1 */
   __IO uint8_t C3;                                 /**< ICS Control Register 3, offset: 0x2 */
   __IO uint8_t C4;                                 /**< ICS Control Register 4, offset: 0x3 */
-  __IO  uint8_t S;                                  /**< ICS Status Register, offset: 0x4 */
-} ICS_Type;
+  __IO uint8_t S;                                  /**< ICS Status Register, offset: 0x4 */
+} ICS_Type, *ICS_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- ICS - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ICS_Register_Accessor_Macros ICS - Register accessor macros
+ * @{
+ */
+
+
+/* ICS - Register accessors */
+#define ICS_C1_REG(base)                         ((base)->C1)
+#define ICS_C2_REG(base)                         ((base)->C2)
+#define ICS_C3_REG(base)                         ((base)->C3)
+#define ICS_C4_REG(base)                         ((base)->C4)
+#define ICS_S_REG(base)                          ((base)->S)
+
+/*!
+ * @}
+ */ /* end of group ICS_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- ICS Register Masks
@@ -1505,8 +2111,32 @@ typedef struct {
 #define ICS_BASE                                 (0x40064000u)
 /** Peripheral ICS base pointer */
 #define ICS                                      ((ICS_Type *)ICS_BASE)
+#define ICS_BASE_PTR                             (ICS)
 /** Array initializer of ICS peripheral base pointers */
 #define ICS_BASES                                { ICS }
+
+/* ----------------------------------------------------------------------------
+   -- ICS - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ICS_Register_Accessor_Macros ICS - Register accessor macros
+ * @{
+ */
+
+
+/* ICS - Register instance definitions */
+/* ICS */
+#define ICS_C1                                   ICS_C1_REG(ICS)
+#define ICS_C2                                   ICS_C2_REG(ICS)
+#define ICS_C3                                   ICS_C3_REG(ICS)
+#define ICS_C4                                   ICS_C4_REG(ICS)
+#define ICS_S                                    ICS_S_REG(ICS)
+
+/*!
+ * @}
+ */ /* end of group ICS_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1525,7 +2155,25 @@ typedef struct {
 /** IRQ - Register Layout Typedef */
 typedef struct {
   __IO uint8_t SC;                                 /**< Interrupt Pin Request Status and Control Register, offset: 0x0 */
-} IRQ_Type;
+} IRQ_Type, *IRQ_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- IRQ - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup IRQ_Register_Accessor_Macros IRQ - Register accessor macros
+ * @{
+ */
+
+
+/* IRQ - Register accessors */
+#define IRQ_SC_REG(base)                         ((base)->SC)
+
+/*!
+ * @}
+ */ /* end of group IRQ_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- IRQ Register Masks
@@ -1562,8 +2210,28 @@ typedef struct {
 #define IRQ_BASE                                 (0x40031000u)
 /** Peripheral IRQ base pointer */
 #define IRQ                                      ((IRQ_Type *)IRQ_BASE)
+#define IRQ_BASE_PTR                             (IRQ)
 /** Array initializer of IRQ peripheral base pointers */
 #define IRQ_BASES                                { IRQ }
+
+/* ----------------------------------------------------------------------------
+   -- IRQ - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup IRQ_Register_Accessor_Macros IRQ - Register accessor macros
+ * @{
+ */
+
+
+/* IRQ - Register instance definitions */
+/* IRQ */
+#define IRQ_SC                                   IRQ_SC_REG(IRQ)
+
+/*!
+ * @}
+ */ /* end of group IRQ_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1585,7 +2253,28 @@ typedef struct {
   __IO uint32_t ES;                                /**< KBI Edge Select Register, offset: 0x4 */
   __IO uint32_t SC;                                /**< KBI Status and Control Register, offset: 0x8 */
   __I  uint32_t SP;                                /**< KBI Source Pin Register, offset: 0xC */
-} KBI_Type;
+} KBI_Type, *KBI_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- KBI - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup KBI_Register_Accessor_Macros KBI - Register accessor macros
+ * @{
+ */
+
+
+/* KBI - Register accessors */
+#define KBI_PE_REG(base)                         ((base)->PE)
+#define KBI_ES_REG(base)                         ((base)->ES)
+#define KBI_SC_REG(base)                         ((base)->SC)
+#define KBI_SP_REG(base)                         ((base)->SP)
+
+/*!
+ * @}
+ */ /* end of group KBI_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- KBI Register Masks
@@ -1632,12 +2321,41 @@ typedef struct {
 #define KBI0_BASE                                (0x40079000u)
 /** Peripheral KBI0 base pointer */
 #define KBI0                                     ((KBI_Type *)KBI0_BASE)
+#define KBI0_BASE_PTR                            (KBI0)
 /** Peripheral KBI1 base address */
 #define KBI1_BASE                                (0x4007A000u)
 /** Peripheral KBI1 base pointer */
 #define KBI1                                     ((KBI_Type *)KBI1_BASE)
+#define KBI1_BASE_PTR                            (KBI1)
 /** Array initializer of KBI peripheral base pointers */
 #define KBI_BASES                                { KBI0, KBI1 }
+
+/* ----------------------------------------------------------------------------
+   -- KBI - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup KBI_Register_Accessor_Macros KBI - Register accessor macros
+ * @{
+ */
+
+
+/* KBI - Register instance definitions */
+/* KBI0 */
+#define KBI0_PE                                  KBI_PE_REG(KBI0)
+#define KBI0_ES                                  KBI_ES_REG(KBI0)
+#define KBI0_SC                                  KBI_SC_REG(KBI0)
+#define KBI0_SP                                  KBI_SP_REG(KBI0)
+/* KBI1 */
+#define KBI1_PE                                  KBI_PE_REG(KBI1)
+#define KBI1_ES                                  KBI_ES_REG(KBI1)
+#define KBI1_SC                                  KBI_SC_REG(KBI1)
+#define KBI1_SP                                  KBI_SP_REG(KBI1)
+
+/*!
+ * @}
+ */ /* end of group KBI_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1659,7 +2377,27 @@ typedef struct {
   __I  uint16_t PLASC;                             /**< Crossbar Switch (AXBS) Slave Configuration, offset: 0x8 */
   __I  uint16_t PLAMC;                             /**< Crossbar Switch (AXBS) Master Configuration, offset: 0xA */
   __IO uint32_t PLACR;                             /**< Platform Control Register, offset: 0xC */
-} MCM_Type;
+} MCM_Type, *MCM_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- MCM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup MCM_Register_Accessor_Macros MCM - Register accessor macros
+ * @{
+ */
+
+
+/* MCM - Register accessors */
+#define MCM_PLASC_REG(base)                      ((base)->PLASC)
+#define MCM_PLAMC_REG(base)                      ((base)->PLAMC)
+#define MCM_PLACR_REG(base)                      ((base)->PLACR)
+
+/*!
+ * @}
+ */ /* end of group MCM_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- MCM Register Masks
@@ -1704,8 +2442,30 @@ typedef struct {
 #define MCM_BASE                                 (0xF0003000u)
 /** Peripheral MCM base pointer */
 #define MCM                                      ((MCM_Type *)MCM_BASE)
+#define MCM_BASE_PTR                             (MCM)
 /** Array initializer of MCM peripheral base pointers */
 #define MCM_BASES                                { MCM }
+
+/* ----------------------------------------------------------------------------
+   -- MCM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup MCM_Register_Accessor_Macros MCM - Register accessor macros
+ * @{
+ */
+
+
+/* MCM - Register instance definitions */
+/* MCM */
+#define MCM_PLASC                                MCM_PLASC_REG(MCM)
+#define MCM_PLAMC                                MCM_PLAMC_REG(MCM)
+#define MCM_PLACR                                MCM_PLACR_REG(MCM)
+
+/*!
+ * @}
+ */ /* end of group MCM_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -1750,12 +2510,11 @@ typedef struct {
   union {                                          /* offset: 0x21 */
     __IO uint8_t REIDR1;                             /**< Receive Extended Identifier Register 1, offset: 0x21 */
     __IO uint8_t RSIDR1;                             /**< Standard Identifier Register 1, offset: 0x21 */
-    __IO uint8_t TSIDR1;                             /**< Transmit Standard Identifier Register 1, offset: 0x21 */
   };
   __IO uint8_t REIDR2;                             /**< Receive Extended Identifier Register 2, offset: 0x22 */
   __IO uint8_t REIDR3;                             /**< Receive Extended Identifier Register 3, offset: 0x23 */
   __IO uint8_t REDSR[8];                           /**< Receive Extended Data Segment Register N, array offset: 0x24, array step: 0x1 */
-  __IO uint8_t RDLR;                               /**< This register keeps the data length field of the CAN frame., offset: 0x2C */
+  __IO uint8_t RDLR;                               /**< Receive Data Length Register, offset: 0x2C */
        uint8_t RESERVED_1[1];
   __IO uint8_t RTSRH;                              /**< Receive Time Stamp Register High, offset: 0x2E */
   __IO uint8_t RTSRL;                              /**< Receive Time Stamp Register Low, offset: 0x2F */
@@ -1763,7 +2522,10 @@ typedef struct {
     __IO uint8_t TEIDR0;                             /**< Transmit Extended Identifier Register 0, offset: 0x30 */
     __IO uint8_t TSIDR0;                             /**< Transmit Standard Identifier Register 0, offset: 0x30 */
   };
-  __IO uint8_t TEIDR1;                             /**< Transmit Extended Identifier Register 1, offset: 0x31 */
+  union {                                          /* offset: 0x31 */
+    __IO uint8_t TEIDR1;                             /**< Transmit Extended Identifier Register 1, offset: 0x31 */
+    __IO uint8_t TSIDR1;                             /**< Transmit Standard Identifier Register 1, offset: 0x31 */
+  };
   __IO uint8_t TEIDR2;                             /**< Transmit Extended Identifier Register 2, offset: 0x32 */
   __IO uint8_t TEIDR3;                             /**< Transmit Extended Identifier Register 3, offset: 0x33 */
   __IO uint8_t TEDSR[8];                           /**< Transmit Extended Data Segment Register N, array offset: 0x34, array step: 0x1 */
@@ -1771,7 +2533,64 @@ typedef struct {
   __IO uint8_t TBPR;                               /**< Transmit Buffer Priority Register, offset: 0x3D */
   __IO uint8_t TTSRH;                              /**< Transmit Time Stamp Register High, offset: 0x3E */
   __IO uint8_t TTSRL;                              /**< Transmit Time Stamp Register Low, offset: 0x3F */
-} MSCAN_Type;
+} MSCAN_Type, *MSCAN_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- MSCAN - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup MSCAN_Register_Accessor_Macros MSCAN - Register accessor macros
+ * @{
+ */
+
+
+/* MSCAN - Register accessors */
+#define MSCAN_CANCTL0_REG(base)                  ((base)->CANCTL0)
+#define MSCAN_CANCTL1_REG(base)                  ((base)->CANCTL1)
+#define MSCAN_CANBTR0_REG(base)                  ((base)->CANBTR0)
+#define MSCAN_CANBTR1_REG(base)                  ((base)->CANBTR1)
+#define MSCAN_CANRFLG_REG(base)                  ((base)->CANRFLG)
+#define MSCAN_CANRIER_REG(base)                  ((base)->CANRIER)
+#define MSCAN_CANTFLG_REG(base)                  ((base)->CANTFLG)
+#define MSCAN_CANTIER_REG(base)                  ((base)->CANTIER)
+#define MSCAN_CANTARQ_REG(base)                  ((base)->CANTARQ)
+#define MSCAN_CANTAAK_REG(base)                  ((base)->CANTAAK)
+#define MSCAN_CANTBSEL_REG(base)                 ((base)->CANTBSEL)
+#define MSCAN_CANIDAC_REG(base)                  ((base)->CANIDAC)
+#define MSCAN_CANMISC_REG(base)                  ((base)->CANMISC)
+#define MSCAN_CANRXERR_REG(base)                 ((base)->CANRXERR)
+#define MSCAN_CANTXERR_REG(base)                 ((base)->CANTXERR)
+#define MSCAN_CANIDAR_BANK_1_REG(base,index)     ((base)->CANIDAR_BANK_1[index])
+#define MSCAN_CANIDMR_BANK_1_REG(base,index)     ((base)->CANIDMR_BANK_1[index])
+#define MSCAN_CANIDAR_BANK_2_REG(base,index)     ((base)->CANIDAR_BANK_2[index])
+#define MSCAN_CANIDMR_BANK_2_REG(base,index)     ((base)->CANIDMR_BANK_2[index])
+#define MSCAN_REIDR0_REG(base)                   ((base)->REIDR0)
+#define MSCAN_RSIDR0_REG(base)                   ((base)->RSIDR0)
+#define MSCAN_REIDR1_REG(base)                   ((base)->REIDR1)
+#define MSCAN_RSIDR1_REG(base)                   ((base)->RSIDR1)
+#define MSCAN_REIDR2_REG(base)                   ((base)->REIDR2)
+#define MSCAN_REIDR3_REG(base)                   ((base)->REIDR3)
+#define MSCAN_REDSR_REG(base,index)              ((base)->REDSR[index])
+#define MSCAN_RDLR_REG(base)                     ((base)->RDLR)
+#define MSCAN_RTSRH_REG(base)                    ((base)->RTSRH)
+#define MSCAN_RTSRL_REG(base)                    ((base)->RTSRL)
+#define MSCAN_TEIDR0_REG(base)                   ((base)->TEIDR0)
+#define MSCAN_TSIDR0_REG(base)                   ((base)->TSIDR0)
+#define MSCAN_TEIDR1_REG(base)                   ((base)->TEIDR1)
+#define MSCAN_TSIDR1_REG(base)                   ((base)->TSIDR1)
+#define MSCAN_TEIDR2_REG(base)                   ((base)->TEIDR2)
+#define MSCAN_TEIDR3_REG(base)                   ((base)->TEIDR3)
+#define MSCAN_TEDSR_REG(base,index)              ((base)->TEDSR[index])
+#define MSCAN_TDLR_REG(base)                     ((base)->TDLR)
+#define MSCAN_TBPR_REG(base)                     ((base)->TBPR)
+#define MSCAN_TTSRH_REG(base)                    ((base)->TTSRH)
+#define MSCAN_TTSRL_REG(base)                    ((base)->TTSRL)
+
+/*!
+ * @}
+ */ /* end of group MSCAN_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- MSCAN Register Masks
@@ -1943,14 +2762,6 @@ typedef struct {
 #define MSCAN_RSIDR1_RSID2_RSID0_MASK            0xE0u
 #define MSCAN_RSIDR1_RSID2_RSID0_SHIFT           5
 #define MSCAN_RSIDR1_RSID2_RSID0(x)              (((uint8_t)(((uint8_t)(x))<<MSCAN_RSIDR1_RSID2_RSID0_SHIFT))&MSCAN_RSIDR1_RSID2_RSID0_MASK)
-/* TSIDR1 Bit Fields */
-#define MSCAN_TSIDR1_TSIDE_MASK                  0x8u
-#define MSCAN_TSIDR1_TSIDE_SHIFT                 3
-#define MSCAN_TSIDR1_TSRTR_MASK                  0x10u
-#define MSCAN_TSIDR1_TSRTR_SHIFT                 4
-#define MSCAN_TSIDR1_TSID2_TSID0_MASK            0xE0u
-#define MSCAN_TSIDR1_TSID2_TSID0_SHIFT           5
-#define MSCAN_TSIDR1_TSID2_TSID0(x)              (((uint8_t)(((uint8_t)(x))<<MSCAN_TSIDR1_TSID2_TSID0_SHIFT))&MSCAN_TSIDR1_TSID2_TSID0_MASK)
 /* REIDR2 Bit Fields */
 #define MSCAN_REIDR2_REID14_REID7_MASK           0xFFu
 #define MSCAN_REIDR2_REID14_REID7_SHIFT          0
@@ -1996,6 +2807,14 @@ typedef struct {
 #define MSCAN_TEIDR1_TEID20_TEID18_MASK          0xE0u
 #define MSCAN_TEIDR1_TEID20_TEID18_SHIFT         5
 #define MSCAN_TEIDR1_TEID20_TEID18(x)            (((uint8_t)(((uint8_t)(x))<<MSCAN_TEIDR1_TEID20_TEID18_SHIFT))&MSCAN_TEIDR1_TEID20_TEID18_MASK)
+/* TSIDR1 Bit Fields */
+#define MSCAN_TSIDR1_TSIDE_MASK                  0x8u
+#define MSCAN_TSIDR1_TSIDE_SHIFT                 3
+#define MSCAN_TSIDR1_TSRTR_MASK                  0x10u
+#define MSCAN_TSIDR1_TSRTR_SHIFT                 4
+#define MSCAN_TSIDR1_TSID2_TSID0_MASK            0xE0u
+#define MSCAN_TSIDR1_TSID2_TSID0_SHIFT           5
+#define MSCAN_TSIDR1_TSID2_TSID0(x)              (((uint8_t)(((uint8_t)(x))<<MSCAN_TSIDR1_TSID2_TSID0_SHIFT))&MSCAN_TSIDR1_TSID2_TSID0_MASK)
 /* TEIDR2 Bit Fields */
 #define MSCAN_TEIDR2_TEID14_TEID7_MASK           0xFFu
 #define MSCAN_TEIDR2_TEID14_TEID7_SHIFT          0
@@ -2011,9 +2830,9 @@ typedef struct {
 #define MSCAN_TEDSR_TDB_SHIFT                    0
 #define MSCAN_TEDSR_TDB(x)                       (((uint8_t)(((uint8_t)(x))<<MSCAN_TEDSR_TDB_SHIFT))&MSCAN_TEDSR_TDB_MASK)
 /* TDLR Bit Fields */
-#define MSCAN_TDLR_DLC_MASK                      0xFu
-#define MSCAN_TDLR_DLC_SHIFT                     0
-#define MSCAN_TDLR_DLC(x)                        (((uint8_t)(((uint8_t)(x))<<MSCAN_TDLR_DLC_SHIFT))&MSCAN_TDLR_DLC_MASK)
+#define MSCAN_TDLR_TDLC_MASK                     0xFu
+#define MSCAN_TDLR_TDLC_SHIFT                    0
+#define MSCAN_TDLR_TDLC(x)                       (((uint8_t)(((uint8_t)(x))<<MSCAN_TDLR_TDLC_SHIFT))&MSCAN_TDLR_TDLC_MASK)
 /* TBPR Bit Fields */
 #define MSCAN_TBPR_PRIO_MASK                     0xFFu
 #define MSCAN_TBPR_PRIO_SHIFT                    0
@@ -2037,8 +2856,101 @@ typedef struct {
 #define MSCAN_BASE                               (0x40024000u)
 /** Peripheral MSCAN base pointer */
 #define MSCAN                                    ((MSCAN_Type *)MSCAN_BASE)
+#define MSCAN_BASE_PTR                           (MSCAN)
 /** Array initializer of MSCAN peripheral base pointers */
 #define MSCAN_BASES                              { MSCAN }
+
+/* ----------------------------------------------------------------------------
+   -- MSCAN - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup MSCAN_Register_Accessor_Macros MSCAN - Register accessor macros
+ * @{
+ */
+
+
+/* MSCAN - Register instance definitions */
+/* MSCAN */
+#define MSCAN_CANCTL0                            MSCAN_CANCTL0_REG(MSCAN)
+#define MSCAN_CANCTL1                            MSCAN_CANCTL1_REG(MSCAN)
+#define MSCAN_CANBTR0                            MSCAN_CANBTR0_REG(MSCAN)
+#define MSCAN_CANBTR1                            MSCAN_CANBTR1_REG(MSCAN)
+#define MSCAN_CANRFLG                            MSCAN_CANRFLG_REG(MSCAN)
+#define MSCAN_CANRIER                            MSCAN_CANRIER_REG(MSCAN)
+#define MSCAN_CANTFLG                            MSCAN_CANTFLG_REG(MSCAN)
+#define MSCAN_CANTIER                            MSCAN_CANTIER_REG(MSCAN)
+#define MSCAN_CANTARQ                            MSCAN_CANTARQ_REG(MSCAN)
+#define MSCAN_CANTAAK                            MSCAN_CANTAAK_REG(MSCAN)
+#define MSCAN_CANTBSEL                           MSCAN_CANTBSEL_REG(MSCAN)
+#define MSCAN_CANIDAC                            MSCAN_CANIDAC_REG(MSCAN)
+#define MSCAN_CANMISC                            MSCAN_CANMISC_REG(MSCAN)
+#define MSCAN_CANRXERR                           MSCAN_CANRXERR_REG(MSCAN)
+#define MSCAN_CANTXERR                           MSCAN_CANTXERR_REG(MSCAN)
+#define MSCAN_CANIDAR0                           MSCAN_CANIDAR_BANK_1_REG(MSCAN,0)
+#define MSCAN_CANIDAR1                           MSCAN_CANIDAR_BANK_1_REG(MSCAN,1)
+#define MSCAN_CANIDAR2                           MSCAN_CANIDAR_BANK_1_REG(MSCAN,2)
+#define MSCAN_CANIDAR3                           MSCAN_CANIDAR_BANK_1_REG(MSCAN,3)
+#define MSCAN_CANIDMR0                           MSCAN_CANIDMR_BANK_1_REG(MSCAN,0)
+#define MSCAN_CANIDMR1                           MSCAN_CANIDMR_BANK_1_REG(MSCAN,1)
+#define MSCAN_CANIDMR2                           MSCAN_CANIDMR_BANK_1_REG(MSCAN,2)
+#define MSCAN_CANIDMR3                           MSCAN_CANIDMR_BANK_1_REG(MSCAN,3)
+#define MSCAN_CANIDAR4                           MSCAN_CANIDAR_BANK_2_REG(MSCAN,0)
+#define MSCAN_CANIDAR5                           MSCAN_CANIDAR_BANK_2_REG(MSCAN,1)
+#define MSCAN_CANIDAR6                           MSCAN_CANIDAR_BANK_2_REG(MSCAN,2)
+#define MSCAN_CANIDAR7                           MSCAN_CANIDAR_BANK_2_REG(MSCAN,3)
+#define MSCAN_CANIDMR4                           MSCAN_CANIDMR_BANK_2_REG(MSCAN,0)
+#define MSCAN_CANIDMR5                           MSCAN_CANIDMR_BANK_2_REG(MSCAN,1)
+#define MSCAN_CANIDMR6                           MSCAN_CANIDMR_BANK_2_REG(MSCAN,2)
+#define MSCAN_CANIDMR7                           MSCAN_CANIDMR_BANK_2_REG(MSCAN,3)
+#define MSCAN_REIDR0                             MSCAN_REIDR0_REG(MSCAN)
+#define MSCAN_RSIDR0                             MSCAN_RSIDR0_REG(MSCAN)
+#define MSCAN_REIDR1                             MSCAN_REIDR1_REG(MSCAN)
+#define MSCAN_RSIDR1                             MSCAN_RSIDR1_REG(MSCAN)
+#define MSCAN_REIDR2                             MSCAN_REIDR2_REG(MSCAN)
+#define MSCAN_REIDR3                             MSCAN_REIDR3_REG(MSCAN)
+#define MSCAN_REDSR0                             MSCAN_REDSR_REG(MSCAN,0)
+#define MSCAN_REDSR1                             MSCAN_REDSR_REG(MSCAN,1)
+#define MSCAN_REDSR2                             MSCAN_REDSR_REG(MSCAN,2)
+#define MSCAN_REDSR3                             MSCAN_REDSR_REG(MSCAN,3)
+#define MSCAN_REDSR4                             MSCAN_REDSR_REG(MSCAN,4)
+#define MSCAN_REDSR5                             MSCAN_REDSR_REG(MSCAN,5)
+#define MSCAN_REDSR6                             MSCAN_REDSR_REG(MSCAN,6)
+#define MSCAN_REDSR7                             MSCAN_REDSR_REG(MSCAN,7)
+#define MSCAN_RDLR                               MSCAN_RDLR_REG(MSCAN)
+#define MSCAN_RTSRH                              MSCAN_RTSRH_REG(MSCAN)
+#define MSCAN_RTSRL                              MSCAN_RTSRL_REG(MSCAN)
+#define MSCAN_TEIDR0                             MSCAN_TEIDR0_REG(MSCAN)
+#define MSCAN_TSIDR0                             MSCAN_TSIDR0_REG(MSCAN)
+#define MSCAN_TEIDR1                             MSCAN_TEIDR1_REG(MSCAN)
+#define MSCAN_TSIDR1                             MSCAN_TSIDR1_REG(MSCAN)
+#define MSCAN_TEIDR2                             MSCAN_TEIDR2_REG(MSCAN)
+#define MSCAN_TEIDR3                             MSCAN_TEIDR3_REG(MSCAN)
+#define MSCAN_TEDSR0                             MSCAN_TEDSR_REG(MSCAN,0)
+#define MSCAN_TEDSR1                             MSCAN_TEDSR_REG(MSCAN,1)
+#define MSCAN_TEDSR2                             MSCAN_TEDSR_REG(MSCAN,2)
+#define MSCAN_TEDSR3                             MSCAN_TEDSR_REG(MSCAN,3)
+#define MSCAN_TEDSR4                             MSCAN_TEDSR_REG(MSCAN,4)
+#define MSCAN_TEDSR5                             MSCAN_TEDSR_REG(MSCAN,5)
+#define MSCAN_TEDSR6                             MSCAN_TEDSR_REG(MSCAN,6)
+#define MSCAN_TEDSR7                             MSCAN_TEDSR_REG(MSCAN,7)
+#define MSCAN_TDLR                               MSCAN_TDLR_REG(MSCAN)
+#define MSCAN_TBPR                               MSCAN_TBPR_REG(MSCAN)
+#define MSCAN_TTSRH                              MSCAN_TTSRH_REG(MSCAN)
+#define MSCAN_TTSRL                              MSCAN_TTSRL_REG(MSCAN)
+
+/* MSCAN - Register array accessors */
+#define MSCAN_CANIDAR_BANK_1(index)              MSCAN_CANIDAR_BANK_1_REG(MSCAN,index)
+#define MSCAN_CANIDMR_BANK_1(index)              MSCAN_CANIDMR_BANK_1_REG(MSCAN,index)
+#define MSCAN_CANIDAR_BANK_2(index)              MSCAN_CANIDAR_BANK_2_REG(MSCAN,index)
+#define MSCAN_CANIDMR_BANK_2(index)              MSCAN_CANIDMR_BANK_2_REG(MSCAN,index)
+#define MSCAN_REDSR(index)                       MSCAN_REDSR_REG(MSCAN,index)
+#define MSCAN_TEDSR(index)                       MSCAN_TEDSR_REG(MSCAN,index)
+
+/*!
+ * @}
+ */ /* end of group MSCAN_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2068,7 +2980,35 @@ typedef struct {
   __I  uint8_t FPROT;                              /**< Non-volatile P-Flash Protection Register, offset: 0xD */
   __I  uint8_t FSEC;                               /**< Non-volatile Flash Security Register, offset: 0xE */
   __I  uint8_t FOPT;                               /**< Non-volatile Flash Option Register, offset: 0xF */
-} NV_Type;
+} NV_Type, *NV_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- NV - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup NV_Register_Accessor_Macros NV - Register accessor macros
+ * @{
+ */
+
+
+/* NV - Register accessors */
+#define NV_BACKKEY0_REG(base)                    ((base)->BACKKEY0)
+#define NV_BACKKEY1_REG(base)                    ((base)->BACKKEY1)
+#define NV_BACKKEY2_REG(base)                    ((base)->BACKKEY2)
+#define NV_BACKKEY3_REG(base)                    ((base)->BACKKEY3)
+#define NV_BACKKEY4_REG(base)                    ((base)->BACKKEY4)
+#define NV_BACKKEY5_REG(base)                    ((base)->BACKKEY5)
+#define NV_BACKKEY6_REG(base)                    ((base)->BACKKEY6)
+#define NV_BACKKEY7_REG(base)                    ((base)->BACKKEY7)
+#define NV_FPROT_REG(base)                       ((base)->FPROT)
+#define NV_FSEC_REG(base)                        ((base)->FSEC)
+#define NV_FOPT_REG(base)                        ((base)->FOPT)
+
+/*!
+ * @}
+ */ /* end of group NV_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- NV Register Masks
@@ -2142,8 +3082,38 @@ typedef struct {
 #define FTMRE_FlashConfig_BASE                   (0x400u)
 /** Peripheral FTMRE_FlashConfig base pointer */
 #define FTMRE_FlashConfig                        ((NV_Type *)FTMRE_FlashConfig_BASE)
+#define FTMRE_FlashConfig_BASE_PTR               (FTMRE_FlashConfig)
 /** Array initializer of NV peripheral base pointers */
 #define NV_BASES                                 { FTMRE_FlashConfig }
+
+/* ----------------------------------------------------------------------------
+   -- NV - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup NV_Register_Accessor_Macros NV - Register accessor macros
+ * @{
+ */
+
+
+/* NV - Register instance definitions */
+/* FTMRE_FlashConfig */
+#define NV_BACKKEY0                              NV_BACKKEY0_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY1                              NV_BACKKEY1_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY2                              NV_BACKKEY2_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY3                              NV_BACKKEY3_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY4                              NV_BACKKEY4_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY5                              NV_BACKKEY5_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY6                              NV_BACKKEY6_REG(FTMRE_FlashConfig)
+#define NV_BACKKEY7                              NV_BACKKEY7_REG(FTMRE_FlashConfig)
+#define NV_FPROT                                 NV_FPROT_REG(FTMRE_FlashConfig)
+#define NV_FSEC                                  NV_FSEC_REG(FTMRE_FlashConfig)
+#define NV_FOPT                                  NV_FOPT_REG(FTMRE_FlashConfig)
+
+/*!
+ * @}
+ */ /* end of group NV_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2162,7 +3132,25 @@ typedef struct {
 /** OSC - Register Layout Typedef */
 typedef struct {
   __IO uint8_t CR;                                 /**< OSC Control Register, offset: 0x0 */
-} OSC_Type;
+} OSC_Type, *OSC_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- OSC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup OSC_Register_Accessor_Macros OSC - Register accessor macros
+ * @{
+ */
+
+
+/* OSC - Register accessors */
+#define OSC_CR_REG(base)                         ((base)->CR)
+
+/*!
+ * @}
+ */ /* end of group OSC_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- OSC Register Masks
@@ -2197,8 +3185,28 @@ typedef struct {
 #define OSC_BASE                                 (0x40065000u)
 /** Peripheral OSC base pointer */
 #define OSC                                      ((OSC_Type *)OSC_BASE)
+#define OSC_BASE_PTR                             (OSC)
 /** Array initializer of OSC peripheral base pointers */
 #define OSC_BASES                                { OSC }
+
+/* ----------------------------------------------------------------------------
+   -- OSC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup OSC_Register_Accessor_Macros OSC - Register accessor macros
+ * @{
+ */
+
+
+/* OSC - Register instance definitions */
+/* OSC */
+#define OSC_CR                                   OSC_CR_REG(OSC)
+
+/*!
+ * @}
+ */ /* end of group OSC_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2224,7 +3232,29 @@ typedef struct {
     __IO uint32_t TCTRL;                             /**< Timer Control Register, array offset: 0x108, array step: 0x10 */
     __IO uint32_t TFLG;                              /**< Timer Flag Register, array offset: 0x10C, array step: 0x10 */
   } CHANNEL[2];
-} PIT_Type;
+} PIT_Type, *PIT_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- PIT - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PIT_Register_Accessor_Macros PIT - Register accessor macros
+ * @{
+ */
+
+
+/* PIT - Register accessors */
+#define PIT_MCR_REG(base)                        ((base)->MCR)
+#define PIT_LDVAL_REG(base,index)                ((base)->CHANNEL[index].LDVAL)
+#define PIT_CVAL_REG(base,index)                 ((base)->CHANNEL[index].CVAL)
+#define PIT_TCTRL_REG(base,index)                ((base)->CHANNEL[index].TCTRL)
+#define PIT_TFLG_REG(base,index)                 ((base)->CHANNEL[index].TFLG)
+
+/*!
+ * @}
+ */ /* end of group PIT_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- PIT Register Masks
@@ -2269,8 +3299,42 @@ typedef struct {
 #define PIT_BASE                                 (0x40037000u)
 /** Peripheral PIT base pointer */
 #define PIT                                      ((PIT_Type *)PIT_BASE)
+#define PIT_BASE_PTR                             (PIT)
 /** Array initializer of PIT peripheral base pointers */
 #define PIT_BASES                                { PIT }
+
+/* ----------------------------------------------------------------------------
+   -- PIT - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PIT_Register_Accessor_Macros PIT - Register accessor macros
+ * @{
+ */
+
+
+/* PIT - Register instance definitions */
+/* PIT */
+#define PIT_MCR                                  PIT_MCR_REG(PIT)
+#define PIT_LDVAL0                               PIT_LDVAL_REG(PIT,0)
+#define PIT_CVAL0                                PIT_CVAL_REG(PIT,0)
+#define PIT_TCTRL0                               PIT_TCTRL_REG(PIT,0)
+#define PIT_TFLG0                                PIT_TFLG_REG(PIT,0)
+#define PIT_LDVAL1                               PIT_LDVAL_REG(PIT,1)
+#define PIT_CVAL1                                PIT_CVAL_REG(PIT,1)
+#define PIT_TCTRL1                               PIT_TCTRL_REG(PIT,1)
+#define PIT_TFLG1                                PIT_TFLG_REG(PIT,1)
+
+/* PIT - Register array accessors */
+#define PIT_LDVAL(index)                         PIT_LDVAL_REG(PIT,index)
+#define PIT_CVAL(index)                          PIT_CVAL_REG(PIT,index)
+#define PIT_TCTRL(index)                         PIT_TCTRL_REG(PIT,index)
+#define PIT_TFLG(index)                          PIT_TFLG_REG(PIT,index)
+
+/*!
+ * @}
+ */ /* end of group PIT_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2290,7 +3354,26 @@ typedef struct {
 typedef struct {
   __IO uint8_t SPMSC1;                             /**< System Power Management Status and Control 1 Register, offset: 0x0 */
   __IO uint8_t SPMSC2;                             /**< System Power Management Status and Control 2 Register, offset: 0x1 */
-} PMC_Type;
+} PMC_Type, *PMC_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- PMC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PMC_Register_Accessor_Macros PMC - Register accessor macros
+ * @{
+ */
+
+
+/* PMC - Register accessors */
+#define PMC_SPMSC1_REG(base)                     ((base)->SPMSC1)
+#define PMC_SPMSC2_REG(base)                     ((base)->SPMSC2)
+
+/*!
+ * @}
+ */ /* end of group PMC_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- PMC Register Masks
@@ -2333,8 +3416,29 @@ typedef struct {
 #define PMC_BASE                                 (0x4007D000u)
 /** Peripheral PMC base pointer */
 #define PMC                                      ((PMC_Type *)PMC_BASE)
+#define PMC_BASE_PTR                             (PMC)
 /** Array initializer of PMC peripheral base pointers */
 #define PMC_BASES                                { PMC }
+
+/* ----------------------------------------------------------------------------
+   -- PMC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PMC_Register_Accessor_Macros PMC - Register accessor macros
+ * @{
+ */
+
+
+/* PMC - Register instance definitions */
+/* PMC */
+#define PMC_SPMSC1                               PMC_SPMSC1_REG(PMC)
+#define PMC_SPMSC2                               PMC_SPMSC2_REG(PMC)
+
+/*!
+ * @}
+ */ /* end of group PMC_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2358,7 +3462,30 @@ typedef struct {
   __IO uint32_t PUE1;                              /**< Port Pullup Enable Register 1, offset: 0xC */
   __IO uint32_t PUE2;                              /**< Port Pullup Enable Register 2, offset: 0x10 */
   __IO uint32_t HDRVE;                             /**< Port High Drive Enable Register, offset: 0x14 */
-} PORT_Type;
+} PORT_Type, *PORT_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- PORT - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PORT_Register_Accessor_Macros PORT - Register accessor macros
+ * @{
+ */
+
+
+/* PORT - Register accessors */
+#define PORT_IOFLT0_REG(base)                    ((base)->IOFLT0)
+#define PORT_IOFLT1_REG(base)                    ((base)->IOFLT1)
+#define PORT_PUE0_REG(base)                      ((base)->PUE0)
+#define PORT_PUE1_REG(base)                      ((base)->PUE1)
+#define PORT_PUE2_REG(base)                      ((base)->PUE2)
+#define PORT_HDRVE_REG(base)                     ((base)->HDRVE)
+
+/*!
+ * @}
+ */ /* end of group PORT_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- PORT Register Masks
@@ -2610,8 +3737,33 @@ typedef struct {
 #define PORT_BASE                                (0x40049000u)
 /** Peripheral PORT base pointer */
 #define PORT                                     ((PORT_Type *)PORT_BASE)
+#define PORT_BASE_PTR                            (PORT)
 /** Array initializer of PORT peripheral base pointers */
 #define PORT_BASES                               { PORT }
+
+/* ----------------------------------------------------------------------------
+   -- PORT - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PORT_Register_Accessor_Macros PORT - Register accessor macros
+ * @{
+ */
+
+
+/* PORT - Register instance definitions */
+/* PORT */
+#define PORT_IOFLT0                              PORT_IOFLT0_REG(PORT)
+#define PORT_IOFLT1                              PORT_IOFLT1_REG(PORT)
+#define PORT_PUE0                                PORT_PUE0_REG(PORT)
+#define PORT_PUE1                                PORT_PUE1_REG(PORT)
+#define PORT_PUE2                                PORT_PUE2_REG(PORT)
+#define PORT_HDRVE                               PORT_HDRVE_REG(PORT)
+
+/*!
+ * @}
+ */ /* end of group PORT_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2631,7 +3783,26 @@ typedef struct {
 typedef struct {
   __IO uint32_t R1;                                /**< Pulse Width Timer Register 1, offset: 0x0 */
   __I  uint32_t R2;                                /**< Pulse Width Timer Register 2, offset: 0x4 */
-} PWT_Type;
+} PWT_Type, *PWT_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- PWT - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PWT_Register_Accessor_Macros PWT - Register accessor macros
+ * @{
+ */
+
+
+/* PWT - Register accessors */
+#define PWT_R1_REG(base)                         ((base)->R1)
+#define PWT_R2_REG(base)                         ((base)->R2)
+
+/*!
+ * @}
+ */ /* end of group PWT_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- PWT Register Masks
@@ -2689,8 +3860,29 @@ typedef struct {
 #define PWT_BASE                                 (0x40033000u)
 /** Peripheral PWT base pointer */
 #define PWT                                      ((PWT_Type *)PWT_BASE)
+#define PWT_BASE_PTR                             (PWT)
 /** Array initializer of PWT peripheral base pointers */
 #define PWT_BASES                                { PWT }
+
+/* ----------------------------------------------------------------------------
+   -- PWT - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup PWT_Register_Accessor_Macros PWT - Register accessor macros
+ * @{
+ */
+
+
+/* PWT - Register instance definitions */
+/* PWT */
+#define PWT_R1                                   PWT_R1_REG(PWT)
+#define PWT_R2                                   PWT_R2_REG(PWT)
+
+/*!
+ * @}
+ */ /* end of group PWT_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2721,7 +3913,36 @@ typedef struct {
   __I  uint32_t PERIPHID2;                         /**< Peripheral ID Register, offset: 0xFE8 */
   __I  uint32_t PERIPHID3;                         /**< Peripheral ID Register, offset: 0xFEC */
   __I  uint32_t COMPID[4];                         /**< Component ID Register, array offset: 0xFF0, array step: 0x4 */
-} ROM_Type;
+} ROM_Type, *ROM_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- ROM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ROM_Register_Accessor_Macros ROM - Register accessor macros
+ * @{
+ */
+
+
+/* ROM - Register accessors */
+#define ROM_ENTRY_REG(base,index)                ((base)->ENTRY[index])
+#define ROM_TABLEMARK_REG(base)                  ((base)->TABLEMARK)
+#define ROM_SYSACCESS_REG(base)                  ((base)->SYSACCESS)
+#define ROM_PERIPHID4_REG(base)                  ((base)->PERIPHID4)
+#define ROM_PERIPHID5_REG(base)                  ((base)->PERIPHID5)
+#define ROM_PERIPHID6_REG(base)                  ((base)->PERIPHID6)
+#define ROM_PERIPHID7_REG(base)                  ((base)->PERIPHID7)
+#define ROM_PERIPHID0_REG(base)                  ((base)->PERIPHID0)
+#define ROM_PERIPHID1_REG(base)                  ((base)->PERIPHID1)
+#define ROM_PERIPHID2_REG(base)                  ((base)->PERIPHID2)
+#define ROM_PERIPHID3_REG(base)                  ((base)->PERIPHID3)
+#define ROM_COMPID_REG(base,index)               ((base)->COMPID[index])
+
+/*!
+ * @}
+ */ /* end of group ROM_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- ROM Register Masks
@@ -2791,8 +4012,46 @@ typedef struct {
 #define ROM_BASE                                 (0xF0002000u)
 /** Peripheral ROM base pointer */
 #define ROM                                      ((ROM_Type *)ROM_BASE)
+#define ROM_BASE_PTR                             (ROM)
 /** Array initializer of ROM peripheral base pointers */
 #define ROM_BASES                                { ROM }
+
+/* ----------------------------------------------------------------------------
+   -- ROM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup ROM_Register_Accessor_Macros ROM - Register accessor macros
+ * @{
+ */
+
+
+/* ROM - Register instance definitions */
+/* ROM */
+#define ROM_ENTRY0                               ROM_ENTRY_REG(ROM,0)
+#define ROM_TABLEMARK                            ROM_TABLEMARK_REG(ROM)
+#define ROM_SYSACCESS                            ROM_SYSACCESS_REG(ROM)
+#define ROM_PERIPHID4                            ROM_PERIPHID4_REG(ROM)
+#define ROM_PERIPHID5                            ROM_PERIPHID5_REG(ROM)
+#define ROM_PERIPHID6                            ROM_PERIPHID6_REG(ROM)
+#define ROM_PERIPHID7                            ROM_PERIPHID7_REG(ROM)
+#define ROM_PERIPHID0                            ROM_PERIPHID0_REG(ROM)
+#define ROM_PERIPHID1                            ROM_PERIPHID1_REG(ROM)
+#define ROM_PERIPHID2                            ROM_PERIPHID2_REG(ROM)
+#define ROM_PERIPHID3                            ROM_PERIPHID3_REG(ROM)
+#define ROM_COMPID0                              ROM_COMPID_REG(ROM,0)
+#define ROM_COMPID1                              ROM_COMPID_REG(ROM,1)
+#define ROM_COMPID2                              ROM_COMPID_REG(ROM,2)
+#define ROM_COMPID3                              ROM_COMPID_REG(ROM,3)
+
+/* ROM - Register array accessors */
+#define ROM_ENTRY(index)                         ROM_ENTRY_REG(ROM,index)
+#define ROM_COMPID(index)                        ROM_COMPID_REG(ROM,index)
+
+/*!
+ * @}
+ */ /* end of group ROM_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2813,7 +4072,27 @@ typedef struct {
   __IO uint32_t SC;                                /**< RTC Status and Control Register, offset: 0x0 */
   __IO uint32_t MOD;                               /**< RTC Modulo Register, offset: 0x4 */
   __I  uint32_t CNT;                               /**< RTC Counter Register, offset: 0x8 */
-} RTC_Type;
+} RTC_Type, *RTC_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- RTC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup RTC_Register_Accessor_Macros RTC - Register accessor macros
+ * @{
+ */
+
+
+/* RTC - Register accessors */
+#define RTC_SC_REG(base)                         ((base)->SC)
+#define RTC_MOD_REG(base)                        ((base)->MOD)
+#define RTC_CNT_REG(base)                        ((base)->CNT)
+
+/*!
+ * @}
+ */ /* end of group RTC_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- RTC Register Masks
@@ -2856,8 +4135,30 @@ typedef struct {
 #define RTC_BASE                                 (0x4003D000u)
 /** Peripheral RTC base pointer */
 #define RTC                                      ((RTC_Type *)RTC_BASE)
+#define RTC_BASE_PTR                             (RTC)
 /** Array initializer of RTC peripheral base pointers */
 #define RTC_BASES                                { RTC }
+
+/* ----------------------------------------------------------------------------
+   -- RTC - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup RTC_Register_Accessor_Macros RTC - Register accessor macros
+ * @{
+ */
+
+
+/* RTC - Register instance definitions */
+/* RTC */
+#define RTC_SC                                   RTC_SC_REG(RTC)
+#define RTC_MOD                                  RTC_MOD_REG(RTC)
+#define RTC_CNT                                  RTC_CNT_REG(RTC)
+
+/*!
+ * @}
+ */ /* end of group RTC_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -2882,10 +4183,37 @@ typedef struct {
   __IO uint32_t PINSEL1;                           /**< Pin Selection Register 1, offset: 0x10 */
   __IO uint32_t SCGC;                              /**< System Clock Gating Control Register, offset: 0x14 */
   __I  uint32_t UUIDL;                             /**< Universally Unique Identifier Low Register, offset: 0x18 */
-  __I  uint32_t UUIDH;                             /**< Universally Unique Identifier Middle Low Register, offset: 0x1C */
+  __I  uint32_t UUIDML;                            /**< Universally Unique Identifier Middle Low Register, offset: 0x1C */
   __I  uint32_t UUIDMH;                            /**< Universally Unique Identifier Middle High Register, offset: 0x20 */
   __IO uint32_t CLKDIV;                            /**< Clock Divider Register, offset: 0x24 */
-} SIM_Type;
+} SIM_Type, *SIM_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- SIM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup SIM_Register_Accessor_Macros SIM - Register accessor macros
+ * @{
+ */
+
+
+/* SIM - Register accessors */
+#define SIM_SRSID_REG(base)                      ((base)->SRSID)
+#define SIM_SOPT0_REG(base)                      ((base)->SOPT0)
+#define SIM_SOPT1_REG(base)                      ((base)->SOPT1)
+#define SIM_PINSEL_REG(base)                     ((base)->PINSEL)
+#define SIM_PINSEL1_REG(base)                    ((base)->PINSEL1)
+#define SIM_SCGC_REG(base)                       ((base)->SCGC)
+#define SIM_UUIDL_REG(base)                      ((base)->UUIDL)
+#define SIM_UUIDML_REG(base)                     ((base)->UUIDML)
+#define SIM_UUIDMH_REG(base)                     ((base)->UUIDMH)
+#define SIM_CLKDIV_REG(base)                     ((base)->CLKDIV)
+
+/*!
+ * @}
+ */ /* end of group SIM_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- SIM Register Masks
@@ -3086,10 +4414,10 @@ typedef struct {
 #define SIM_UUIDL_ID_MASK                        0xFFFFFFFFu
 #define SIM_UUIDL_ID_SHIFT                       0
 #define SIM_UUIDL_ID(x)                          (((uint32_t)(((uint32_t)(x))<<SIM_UUIDL_ID_SHIFT))&SIM_UUIDL_ID_MASK)
-/* UUIDH Bit Fields */
-#define SIM_UUIDH_ID_MASK                        0xFFFFFFFFu
-#define SIM_UUIDH_ID_SHIFT                       0
-#define SIM_UUIDH_ID(x)                          (((uint32_t)(((uint32_t)(x))<<SIM_UUIDH_ID_SHIFT))&SIM_UUIDH_ID_MASK)
+/* UUIDML Bit Fields */
+#define SIM_UUIDML_ID_MASK                       0xFFFFFFFFu
+#define SIM_UUIDML_ID_SHIFT                      0
+#define SIM_UUIDML_ID(x)                         (((uint32_t)(((uint32_t)(x))<<SIM_UUIDML_ID_SHIFT))&SIM_UUIDML_ID_MASK)
 /* UUIDMH Bit Fields */
 #define SIM_UUIDMH_ID_MASK                       0xFFFFu
 #define SIM_UUIDMH_ID_SHIFT                      0
@@ -3113,8 +4441,37 @@ typedef struct {
 #define SIM_BASE                                 (0x40048000u)
 /** Peripheral SIM base pointer */
 #define SIM                                      ((SIM_Type *)SIM_BASE)
+#define SIM_BASE_PTR                             (SIM)
 /** Array initializer of SIM peripheral base pointers */
 #define SIM_BASES                                { SIM }
+
+/* ----------------------------------------------------------------------------
+   -- SIM - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup SIM_Register_Accessor_Macros SIM - Register accessor macros
+ * @{
+ */
+
+
+/* SIM - Register instance definitions */
+/* SIM */
+#define SIM_SRSID                                SIM_SRSID_REG(SIM)
+#define SIM_SOPT0                                SIM_SOPT0_REG(SIM)
+#define SIM_SOPT1                                SIM_SOPT1_REG(SIM)
+#define SIM_PINSEL0                              SIM_PINSEL_REG(SIM)
+#define SIM_PINSEL1                              SIM_PINSEL1_REG(SIM)
+#define SIM_SCGC                                 SIM_SCGC_REG(SIM)
+#define SIM_UUIDL                                SIM_UUIDL_REG(SIM)
+#define SIM_UUIDML                               SIM_UUIDML_REG(SIM)
+#define SIM_UUIDMH                               SIM_UUIDMH_REG(SIM)
+#define SIM_CLKDIV                               SIM_CLKDIV_REG(SIM)
+
+/*!
+ * @}
+ */ /* end of group SIM_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -3140,7 +4497,30 @@ typedef struct {
   __IO uint8_t D;                                  /**< SPI Data Register, offset: 0x5 */
        uint8_t RESERVED_1[1];
   __IO uint8_t M;                                  /**< SPI Match Register, offset: 0x7 */
-} SPI_Type;
+} SPI_Type, *SPI_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- SPI - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup SPI_Register_Accessor_Macros SPI - Register accessor macros
+ * @{
+ */
+
+
+/* SPI - Register accessors */
+#define SPI_C1_REG(base)                         ((base)->C1)
+#define SPI_C2_REG(base)                         ((base)->C2)
+#define SPI_BR_REG(base)                         ((base)->BR)
+#define SPI_S_REG(base)                          ((base)->S)
+#define SPI_D_REG(base)                          ((base)->D)
+#define SPI_M_REG(base)                          ((base)->M)
+
+/*!
+ * @}
+ */ /* end of group SPI_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- SPI Register Masks
@@ -3214,12 +4594,45 @@ typedef struct {
 #define SPI0_BASE                                (0x40076000u)
 /** Peripheral SPI0 base pointer */
 #define SPI0                                     ((SPI_Type *)SPI0_BASE)
+#define SPI0_BASE_PTR                            (SPI0)
 /** Peripheral SPI1 base address */
 #define SPI1_BASE                                (0x40077000u)
 /** Peripheral SPI1 base pointer */
 #define SPI1                                     ((SPI_Type *)SPI1_BASE)
+#define SPI1_BASE_PTR                            (SPI1)
 /** Array initializer of SPI peripheral base pointers */
 #define SPI_BASES                                { SPI0, SPI1 }
+
+/* ----------------------------------------------------------------------------
+   -- SPI - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup SPI_Register_Accessor_Macros SPI - Register accessor macros
+ * @{
+ */
+
+
+/* SPI - Register instance definitions */
+/* SPI0 */
+#define SPI0_C1                                  SPI_C1_REG(SPI0)
+#define SPI0_C2                                  SPI_C2_REG(SPI0)
+#define SPI0_BR                                  SPI_BR_REG(SPI0)
+#define SPI0_S                                   SPI_S_REG(SPI0)
+#define SPI0_D                                   SPI_D_REG(SPI0)
+#define SPI0_M                                   SPI_M_REG(SPI0)
+/* SPI1 */
+#define SPI1_C1                                  SPI_C1_REG(SPI1)
+#define SPI1_C2                                  SPI_C2_REG(SPI1)
+#define SPI1_BR                                  SPI_BR_REG(SPI1)
+#define SPI1_S                                   SPI_S_REG(SPI1)
+#define SPI1_D                                   SPI_D_REG(SPI1)
+#define SPI1_M                                   SPI_M_REG(SPI1)
+
+/*!
+ * @}
+ */ /* end of group SPI_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -3245,7 +4658,32 @@ typedef struct {
   __IO uint8_t S2;                                 /**< UART Status Register 2, offset: 0x5 */
   __IO uint8_t C3;                                 /**< UART Control Register 3, offset: 0x6 */
   __IO uint8_t D;                                  /**< UART Data Register, offset: 0x7 */
-} UART_Type;
+} UART_Type, *UART_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- UART - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup UART_Register_Accessor_Macros UART - Register accessor macros
+ * @{
+ */
+
+
+/* UART - Register accessors */
+#define UART_BDH_REG(base)                       ((base)->BDH)
+#define UART_BDL_REG(base)                       ((base)->BDL)
+#define UART_C1_REG(base)                        ((base)->C1)
+#define UART_C2_REG(base)                        ((base)->C2)
+#define UART_S1_REG(base)                        ((base)->S1)
+#define UART_S2_REG(base)                        ((base)->S2)
+#define UART_C3_REG(base)                        ((base)->C3)
+#define UART_D_REG(base)                         ((base)->D)
+
+/*!
+ * @}
+ */ /* end of group UART_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- UART Register Masks
@@ -3381,16 +4819,63 @@ typedef struct {
 #define UART0_BASE                               (0x4006A000u)
 /** Peripheral UART0 base pointer */
 #define UART0                                    ((UART_Type *)UART0_BASE)
+#define UART0_BASE_PTR                           (UART0)
 /** Peripheral UART1 base address */
 #define UART1_BASE                               (0x4006B000u)
 /** Peripheral UART1 base pointer */
 #define UART1                                    ((UART_Type *)UART1_BASE)
+#define UART1_BASE_PTR                           (UART1)
 /** Peripheral UART2 base address */
 #define UART2_BASE                               (0x4006C000u)
 /** Peripheral UART2 base pointer */
 #define UART2                                    ((UART_Type *)UART2_BASE)
+#define UART2_BASE_PTR                           (UART2)
 /** Array initializer of UART peripheral base pointers */
 #define UART_BASES                               { UART0, UART1, UART2 }
+
+/* ----------------------------------------------------------------------------
+   -- UART - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup UART_Register_Accessor_Macros UART - Register accessor macros
+ * @{
+ */
+
+
+/* UART - Register instance definitions */
+/* UART0 */
+#define UART0_BDH                                UART_BDH_REG(UART0)
+#define UART0_BDL                                UART_BDL_REG(UART0)
+#define UART0_C1                                 UART_C1_REG(UART0)
+#define UART0_C2                                 UART_C2_REG(UART0)
+#define UART0_S1                                 UART_S1_REG(UART0)
+#define UART0_S2                                 UART_S2_REG(UART0)
+#define UART0_C3                                 UART_C3_REG(UART0)
+#define UART0_D                                  UART_D_REG(UART0)
+/* UART1 */
+#define UART1_BDH                                UART_BDH_REG(UART1)
+#define UART1_BDL                                UART_BDL_REG(UART1)
+#define UART1_C1                                 UART_C1_REG(UART1)
+#define UART1_C2                                 UART_C2_REG(UART1)
+#define UART1_S1                                 UART_S1_REG(UART1)
+#define UART1_S2                                 UART_S2_REG(UART1)
+#define UART1_C3                                 UART_C3_REG(UART1)
+#define UART1_D                                  UART_D_REG(UART1)
+/* UART2 */
+#define UART2_BDH                                UART_BDH_REG(UART2)
+#define UART2_BDL                                UART_BDL_REG(UART2)
+#define UART2_C1                                 UART_C1_REG(UART2)
+#define UART2_C2                                 UART_C2_REG(UART2)
+#define UART2_S1                                 UART_S1_REG(UART2)
+#define UART2_S2                                 UART_S2_REG(UART2)
+#define UART2_C3                                 UART_C3_REG(UART2)
+#define UART2_D                                  UART_D_REG(UART2)
+
+/*!
+ * @}
+ */ /* end of group UART_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -3431,7 +4916,35 @@ typedef struct {
       __IO uint8_t WINL;                               /**< Watchdog Window Register: Low, offset: 0x7 */
     } WIN8B;
   };
-} WDOG_Type;
+} WDOG_Type, *WDOG_MemMapPtr;
+
+/* ----------------------------------------------------------------------------
+   -- WDOG - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup WDOG_Register_Accessor_Macros WDOG - Register accessor macros
+ * @{
+ */
+
+
+/* WDOG - Register accessors */
+#define WDOG_CS1_REG(base)                       ((base)->CS1)
+#define WDOG_CS2_REG(base)                       ((base)->CS2)
+#define WDOG_CNT_REG(base)                       ((base)->CNT)
+#define WDOG_CNTH_REG(base)                      ((base)->CNT8B.CNTH)
+#define WDOG_CNTL_REG(base)                      ((base)->CNT8B.CNTL)
+#define WDOG_TOVAL_REG(base)                     ((base)->TOVAL)
+#define WDOG_TOVALH_REG(base)                    ((base)->TOVAL8B.TOVALH)
+#define WDOG_TOVALL_REG(base)                    ((base)->TOVAL8B.TOVALL)
+#define WDOG_WIN_REG(base)                       ((base)->WIN)
+#define WDOG_WINH_REG(base)                      ((base)->WIN8B.WINH)
+#define WDOG_WINL_REG(base)                      ((base)->WIN8B.WINL)
+
+/*!
+ * @}
+ */ /* end of group WDOG_Register_Accessor_Macros */
+
 
 /* ----------------------------------------------------------------------------
    -- WDOG Register Masks
@@ -3515,8 +5028,38 @@ typedef struct {
 #define WDOG_BASE                                (0x40052000u)
 /** Peripheral WDOG base pointer */
 #define WDOG                                     ((WDOG_Type *)WDOG_BASE)
+#define WDOG_BASE_PTR                            (WDOG)
 /** Array initializer of WDOG peripheral base pointers */
 #define WDOG_BASES                               { WDOG }
+
+/* ----------------------------------------------------------------------------
+   -- WDOG - Register accessor macros
+   ---------------------------------------------------------------------------- */
+
+/*!
+ * @addtogroup WDOG_Register_Accessor_Macros WDOG - Register accessor macros
+ * @{
+ */
+
+
+/* WDOG - Register instance definitions */
+/* WDOG */
+#define WDOG_CS1                                 WDOG_CS1_REG(WDOG)
+#define WDOG_CS2                                 WDOG_CS2_REG(WDOG)
+#define WDOG_CNT                                 WDOG_CNT_REG(WDOG)
+#define WDOG_CNTH                                WDOG_CNTH_REG(WDOG)
+#define WDOG_CNTL                                WDOG_CNTL_REG(WDOG)
+#define WDOG_TOVAL                               WDOG_TOVAL_REG(WDOG)
+#define WDOG_TOVALH                              WDOG_TOVALH_REG(WDOG)
+#define WDOG_TOVALL                              WDOG_TOVALL_REG(WDOG)
+#define WDOG_WIN                                 WDOG_WIN_REG(WDOG)
+#define WDOG_WINH                                WDOG_WINH_REG(WDOG)
+#define WDOG_WINL                                WDOG_WINL_REG(WDOG)
+
+/*!
+ * @}
+ */ /* end of group WDOG_Register_Accessor_Macros */
+
 
 /*!
  * @}
@@ -3553,13 +5096,42 @@ typedef struct {
  * @{
  */
 
-/* No backward compatibility issues. */
+#define NVIC_ISER_SETENA_MASK        This_symbol_has_been_deprecated
+#define NVIC_ISER_SETENA_SHIFT       This_symbol_has_been_deprecated
+#define NVIC_ISER_SETENA(x)          This_symbol_has_been_deprecated
+#define NVIC_ICER_CLRENA_MASK        This_symbol_has_been_deprecated
+#define NVIC_ICER_CLRENA_SHIFT       This_symbol_has_been_deprecated
+#define NVIC_ICER_CLRENA(x)          This_symbol_has_been_deprecated
+#define NVIC_ISPR_SETPEND_MASK       This_symbol_has_been_deprecated
+#define NVIC_ISPR_SETPEND_SHIFT      This_symbol_has_been_deprecated
+#define NVIC_ISPR_SETPEND(x)         This_symbol_has_been_deprecated
+#define NVIC_ICPR_CLRPEND_MASK       This_symbol_has_been_deprecated
+#define NVIC_ICPR_CLRPEND_SHIFT      This_symbol_has_been_deprecated
+#define NVIC_ICPR_CLRPEND(x)         This_symbol_has_been_deprecated
+#define SCB_ICSR_VECTACTIVE_MASK     This_symbol_has_been_deprecated
+#define SCB_ICSR_VECTACTIVE_SHIFT    This_symbol_has_been_deprecated
+#define SCB_ICSR_VECTACTIVE(x)       This_symbol_has_been_deprecated
+#define SCB_ICSR_ISRPENDING_MASK     This_symbol_has_been_deprecated
+#define SCB_ICSR_ISRPENDING_SHIFT    This_symbol_has_been_deprecated
+#define INT_LVD_LVW                INT_PMC
+#define INT_ADC0                   INT_ADC
+#define INT_Watchdog               INT_WDOG
+#define MSCAN_TDLR_DLC_MASK        MSCAN_TDLR_TDLC_MASK
+#define MSCAN_TDLR_DLC_SHIFT       MSCAN_TDLR_TDLC_SHIFT
+#define MSCAN_TDLR_DLC(x)          MSCAN_TDLR_TDLC(x)
 
 /*!
  * @}
  */ /* end of group Backward_Compatibility_Symbols */
 
 
-#endif  /* #if !defined(MKE06Z4_H_) */
+#else /* #if !defined(MCU_SKEAZ1284) */
+  /* There is already included the same memory map. Check if it is compatible (has the same major version) */
+  #if (MCU_MEM_MAP_VERSION != 0x0100u)
+    #if (!defined(MCU_MEM_MAP_SUPPRESS_VERSION_WARNING))
+      #warning There are included two not compatible versions of memory maps. Please check possible differences.
+    #endif /* (!defined(MCU_MEM_MAP_SUPPRESS_VERSION_WARNING)) */
+  #endif /* (MCU_MEM_MAP_VERSION != 0x0100u) */
+#endif  /* #if !defined(MCU_SKEAZ1284) */
 
-/* MKE06Z4.h, eof. */
+/* SKEAZ1284.h, eof. */

@@ -96,7 +96,7 @@ typedef struct
 	uint8_t data_length;								/* CAN frame data length */
 	uint32_t frame_id;									/* CAN frame ID value */
 	MSCAN_FrameTypeAndIdFormat_Def frame_type;			/* CAN frame type and ID format */
-} MSCAN_Message_TypeDef;
+}MSCAN_Message_TypeDef;
 
 
 

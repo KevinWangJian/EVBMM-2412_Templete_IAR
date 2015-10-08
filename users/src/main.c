@@ -29,19 +29,22 @@
 
 #include <stdint.h>
 #include "arm_cm0.h"
+#include "ISR.h"
 #include "Systick_Driver.h"
 #include "GPIO_Driver.h"
 #include "MSCAN_Driver.h"
-#include "ISR.h"
+#include "CAN_Message.h"
+
 
 
 int main(void)
 {
+	
 	MSCAN_ParametersConfig CAN_Property;
 	
 	MSCAN_FilterConfigure CAN_FILTER;
 	
-	MSCAN_Message_TypeDef W_Message;
+	MSCAN_Message_TypeDef W_Message, Rd_Message;
 	
 	Systick_Init(_1ms_perticks);
 
@@ -50,6 +53,7 @@ int main(void)
 	
 	GPIO_PinClear(GPIO_PTC1);
 	GPIO_PinClear(GPIO_PTG0);
+
 	
 	CAN_Property.baudrate                   = MSCAN_Baudrate_250K;
 	CAN_Property.MSCAN_SignalPinsRemap      = 0;
@@ -87,15 +91,21 @@ int main(void)
 	
 	MSCAN_Init(&CAN_Property, &CAN_FILTER);
 	
-	Set_Vector_Handler(MSCAN_RX_VECTORn, MSCAN_TX_Handler);
+	Set_Vector_Handler(MSCAN_RX_VECTORn, MSCAN_RX_Handler);
 	
 	NVIC_EnableIRQ(MSCAN_RX_IRQn);
 
 	while (1)
-	{
-		Delay1ms(100);
-		
-		MSCAN_SendFrame(&W_Message);
+	{	
+		if (Check_CANReceiveBuffer(&Rd_Message) == 0)
+		{
+			if (Rd_Message.frame_id == 0x18901212u)
+			{
+				Rd_Message.frame_id = 0;
+				
+				GPIO_PinToggle(GPIO_PTC1);
+			}
+		}
 	}
 }
 

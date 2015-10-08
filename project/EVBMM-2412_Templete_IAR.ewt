@@ -2243,11 +2243,17 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\users\inc\ISR.h</name>
       </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\ISR.c</name>
       </file>

@@ -45,7 +45,7 @@ extern "C" {
 
 void SysTick_Handler(void);
 
-void MSCAN_TX_Handler(void);
+void MSCAN_RX_Handler(void);
 
 
 #ifdef __cplusplus

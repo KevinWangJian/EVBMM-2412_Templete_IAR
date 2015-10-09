@@ -2216,6 +2216,9 @@
         <name>$PROJ_DIR$\..\peripher_drivers\inc\GPIO_Driver.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\inc\KBI_Driver.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\peripher_drivers\inc\MSCAN_Driver.h</name>
       </file>
       <file>
@@ -2235,6 +2238,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\GPIO_Driver.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\peripher_drivers\src\KBI_Driver.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\peripher_drivers\src\MSCAN_Driver.c</name>

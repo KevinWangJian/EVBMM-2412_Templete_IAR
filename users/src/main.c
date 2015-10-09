@@ -36,7 +36,8 @@
 #include "CAN_Message.h"
 #include "Flash_Driver.h"
 #include "PIT_Driver.h"
-
+#include "KBI_Driver.h"
+//#include "KBI.h"
 
 
 
@@ -50,9 +51,10 @@ int main(void)
 	MSCAN_Message_TypeDef W_Message, Rd_Message;
 #endif
 	
-	PIT_TimebaseInitTypeDef PIT_Config;
+//	PIT_TimebaseInitTypeDef PIT_Config;
 	
-	
+	KBI_Configuration_TypeDef KBIx_Config;
+
 	Systick_Init(_1ms_perticks);
 
 	GPIO_PinInit(GPIO_PTC1, GPIO_PinOutput);
@@ -61,6 +63,7 @@ int main(void)
 	GPIO_PinClear(GPIO_PTC1);
 	GPIO_PinClear(GPIO_PTG0);
 
+#if 0
 	PIT_Config.channel   = PIT_CH0;
 	PIT_Config.INT_Func  = PIT_INT_ENABLE;
 	PIT_Config.freeze    = PIT_FreezeEnable;
@@ -73,6 +76,19 @@ int main(void)
 	Set_Vector_Handler(PIT_CH0_VECTORn, PIT_CH0_Handler);
 	
 	NVIC_EnableIRQ(PIT_CH0_IRQn);	
+#endif
+	
+
+	KBIx_Config.Detection_Mode       = 0;
+	KBIx_Config.Pin_Num              = (KBIx_PinNumber_TypeDef)(KBIx_P24 | KBIx_P25);
+	KBIx_Config.Trigger_Mode         = RisingEdge_HighLevel;
+	KBIx_Config.KBI_Interrupt_Enable = 1;
+	
+	KBI_Init(KBI0, &KBIx_Config);
+
+	Set_Vector_Handler(KBI0_VECTORn, KBI0_Handler);
+	
+	NVIC_EnableIRQ(KBI0_IRQn);	
 	
 #if 0
 	CAN_Property.baudrate                   = MSCAN_Baudrate_250K;

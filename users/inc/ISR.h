@@ -49,6 +49,11 @@ void MSCAN_RX_Handler(void);
 
 void PIT_CH0_Handler(void);
 
+void PIT_CH1_Handler(void);
+
+void KBI0_Handler(void);
+
+void KBI1_Handler(void);
 
 #ifdef __cplusplus
 }

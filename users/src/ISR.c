@@ -94,4 +94,55 @@ void PIT_CH0_Handler(void)
 }
 
 
+
+/*
+* @brief    PIT timer channel 1 interrupt service routine.
+* @param    None.
+* @returns  None.
+*/
+void PIT_CH1_Handler(void)
+{
+	
+}
+
+
+
+/*
+* @brief    KBI0 interrupt service routine.
+* @param    None.
+* @returns  None.
+*/
+void KBI0_Handler(void)
+{
+	uint32_t ret_val;
+
+	ret_val = KBI0->SP;
+	
+	if ((ret_val & (1 << 24)))
+	{
+		GPIO_PinToggle(GPIO_PTC1);
+	}
+	
+	if ((ret_val & (1 << 25)))
+	{
+		GPIO_PinToggle(GPIO_PTC1);
+	}
+	
+	/* Attention: The following two statements must be called to clear KBI interrupt flag. */	
+	KBI0->SC |= KBI_SC_KBACK_MASK;      
+	KBI0->SC |= KBI_SC_RSTKBSP_MASK;
+}
+
+
+
+/*
+* @brief    KBI1 interrupt service routine.
+* @param    None.
+* @returns  None.
+*/
+void KBI1_Handler(void)
+{
+	
+}
+
 /*****************************END OF FILE**************************************/

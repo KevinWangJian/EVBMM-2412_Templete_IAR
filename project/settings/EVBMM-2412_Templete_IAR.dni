@@ -38,7 +38,7 @@ TraceBufferSize=0x00010000
 TraceStallIfFIFOFull=0x00000000
 TracePortSize=0x00000000
 [DebugChecksum]
-Checksum=-1038436762
+Checksum=1760911980
 [CodeCoverage]
 Enabled=_ 0
 [Exceptions]
@@ -50,6 +50,14 @@ ShowArgs=0
 MixedMode=1
 [Breakpoints]
 Count=0
+[array_types]
+Fmt0=uint8_t[10]	4	0
+Fmt1=uint8_t[512]	4	0
+Fmt2=uint8_t[8]	4	0
+[watch_formats]
+Fmt0={W}1:*R_Value	4	0
+Fmt1={W}1:R_Val	4	0
+Fmt2={W}1:g_SDCard_Type	4	0
 [Trace1]
 Enabled=0
 ShowSource=1

@@ -37,12 +37,26 @@
 #include "Flash_Driver.h"
 #include "PIT_Driver.h"
 #include "KBI_Driver.h"
-//#include "KBI.h"
+#include "M95160_Driver.h"
+#include "SDCard_Driver.h"
+#include "SPI_Driver.h"
+#include "GPIO_Driver.h"
 
+
+
+
+
+
+
+uint8_t W_Buffer[10];
+
+uint8_t R_Buffer[10];
 
 
 int main(void)
 {
+	uint8_t i, R_Val;
+
 #if 0
 	MSCAN_ParametersConfig CAN_Property;
 	
@@ -53,7 +67,7 @@ int main(void)
 	
 //	PIT_TimebaseInitTypeDef PIT_Config;
 	
-	KBI_Configuration_TypeDef KBIx_Config;
+//	KBI_Configuration_TypeDef KBIx_Config;
 
 	Systick_Init(_1ms_perticks);
 
@@ -62,6 +76,13 @@ int main(void)
 	
 	GPIO_PinClear(GPIO_PTC1);
 	GPIO_PinClear(GPIO_PTG0);
+	
+	for (i = 0; i < 10; i++)
+	{
+		W_Buffer[i] = 0xA8u;
+		
+		R_Buffer[i] = 0x00u;
+	}
 
 #if 0
 	PIT_Config.channel   = PIT_CH0;
@@ -77,8 +98,27 @@ int main(void)
 	
 	NVIC_EnableIRQ(PIT_CH0_IRQn);	
 #endif
-	
 
+#if 1
+	M95160_Init();
+	
+	M95160_WriteStatusRegister(SPI0, 0x00u);
+
+	M95160_ReadStatusRegister(SPI0, &R_Val);
+	
+	if (R_Val == 0x00u)
+	{
+		GPIO_PinToggle(GPIO_PTC1);
+	}
+	
+	M95160_WriteSequenceBytesData(SPI0, 0x0027u, W_Buffer, 10);
+	
+	M95160_ReadSequenceBytesData(SPI0, 0x0027u, R_Buffer, 10);
+	
+	R_Val = 10;
+#endif
+	
+#if 0
 	KBIx_Config.Detection_Mode       = 0;
 	KBIx_Config.Pin_Num              = (KBIx_PinNumber_TypeDef)(KBIx_P24 | KBIx_P25);
 	KBIx_Config.Trigger_Mode         = RisingEdge_HighLevel;
@@ -88,9 +128,8 @@ int main(void)
 
 	Set_Vector_Handler(KBI0_VECTORn, KBI0_Handler);
 	
-	NVIC_EnableIRQ(KBI0_IRQn);	
-	
-#if 0
+	NVIC_EnableIRQ(KBI0_IRQn);
+
 	CAN_Property.baudrate                   = MSCAN_Baudrate_250K;
 	CAN_Property.MSCAN_SignalPinsRemap      = 0;
 	CAN_Property.MSCAN_StopInWaitMode       = 1;

@@ -52,14 +52,14 @@
 #include "system_SKEAZ1284.h"
 
 
-#define DISABLE_WDOG    0
+#define DISABLE_WDOG    1
 
-#define CLOCK_SETUP     0
+#define CLOCK_SETUP     1
 /* Predefined clock setups
    0 ... Internal Clock Source (ICS) in FLL Engaged Internal (FEI) mode
          Default  part configuration.
          Reference clock source for ICS module is the slow internal clock source 32.768kHz
-         Core clock = 20.97MHz, BusClock = 20.97MHz
+         Core clock = 48MHz, BusClock = 24MHz
    1 ... Internal Clock Source (ICS) in FLL Engaged External (FEE) mode
          Maximum achievable clock frequency configuration.
          Reference clock source for ICS module is an external 8MHz crystal

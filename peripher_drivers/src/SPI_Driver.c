@@ -8,8 +8,9 @@
   *                reading and writing data by SPI ports.
   * @Others: None
   * @History: 1. Created by Wangjian.
-  * @version: V1.0.0
-  * @date:    07-Nov-2015
+  *           2. Modify the flag judgement after transmiting one byte data.
+  * @version: V1.0.1
+  * @date:    11-Nov-2015
 
   ******************************************************************************
   * @attention
@@ -36,14 +37,14 @@
 
 
 /**
-  * @brief      Initialize SPI ports.
+  * @brief      Initialize SPI ports with specified properties.
   * @param      SPIx, The specified SPI port.
   *             *p_Config, Data buffer which store SPI configure parameters.
   *             speed_mode, SPI transfer speed mode. 
   * @Attention  Users should call this function first before others.
   * @returns    0 means success, -1 means failure.
   */
-int32_t SPI_Init(SPI_Type* SPIx, SPIx_ConfigType *p_Config, SPIxSpeed_Typedef speed_mode)
+int SPI_Init(SPI_Type* SPIx, SPIx_ConfigType *p_Config, SPIxSpeed_Typedef speed_mode)
 {
 	if ((SPIx != SPI0) && (SPIx != SPI1))return -1;
 	
@@ -207,7 +208,7 @@ int32_t SPI_Init(SPI_Type* SPIx, SPIx_ConfigType *p_Config, SPIxSpeed_Typedef sp
   *          Tx_data, The data which will be written. 
   * @returns 0 means success, -1 means failure.
   */
-int32_t SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data)
+int SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data)
 {	
     uint32_t Timeout_Count = 0;
 	
@@ -215,7 +216,7 @@ int32_t SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data)
 	
 	while (!(SPIx->S & SPI_S_SPTEF_MASK))
 	{
-		if (++Timeout_Count == 0xFFFFu)
+		if (++Timeout_Count == 0xFFu)
 		{
 			/* Time out,return error */
 			return -1;
@@ -228,15 +229,15 @@ int32_t SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data)
 	
 	SPIx->D = Tx_data;
 	
-	while (!(SPIx->S & SPI_S_SPTEF_MASK))
+	while (!(SPIx->S & SPI_S_SPRF_MASK))
 	{
-		if (++Timeout_Count == 0xFFFFu)
+		if (++Timeout_Count == 0xFFu)
 		{
 			/* Time out,return error */
 			return -1;
-		}
+		}		
 	}
-	
+
 	/* Dummy read one time */
 	(void)(SPIx->D);
 	
@@ -253,7 +254,7 @@ int32_t SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data)
   *          *Rx_data, Data buffer which store the read data.
   * @returns 0 means success, -1 means failure.
   */
-int32_t SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data)
+int SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data)
 {
 	uint32_t Timeout_Count = 0;
 	
@@ -263,7 +264,7 @@ int32_t SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data)
 	
 	while (!(SPIx->S & SPI_S_SPTEF_MASK))
 	{
-		if (++Timeout_Count == 0xFFFFu)
+		if (++Timeout_Count == 0xFFu)
 		{
 			/* Time out,return error */
 			return -1;
@@ -276,15 +277,15 @@ int32_t SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data)
 	
 	SPIx->D = dummy_data;
 	
-	while (!(SPIx->S & SPI_S_SPTEF_MASK))
+	while (!(SPIx->S & SPI_S_SPRF_MASK))
 	{
-		if (++Timeout_Count == 0xFFFFu)
+		if (++Timeout_Count == 0xFFu)
 		{
 			/* Time out,return error */
 			return -1;
-		}
+		}		
 	}
-	
+
 	/* Load the received data to received buffer */
 	*Rx_data = SPIx->D;
 	
@@ -300,7 +301,7 @@ int32_t SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data)
   *          *Rx_data, Data buffer which store the received data.
   * @returns 0 means success, -1 means failure.
   */
-int32_t SPI_WriteReadByteData(SPI_Type* SPIx, uint8_t Tx_data, uint8_t* Rx_data)
+int SPI_WriteReadByteData(SPI_Type* SPIx, uint8_t Tx_data, uint8_t* Rx_data)
 {
 	uint32_t Timeout_Count = 0;
 	
@@ -321,13 +322,13 @@ int32_t SPI_WriteReadByteData(SPI_Type* SPIx, uint8_t Tx_data, uint8_t* Rx_data)
 	
 	SPIx->D = Tx_data;
 	
-	while (!(SPIx->S & SPI_S_SPTEF_MASK))
+	while (!(SPIx->S & SPI_S_SPRF_MASK))
 	{
-		if (++Timeout_Count == 0xFFFFu)
+		if (++Timeout_Count == 0xFFu)
 		{
 			/* Time out,return error */
 			return -1;
-		}
+		}		
 	}
 	
 	/* Load the received data to received buffer */

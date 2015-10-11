@@ -2191,18 +2191,21 @@
     <name>device_drivers</name>
     <group>
       <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\..\device_drivers\inc\M95160_Driver.h</name>
+      </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\device_drivers\src\M95160_Driver.c</name>
+      </file>
     </group>
   </group>
   <group>
     <name>linker_files</name>
     <file>
       <name>$PROJ_DIR$\..\linker_files\128KB_Pflash.icf</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\linker_files\KEAZ128xxx4.icf</name>
     </file>
   </group>
   <group>

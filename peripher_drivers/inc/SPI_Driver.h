@@ -8,8 +8,9 @@
   *                reading and writing data by SPI ports.
   * @Others: None
   * @History: 1. Created by Wangjian.
-  * @version: V1.0.0
-  * @date:    07-Nov-2015
+  *           2. Modify the flag judgement after transmiting one byte data.
+  * @version: V1.0.1
+  * @date:    11-Nov-2015
 
   ******************************************************************************
   * @attention
@@ -44,8 +45,8 @@
 
  /* Exported types ------------------------------------------------------------*/  
 
-/* KEA serious SPI driver version: 1.0.0 */
-#define   SPI_DRIVER_VERSION     (100)
+/* KEA serious SPI driver version: 1.0.1 */
+#define   SPI_DRIVER_VERSION     (101)
 
 
 
@@ -80,8 +81,8 @@ typedef struct
 /* SPI transport speed mode */
 typedef enum
 {
-	High_Speed = 1,                  /* 200Kbps */
-	Low_Speed,                       /* 1Mbps */
+	High_Speed = 1,                  /* 1Mbps */
+	Low_Speed,                       /* 250Kbps */
 }SPIxSpeed_Typedef;
 
 
@@ -92,13 +93,13 @@ extern "C" {
 /* Exported functions ------------------------------------------------------- */
 
 
-int32_t SPI_Init(SPI_Type* SPIx, SPIx_ConfigType *p_Config, SPIxSpeed_Typedef speed_mode);
+int SPI_Init(SPI_Type* SPIx, SPIx_ConfigType *p_Config, SPIxSpeed_Typedef speed_mode);
 
-int32_t SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data);
+int SPI_WriteByteData(SPI_Type* SPIx, uint8_t Tx_data);
 
-int32_t SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data);
+int SPI_ReadByteData(SPI_Type* SPIx, uint8_t dummy_data, uint8_t* Rx_data);
 
-int32_t SPI_WriteReadByteData(SPI_Type* SPIx, uint8_t Tx_data, uint8_t* Rx_data);
+int SPI_WriteReadByteData(SPI_Type* SPIx, uint8_t Tx_data, uint8_t* Rx_data);
 
 
 #ifdef __cplusplus

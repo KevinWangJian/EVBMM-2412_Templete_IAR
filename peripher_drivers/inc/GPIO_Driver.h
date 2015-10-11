@@ -254,6 +254,9 @@ void GPIO_Write(GPIO_Type *pGPIO, uint32_t u32Value);
 void GPIO_PinInit(GPIO_PinType GPIO_Pin, GPIO_PinConfigType GPIO_PinConfig);
 
 
+uint8_t GPIO_PinRead(GPIO_PinType GPIO_Pin);
+
+
 void GPIO_PinToggle(GPIO_PinType GPIO_Pin);
 
 

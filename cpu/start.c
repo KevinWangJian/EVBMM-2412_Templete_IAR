@@ -51,14 +51,12 @@
  */
 void start(void)
 { 
+	/* Disable the watchdog timer  */
 	WDOG->TOVAL = WDOG_TOVAL_TOVAL(0xE803);
 	
 	WDOG->CS2 = WDOG_CS2_CLK(0x01);
 	
 	WDOG->CS1 = (WDOG_CS1_UPDATE_MASK | WDOG_CS1_TST(0x00) | WDOG_CS1_WAIT_MASK | WDOG_CS1_STOP_MASK);
-	
-	/* Disable the watchdog timer but enable update */
-//    WDOG_DisableWDOGEnableUpdate();    
     
 #ifndef __GNUC__ 
 #ifndef KEIL

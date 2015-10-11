@@ -301,6 +301,51 @@ void GPIO_PinInit(GPIO_PinType GPIO_Pin, GPIO_PinConfigType GPIO_PinConfig)
 
 
 /*****************************************************************************//*!
+* @brief    Read GPIO single pin input value.
+*        
+* @param[in] GPIO_Pin        GPIO pin name, can be GPIO_PTA0,1 ...
+*
+* @return   none
+*
+* @ Pass/ Fail criteria: none
+*****************************************************************************/
+uint8_t GPIO_PinRead(GPIO_PinType GPIO_Pin)
+{
+	uint8_t input_val;
+	
+	if (GPIO_Pin < GPIO_PTE0)
+    {
+        /* PTA0-7, PTB0-7, PTC0-7, PTD0-7 */		
+		input_val = (uint8_t)(GPIOA->PDIR >> GPIO_Pin) & 0x01u;
+    }	
+
+#if (defined(CPU_KEA8) | defined(CPU_KEA128))
+
+    else if (GPIO_Pin < GPIO_PTI0)
+    {
+        /* PTE0-7, PTF0-7, PTH0-7, PTI0-7 */
+        GPIO_Pin = (GPIO_PinType)(GPIO_Pin - GPIO_PTE0);
+
+		input_val = (uint8_t)(GPIOB->PDIR >> GPIO_Pin) & 0x01u;
+    }
+#endif
+
+#if defined(CPU_KEA128)  
+    else if(GPIO_Pin < GPIO_PIN_MAX)
+    {
+        /* PTI0-7 */
+        GPIO_Pin = (GPIO_PinType)(GPIO_Pin - GPIO_PTI0);
+	
+		input_val = (uint8_t)(GPIOC->PDIR >> GPIO_Pin) & 0x01u;
+    }
+#endif
+	
+	return (input_val);
+}
+
+
+
+/*****************************************************************************//*!
 * @brief    Toggle GPIO single pin which is specified by GPIO_Pin
 *        
 * @param[in] GPIO_Pin        GPIO pin name, can be GPIO_PTA0,1 ...

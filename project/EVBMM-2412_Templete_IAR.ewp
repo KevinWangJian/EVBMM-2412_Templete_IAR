@@ -317,6 +317,7 @@
           <state>$PROJ_DIR$\..\cpu</state>
           <state>$PROJ_DIR$\..\platforms</state>
           <state>$PROJ_DIR$\..\users\inc</state>
+          <state>$PROJ_DIR$\..\device_drivers\inc</state>
           <state>$PROJ_DIR$\..\peripher_drivers\inc</state>
         </option>
         <option>
@@ -337,7 +338,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -346,7 +347,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -704,7 +705,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -2016,18 +2017,21 @@
     <name>device_drivers</name>
     <group>
       <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$\..\device_drivers\inc\M95160_Driver.h</name>
+      </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\device_drivers\src\M95160_Driver.c</name>
+      </file>
     </group>
   </group>
   <group>
     <name>linker_files</name>
     <file>
       <name>$PROJ_DIR$\..\linker_files\128KB_Pflash.icf</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\linker_files\KEAZ128xxx4.icf</name>
     </file>
   </group>
   <group>

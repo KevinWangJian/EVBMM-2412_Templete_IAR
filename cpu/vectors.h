@@ -53,16 +53,16 @@ extern void Reset_Handler(void);
 #if (defined(__GNUC__))
 extern unsigned long _estack;
 extern void __thumb_startup(void);
-#define VECTOR_000      (pointer*)&_estack	//          ARM core        Initial Supervisor SP
+#define VECTOR_000      (pointer*)&_estack	            //          ARM core        Initial Supervisor SP
 #define VECTOR_001      __thumb_startup	// 0x0000_0004 1 -          ARM core        Initial Program Counter
 //#define VECTOR_001      __startup //__thumb_startup	// 0x0000_0004 1 -          ARM core        Initial Program Counter
 #elif (defined(KEIL))
-#define VECTOR_000      (pointer*)__initial_sp	//          ARM core        Initial Supervisor SP
-#define VECTOR_001      Reset_Handler						// 0x0000_0004 1 -          ARM core        Initial Program Counter
+#define VECTOR_000      (pointer*)__initial_sp	        //          ARM core        Initial Supervisor SP
+#define VECTOR_001      Reset_Handler	// 0x0000_0004 1 -          ARM core        Initial Program Counter
 #else
-    																						// Address     Vector IRQ   Source module   Source description
+// Address     Vector IRQ   Source module   Source description
 #define VECTOR_000      (pointer*)__BOOT_STACK_ADDRESS	//          ARM core        Initial Supervisor SP
-#define VECTOR_001      __startup	// 0x0000_0004 1 -          ARM core        Initial Program Counter
+#define VECTOR_001      __startup	    // 0x0000_0004 1 -          ARM core        Initial Program Counter
 #endif
 #define VECTOR_002      default_isr     // 0x0000_0008 2 -          ARM core        Non-maskable Interrupt (NMI)
 #define VECTOR_003      default_isr     // 0x0000_000C 3 -          ARM core        Hard Fault
@@ -141,9 +141,9 @@ extern void __thumb_startup(void);
 #define VECTOR_075      default_isr     // 0x0000_012C 75    59     Reserved             
 #define VECTOR_076      default_isr     // 0x0000_0130 76    60     Reserved
 #define VECTOR_077      default_isr     // 0x0000_0134 77    61     Reserved
-#define VECTOR_078      default_isr     // 0x0000_0138 78    62     Reserved 			 Single interrupt vector for all sources
-#define VECTOR_079      default_isr     // 0x0000_013C 79    63     Reserved 			 Single interrupt vector for all sources
-#define VECTOR_080      default_isr     // 0x0000_0140 80    64     Reserved 			 Single interrupt vector for all sources
+#define VECTOR_078      default_isr     // 0x0000_0138 78    62     Reserved 			Single interrupt vector for all sources
+#define VECTOR_079      default_isr     // 0x0000_013C 79    63     Reserved 			Single interrupt vector for all sources
+#define VECTOR_080      default_isr     // 0x0000_0140 80    64     Reserved 			Single interrupt vector for all sources
 #define VECTOR_081      default_isr     // 0x0000_0144 81    65     Reserved
 #define VECTOR_082      default_isr     // 0x0000_0148 82    66     Reserved
 #define VECTOR_083      default_isr     // 0x0000_014C 83    67

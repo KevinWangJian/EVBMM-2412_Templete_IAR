@@ -2,48 +2,57 @@
 /*-Editor annotation file-*/
 /* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
 /*-Specials-*/
-define symbol __ICFEDIT_intvec_start__ = 0x00000000;
+define symbol __ICFEDIT_intvec_start__ = 0x00000000;   // Interrupt vector address.It's different when program is started from ROM or RAM.
 /*-Memory Regions-*/
-define symbol __ICFEDIT_region_ROM_start__ = 0x0;
-define symbol __ICFEDIT_region_ROM_end__   = 0x00020000;
-define symbol __ICFEDIT_region_RAM_start__ = 0x1ffffF00;
-define symbol __ICFEDIT_region_RAM_end__   = 0x20000000;
+define symbol __ICFEDIT_region_ROM_start__ = 0x00000000;  // ROM start address	
+define symbol __ICFEDIT_region_ROM_end__   = 0x00020000;  // ROM end address
+define symbol __ICFEDIT_region_RAM_start__ = 0x1ffff000;  // SRAM_L area start address  
+define symbol __ICFEDIT_region_RAM_end__   = 0x20000000;  // SRAM_L area end address    (SRAM_L area size is 4KB)
 /*-Sizes-*/
-define symbol __ICFEDIT_size_cstack__ = 0x100;
-define symbol __ICFEDIT_size_heap__   = 0x100;
+define symbol __ICFEDIT_size_cstack__ = 0x1000;			  // Stack size is 4KB
+define symbol __ICFEDIT_size_heap__   = 0x1000;			  // Heap size is 4KB
 /**** End of ICF editor section. ###ICF###*/
 
-define symbol __region_RAM2_start__ = 0x20000000;
-define symbol __region_RAM2_end__ = 0x200002F0;
+define symbol __region_RAM2_start__ = 0x20000000;		  // The SRAM about Kinetis serious's MCU is form with SRAM_L and SRAM_U. RAM2 is SRAM_U. 
+define symbol __region_RAM2_end__ = 0x20003000;			  // SRAM_U area end address
 
-define exported symbol __VECTOR_TABLE = 0x00000000;
-define exported symbol __VECTOR_RAM = 0x1fffff00;
+define exported symbol __VECTOR_TABLE = __ICFEDIT_intvec_start__;	// If code is started from ROM,this value should be 0x00000000.If code is started from RAM,this value should be __ICFEDIT_region_RAM_start__.
+define exported symbol __VECTOR_RAM = __ICFEDIT_region_RAM_start__; // 前面的RAM留给Vector Table.如果是从ROM启动,则common_startup函数会把__VECTOR_TABLE复制到__VECTOR_RAM中
+
 define symbol EE_CACHETABLE_START_ADDRESS = 0x200002F0;
 
-define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;	//0x200003E8;
+define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;	// 启动栈地址,中断向量表第一个元素指向这里
 
-define symbol __code_start__ = 0x00002000; //0x00000410;
+/* 下面语句决定代码编译到的地址 */
+/* 代码编译进ROM,则为__ICFEDIT_region_ROM_start__ + 0x410;
+   代码编译进RAM,则为__ICFEDIT_region_RAM_start__ + 0x410;
+   0x410是前面留给中断向量表的空间
+*/
+define symbol __code_start__ = __ICFEDIT_region_ROM_start__ + 0x410;
+
 
 define memory mem with size = 4G;
+
+/* 下面语句是用于设置ROM和RAM可用内存地址范围 */
 define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
 define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__] | mem:[from __region_RAM2_start__ to __region_RAM2_end__];
 
-define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
-define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };  // 堆大小,8字节对其
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };  // 栈大小,8字节对其
 
-initialize manually { readwrite };
-initialize manually { section .data};
-initialize manually { section .textrw };
-do not initialize  { section .noinit };
+/* 手动初始化部分,在common_startup函数里完成 */
+initialize manually { readwrite };					// 未初始化数据.bss段
+initialize manually { section .data};				// 已初始化数据.data段
+initialize manually { section .textrw };			// __ramfunc声明的子函数
+do not initialize  { section .noinit };				// 复位中断向量服务函数
 
 define block CodeRelocate { section .textrw_init };
 define block CodeRelocateRam { section .textrw };
 
 place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
-//place at address mem:__code_start__ { readonly section .noinit };
-place at address mem:__code_start__ { readonly, block CodeRelocate};
+place at address mem:__code_start__ { readonly section .noinit };
 
-///place in ROM_region   { readonly, block CodeRelocate};
+place in ROM_region   { readonly, block CodeRelocate};
 
 place in RAM_region   { readwrite, block CodeRelocateRam,
                         block CSTACK, block HEAP };

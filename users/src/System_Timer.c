@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
-  * @file name: main.c
+  * @file name: System_Timer.h
   * @author: Wangjian
-  * @Descriptiuon: System main loop function.
-  * @Others:  None
+  * @Descriptiuon: Provides a set of functions about Flash driver.
+  * @Others: None
   * @History: 1. Created by Wangjian.
   * @version: V1.0.0
   * @date:    05-Nov-2015
@@ -27,33 +27,18 @@
   ******************************************************************************
   */
 
-#include <stdint.h>
-
-#include "System_Init.h"
-#include "CAN_Message.h"
-#include "M95160_Driver.h"
-#include "MSCAN_Driver.h"
-#include "Systick_Driver.h"
-#include "LTC6804_Driver.h"
+#include "arm_cm0.h"
+#include "System_Timer.h"
+#include "ISR.h"
 
 
 
-/**
- * @brief   System main loop function.
- * @attention  This function is executing after start up code has been executed. 
- * @param   None
- * @returns None
- */
-int main(void)
-{		
-	System_Initialization();
+void CANSendMessageTimer_Init(void)
+{
+	
+	
 
-	for (;;)
-	{	
-		Vol_Temp_Conversion_And_Read();
+	
 		
-		EVBMM_CANReceiveBufferParsing();
-	}
 }
 
-/***********************************  End Of File  *****************************/

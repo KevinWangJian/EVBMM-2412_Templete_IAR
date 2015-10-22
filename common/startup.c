@@ -42,15 +42,10 @@
 
 /********************************************************************/
 void common_startup(void)
-{
-//    extern char __DATA_ROM[];
-//    extern char __DATA_RAM[];
-//    extern char __DATA_END[];
-  
+{ 
     /* Declare a counter we'll use in all of the copy loops */
     uint32 n;
- 
- 
+
     /* Addresses for VECTOR_TABLE and VECTOR_RAM come from the linker file */  
     extern uint32 __VECTOR_TABLE[];
     extern uint32 __VECTOR_RAM[];

@@ -61,33 +61,32 @@
 
 
 
-
+#define    SDCARD_PORT        (SPI1)
 
 #define    SD_CS_OUTPUT()     GPIO_PinInit(GPIO_PTG7, GPIO_PinOutput)
 #define    SD_CS_HIGH()       GPIO_PinSet(GPIO_PTG7)		/* SD Card select pin disable */
 #define    SD_CS_LOW()        GPIO_PinClear(GPIO_PTG7)		/* SD Card select pin enable  */
 
 
-#define    DUMMY_BYTE	0xFF 
+#define    DUMMY_BYTE	0xAA 
 
 
-/* SD卡指令表 */
-#define CMD0    0       //卡复位  (应答格式：R1)
-#define CMD1    1       //MMC卡开始初始化
-#define CMD8	8       //识别卡的版本
-#define CMD9    9       //命令9 ，读CSD数据   (应答格式：R1)
-#define CMD10   10      //命令10，读CID数据   (应答格式：R1)
-#define CMD12   12      //命令12，停止数据传输    (应答格式：R1b)
-#define CMD16   16      //命令16，设置SectorSize 应返回0x00   (应答格式：R1)
-#define CMD17   17      //命令17，读sector    (应答格式：R1)
-#define CMD18   18      //命令18，读Multi sector    (应答格式：R1)
-#define ACMD23  23      //命令23，设置多sector写入前预先擦除N个block    (应答格式：R1)
-#define CMD24   24      //命令24，写sector    (应答格式：R1)
-#define CMD25   25      //命令25，写Multi sector    (应答格式：R1)
-#define ACMD41  41      //命令41，应返回0x00    (应答格式：R1)
-#define CMD55   55      //命令55，应返回0x01    (应答格式：R1)
-#define CMD58   58      //命令58，读OCR信息     (应答格式：R1)
-#define CMD59   59      //命令59，使能/禁止CRC，应返回0x00    (应答格式：R1)
+#define CMD0    0    
+#define CMD1    1       
+#define CMD8	8     
+#define CMD9    9    
+#define CMD10   10     
+#define CMD12   12   
+#define CMD16   16   
+#define CMD17   17      
+#define CMD18   18     
+#define ACMD23  23     
+#define CMD24   24      
+#define CMD25   25      
+#define ACMD41  41     
+#define CMD55   55      
+#define CMD58   58    
+#define CMD59   59     
 
 
 #define SD_TYPE_ERR     0X00
@@ -105,83 +104,83 @@ typedef enum
 }CSStatus_TypeDef;
 
 
-#if 0
+
 typedef struct                   /* SD Card specific data */
 {
-  uint8_t  CSDStruct;            /* CSD structure */
-  uint8_t  SysSpecVersion;       /* System specification version */
-  uint8_t  Reserved1;            /* Reserved */
-  uint8_t  TAAC;                 /* Data read access-time 1 */
-  uint8_t  NSAC;                 /* Data read access-time 2 in CLK cycles */
-  uint8_t  MaxBusClkFrec;        /* Max. bus clock frequency */
-  uint16_t CardComdClasses;      /* Card command classes */
-  uint8_t  RdBlockLen;           /* Max. read data block length */
-  uint8_t  PartBlockRead;        /* Partial blocks for read allowed */
-  uint8_t  WrBlockMisalign;      /* Write block misalignment */
-  uint8_t  RdBlockMisalign;      /* Read block misalignment */
-  uint8_t  DSRImpl;              /* DSR implemented */
-  uint8_t  Reserved2;            /* Reserved */
-  uint32_t DeviceSize;           /* Device Size */
-  uint8_t  MaxRdCurrentVDDMin;   /* Max. read current @ VDD min */
-  uint8_t  MaxRdCurrentVDDMax;   /* Max. read current @ VDD max */
-  uint8_t  MaxWrCurrentVDDMin;   /* Max. write current @ VDD min */
-  uint8_t  MaxWrCurrentVDDMax;   /* Max. write current @ VDD max */
-  uint8_t  DeviceSizeMul;        /* Device size multiplier */
-  uint8_t  EraseGrSize;          /* Erase group size */
-  uint8_t  EraseGrMul;           /* Erase group size multiplier */
-  uint8_t  WrProtectGrSize;      /* Write protect group size */
-  uint8_t  WrProtectGrEnable;    /* Write protect group enable */
-  uint8_t  ManDeflECC;           /* Manufacturer default ECC */
-  uint8_t  WrSpeedFact;          /* Write speed factor */
-  uint8_t  MaxWrBlockLen;        /* Max. write data block length */
-  uint8_t  WriteBlockPaPartial;  /* Partial blocks for write allowed */
-  uint8_t  Reserved3;            /* Reserded */
-  uint8_t  ContentProtectAppli;  /* Content protection application */
-  uint8_t  FileFormatGrouop;     /* File format group */
-  uint8_t  CopyFlag;             /* Copy flag (OTP) */
-  uint8_t  PermWrProtect;        /* Permanent write protection */
-  uint8_t  TempWrProtect;        /* Temporary write protection */
-  uint8_t  FileFormat;           /* File Format */
-  uint8_t  ECC;                  /* ECC code */
-  uint8_t  CSD_CRC;              /* CSD CRC */
-  uint8_t  Reserved4;            /* always 1*/
+	uint8_t  CSDStruct;            /* CSD structure */
+	uint8_t  SysSpecVersion;       /* System specification version */
+	uint8_t  Reserved1;            /* Reserved */
+	uint8_t  TAAC;                 /* Data read access-time 1 */
+	uint8_t  NSAC;                 /* Data read access-time 2 in CLK cycles */
+	uint8_t  MaxBusClkFrec;        /* Max. bus clock frequency */
+	uint16_t CardComdClasses;      /* Card command classes */
+	uint8_t  RdBlockLen;           /* Max. read data block length */
+	uint8_t  PartBlockRead;        /* Partial blocks for read allowed */
+	uint8_t  WrBlockMisalign;      /* Write block misalignment */
+	uint8_t  RdBlockMisalign;      /* Read block misalignment */
+	uint8_t  DSRImpl;              /* DSR implemented */
+	uint8_t  Reserved2;            /* Reserved */
+	uint32_t DeviceSize;           /* Device Size */
+	uint8_t  MaxRdCurrentVDDMin;   /* Max. read current @ VDD min */
+	uint8_t  MaxRdCurrentVDDMax;   /* Max. read current @ VDD max */
+	uint8_t  MaxWrCurrentVDDMin;   /* Max. write current @ VDD min */
+	uint8_t  MaxWrCurrentVDDMax;   /* Max. write current @ VDD max */
+	uint8_t  DeviceSizeMul;        /* Device size multiplier */
+	uint8_t  EraseGrSize;          /* Erase group size */
+	uint8_t  EraseGrMul;           /* Erase group size multiplier */
+	uint8_t  WrProtectGrSize;      /* Write protect group size */
+	uint8_t  WrProtectGrEnable;    /* Write protect group enable */
+	uint8_t  ManDeflECC;           /* Manufacturer default ECC */
+	uint8_t  WrSpeedFact;          /* Write speed factor */
+	uint8_t  MaxWrBlockLen;        /* Max. write data block length */
+	uint8_t  WriteBlockPaPartial;  /* Partial blocks for write allowed */
+	uint8_t  Reserved3;            /* Reserded */
+	uint8_t  ContentProtectAppli;  /* Content protection application */
+	uint8_t  FileFormatGrouop;     /* File format group */
+	uint8_t  CopyFlag;             /* Copy flag (OTP) */
+	uint8_t  PermWrProtect;        /* Permanent write protection */
+	uint8_t  TempWrProtect;        /* Temporary write protection */
+	uint8_t  FileFormat;           /* File Format */
+	uint8_t  ECC;                  /* ECC code */
+	uint8_t  CSD_CRC;              /* CSD CRC */
+	uint8_t  Reserved4;            /* always 1*/
 }SDCard_CSD;
 
 
 typedef struct                   /*Card Identification Data*/
 {
-  uint8_t  ManufacturerID;       /* ManufacturerID */
-  uint16_t OEM_AppliID;          /* OEM/Application ID */
-  uint32_t ProdName1;            /* Product Name part1 */
-  uint8_t  ProdName2;            /* Product Name part2*/
-  uint8_t  ProdRev;              /* Product Revision */
-  uint32_t ProdSN;               /* Product Serial Number */
-  uint8_t  Reserved1;            /* Reserved1 */
-  uint16_t ManufactDate;         /* Manufacturing Date */
-  uint8_t  CID_CRC;              /* CID CRC */
-  uint8_t  Reserved2;            /* always 1 */
+	uint8_t  ManufacturerID;       /* ManufacturerID */
+	uint16_t OEM_AppliID;          /* OEM/Application ID */
+	uint32_t ProdName1;            /* Product Name part1 */
+	uint8_t  ProdName2;            /* Product Name part2*/
+	uint8_t  ProdRev;              /* Product Revision */
+	uint32_t ProdSN;               /* Product Serial Number */
+	uint8_t  Reserved1;            /* Reserved1 */
+	uint16_t ManufactDate;         /* Manufacturing Date */
+	uint8_t  CID_CRC;              /* CID CRC */
+	uint8_t  Reserved2;            /* always 1 */
 }SDCard_CID;
 
 
 typedef struct 
 {
-  SDCard_CSD CSD;              /* SD card CSD register */
-    
-  SDCard_CID CID;              /* SD card CID register */
-    
-  uint32_t Capacity;           /* SD card Capacity */
-    
-  uint32_t BlockSize;          /* SD card Block Size */
-    
-  uint16_t RCA;                /* SD relative card address register */
-    
-  uint8_t CardType;            /* SD card type */
-    
-  uint32_t SpaceTotal;         /* Total space size in file system */
-    
-  uint32_t SpaceFree;          /* Free space size in file system */
+	SDCard_CSD CSD;              /* SD card CSD register */
+	  
+	SDCard_CID CID;              /* SD card CID register */
+	  
+	uint32_t Capacity;           /* SD card Capacity */
+	  
+	uint32_t BlockSize;          /* SD card Block Size */
+	  
+	uint16_t RCA;                /* SD relative card address register */
+	  
+	uint8_t CardType;            /* SD card type */
+	  
+	uint32_t SpaceTotal;         /* Total space size in file system */
+	  
+	uint32_t SpaceFree;          /* Free space size in file system */
 }SDCardInfo,*PSDCardInfo;
-#endif
+
 
 
 #ifdef __cplusplus

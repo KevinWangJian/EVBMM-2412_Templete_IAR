@@ -34,7 +34,11 @@
 #include "Systick_Driver.h"
 #include "MSCAN_Driver.h"
 #include "GPIO_Driver.h"
+#include "CAN_Buffer.h"
+#include "System_Init.h"
+#include "LTC6804_Driver.h"
 #include "CAN_Message.h"
+
 
 
 
@@ -62,7 +66,7 @@ void MSCAN_RX_Handler(void)
 	
 	if (MSCAN_ReceiveFrame(&R_Message) == 0)
 	{
-		Fill_CANReceiveBuffer(&R_Message);
+		(void)Fill_CANReceiveBuffer(&R_Message);
 	}
 }
 
@@ -75,21 +79,19 @@ void MSCAN_RX_Handler(void)
 */
 void PIT_CH0_Handler(void)
 {
-	static uint16_t Time_Count = 0;
-	
 	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK)
 	{
 		/* Before exit PIT0_IRQHandler,clear PIT_Channel0 interrupt flag TIF */
 		PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
-		
-		Time_Count++;
-		
-		if (Time_Count >= 200)
-		{
-			Time_Count = 0;
-			
-			GPIO_PinToggle(GPIO_PTC1);
-		}
+
+        if( g_LTC6804_Time_Count <= 40)
+        {
+            g_LTC6804_Time_Count ++;
+        }
+        else
+        {
+            g_LTC6804_Conversion_Finish_Flag = 1;
+        }
 	}
 }
 
@@ -102,7 +104,41 @@ void PIT_CH0_Handler(void)
 */
 void PIT_CH1_Handler(void)
 {
+	static uint16_t Time_Count = 0;
 	
+	int32_t ret_val;
+	
+	MSCAN_Message_TypeDef S_Message;
+	
+	if (PIT->CHANNEL[1].TFLG & PIT_TFLG_TIF_MASK)
+	{
+		/* Before exit PIT1_IRQHandler,clear PIT_Channel0 interrupt flag TIF */
+		PIT->CHANNEL[1].TFLG |= PIT_TFLG_TIF_MASK;
+
+		Time_Count++;
+		
+		if (Time_Count >= 1000)
+		{
+			Time_Count = 0;
+			
+			EVBMM_PreparePartialConfigTableData();
+			
+			LED_TOGGLE();
+		}
+				
+		/* Checking whether MSCAN module have enough TX buffer to send CAN message. */
+		if (MSCAN_HardTxBufferCheck() == 0)
+		{
+			/* Checking soft CAN TX buffer have valid CAN message. */
+			ret_val = Check_CANSendBuffer(&S_Message);
+			
+			/* If yes,load the read CAN message and send it. */
+			if (ret_val == 0)
+			{
+				(void)MSCAN_SendFrame(&S_Message);
+			}
+		}
+	}
 }
 
 
@@ -114,6 +150,7 @@ void PIT_CH1_Handler(void)
 */
 void KBI0_Handler(void)
 {
+#if 0
 	uint32_t ret_val;
 
 	ret_val = KBI0->SP;
@@ -131,6 +168,7 @@ void KBI0_Handler(void)
 	/* Attention: The following two statements must be called to clear KBI interrupt flag. */	
 	KBI0->SC |= KBI_SC_KBACK_MASK;      
 	KBI0->SC |= KBI_SC_RSTKBSP_MASK;
+#endif
 }
 
 

@@ -5,12 +5,12 @@
 define symbol __ICFEDIT_intvec_start__ = 0x00000000;   // Interrupt vector address.It's different when program is started from ROM or RAM.
 /*-Memory Regions-*/
 define symbol __ICFEDIT_region_ROM_start__ = 0x00000000;  // ROM start address	
-define symbol __ICFEDIT_region_ROM_end__   = 0x00020000;  // ROM end address
-define symbol __ICFEDIT_region_RAM_start__ = 0x1ffff000;  // SRAM_L area start address  
-define symbol __ICFEDIT_region_RAM_end__   = 0x20000000;  // SRAM_L area end address    (SRAM_L area size is 4KB)
+define symbol __ICFEDIT_region_ROM_end__   = 0x0001FFFF;  // ROM end address
+define symbol __ICFEDIT_region_RAM_start__ = 0x1FFFF000;  // SRAM_L area start address  
+define symbol __ICFEDIT_region_RAM_end__   = 0x1FFFFFFF;  // SRAM_L area end address    (SRAM_L area size is 4KB)
 /*-Sizes-*/
 define symbol __ICFEDIT_size_cstack__ = 0x1000;			  // Stack size is 4KB
-define symbol __ICFEDIT_size_heap__   = 0x1000;			  // Heap size is 4KB
+define symbol __ICFEDIT_size_heap__   = 0xC00;			  // Heap size is 3KB
 /**** End of ICF editor section. ###ICF###*/
 
 define symbol __region_RAM2_start__ = 0x20000000;		  // The SRAM about Kinetis serious's MCU is form with SRAM_L and SRAM_U. RAM2 is SRAM_U. 
@@ -19,7 +19,7 @@ define symbol __region_RAM2_end__ = 0x20003000;			  // SRAM_U area end address
 define exported symbol __VECTOR_TABLE = __ICFEDIT_intvec_start__;	// If code is started from ROM,this value should be 0x00000000.If code is started from RAM,this value should be __ICFEDIT_region_RAM_start__.
 define exported symbol __VECTOR_RAM = __ICFEDIT_region_RAM_start__; // 前面的RAM留给Vector Table.如果是从ROM启动,则common_startup函数会把__VECTOR_TABLE复制到__VECTOR_RAM中
 
-define symbol EE_CACHETABLE_START_ADDRESS = 0x200002F0;
+//define symbol EE_CACHETABLE_START_ADDRESS = 0x200002F0;
 
 define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;	// 启动栈地址,中断向量表第一个元素指向这里
 
@@ -28,7 +28,7 @@ define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;	// 启动
    代码编译进RAM,则为__ICFEDIT_region_RAM_start__ + 0x410;
    0x410是前面留给中断向量表的空间
 */
-define symbol __code_start__ = __ICFEDIT_region_ROM_start__ + 0x410;
+define symbol __code_start__ = __ICFEDIT_region_ROM_start__ + 0x410;   
 
 
 define memory mem with size = 4G;
@@ -37,14 +37,14 @@ define memory mem with size = 4G;
 define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
 define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__] | mem:[from __region_RAM2_start__ to __region_RAM2_end__];
 
-define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };  // 堆大小,8字节对其
-define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };  // 栈大小,8字节对其
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };  // 栈大小,8字节对其
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };  // 堆大小,8字节对其
 
 /* 手动初始化部分,在common_startup函数里完成 */
 initialize manually { readwrite };					// 未初始化数据.bss段
 initialize manually { section .data};				// 已初始化数据.data段
 initialize manually { section .textrw };			// __ramfunc声明的子函数
-do not initialize  { section .noinit };				// 复位中断向量服务函数
+do not initialize   { section .noinit };			// 复位中断向量服务函数
 
 define block CodeRelocate { section .textrw_init };
 define block CodeRelocateRam { section .textrw };

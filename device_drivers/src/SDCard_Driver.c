@@ -48,30 +48,29 @@ static uint8_t g_SDCard_Type = SD_TYPE_ERR;
   */
 static uint8_t SDCard_SendCommand(uint8_t cmd, uint32_t arg, uint8_t crc)
 {
-    int16_t ret;
 	uint8_t r1;
 	uint16_t retry;
 	
 	/* Chip select disable */
 	SD_CS_HIGH();
 	
-	ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+	(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 	
 	/* Chip select enable */
 	SD_CS_LOW();
 	
 	/* Command, argument and crc */
-	ret = SPI_WriteByteData(SPI1, (cmd | 0x40));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg >> 24));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg >> 16));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg >> 8));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg));
-	ret = SPI_WriteByteData(SPI1, crc);
+	(void)SPI_WriteByteData(SDCARD_PORT, (cmd | 0x40));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg >> 24));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg >> 16));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg >> 8));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg));
+	(void)SPI_WriteByteData(SDCARD_PORT, crc);
 	
 	/* Wait response, quit until time out */
 	for (retry = 0; retry < 800; retry++)
 	{
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+		(void)SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
 		
 		if (r1 != 0xFF)break;
 	}
@@ -80,7 +79,7 @@ static uint8_t SDCard_SendCommand(uint8_t cmd, uint32_t arg, uint8_t crc)
 	SD_CS_HIGH();
 	
 	/* Generate another 8 clocks to enable SD card finish the transfer and be stable */
-	ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+	(void)SPI_WriteByteData(SPI1, DUMMY_BYTE);
 	
 	return (r1);
 }
@@ -96,30 +95,29 @@ static uint8_t SDCard_SendCommand(uint8_t cmd, uint32_t arg, uint8_t crc)
   */
 static uint8_t SDCard_SendCommand_NoDeassert(uint8_t cmd, uint32_t arg, uint8_t crc)
 {
-    int16_t ret;
 	uint8_t r1;
 	uint16_t retry = 0;
 	
 	/* Chip select disable */
 	SD_CS_HIGH();
 	
-	ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+	(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 	
 	/* Chip select enable */
 	SD_CS_LOW();
 	
 	/* Command, argument and crc */
-	ret = SPI_WriteByteData(SPI1, (cmd | 0x40));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg >> 24));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg >> 16));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg >> 8));
-	ret = SPI_WriteByteData(SPI1, (uint8_t)(arg));
-	ret = SPI_WriteByteData(SPI1, crc);
+	(void)SPI_WriteByteData(SDCARD_PORT, (cmd | 0x40));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg >> 24));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg >> 16));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg >> 8));
+	(void)SPI_WriteByteData(SDCARD_PORT, (uint8_t)(arg));
+	(void)SPI_WriteByteData(SDCARD_PORT, crc);
 	
 	/* Wait response, quit until time out */
 	for (retry = 0; retry < 800; retry++)
 	{
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+		(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 		
 		if (r1 != 0xFF)break;
 	}
@@ -128,7 +126,7 @@ static uint8_t SDCard_SendCommand_NoDeassert(uint8_t cmd, uint32_t arg, uint8_t 
 }
 
 
-#if 1
+
 /**
   * @brief   Host receive data from SD card by SPI reading.
   * @param   *r_buff£ºData buffer which store the received data. 
@@ -136,7 +134,7 @@ static uint8_t SDCard_SendCommand_NoDeassert(uint8_t cmd, uint32_t arg, uint8_t 
   *          sta£ºCS(Chip select signal) status after finish receiving data.
   * @returns 0 means success, -1 means failure.
   */
-static int16_t SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDef sta)
+static int SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDef sta)
 {
 	uint16_t retry = 0;
 	uint8_t r1,dummy_crc;
@@ -154,7 +152,7 @@ static int16_t SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDe
 	/* Wait start-token 0xFE */
 	do
 	{
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+		ret = SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 		
 		if (ret == -1)return (SDCARD_RECEIVEDATA_ERROR);
 		
@@ -172,7 +170,7 @@ static int16_t SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDe
 	/* Start reading */
 	while (len--)
 	{
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, r_buff);
+		ret = SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, r_buff);
 		
 		r_buff++;
 		
@@ -186,8 +184,8 @@ static int16_t SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDe
 	}
 	
 	/* Read 2 bytes dummy CRC data */
-	ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &dummy_crc);
-	ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &dummy_crc);
+	(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &dummy_crc);
+	(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &dummy_crc);
 	
 	if (sta == CS_Release)
 	{
@@ -195,12 +193,11 @@ static int16_t SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDe
 		SD_CS_HIGH();
 		
 		/* Generate another 8 clocks to enable SD card finish the transfer and be stable */
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &dummy_crc);
+		(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &dummy_crc);
 	}
 	
 	return (SDCARD_RECEIVEDATA_SUCCESS);
 }
-#endif
 
 
 
@@ -210,25 +207,25 @@ static int16_t SDCard_ReceiveData(uint8_t* r_buff, uint16_t len, CSStatus_TypeDe
   * @param   speedmode: SPI communicate speed mode.The value can be High_Speed or Low_Speed.
   * @returns 0 means success, -1 means failure.
   */
-static int16_t SDCard_SignalLine_Init(SPIxSpeed_Typedef speedmode)
+static int SDCard_SignalLine_Init(SPIxSpeed_Typedef speedmode)
 {
-	int16_t ret;
+	int ret;
 	
-	SPIx_ConfigType spi0_init;
+	SPIx_ConfigType spi_init;
 	
-	spi0_init.SPRF_MODF_INT_Enable = 0;       /* Disable SPI interrupt. */
-    spi0_init.Match_INT_Enable = 0;                    /* SPI System Enabled. */
-    spi0_init.Transmit_INT_Enable = 0;  /* SPTEF interrupt disabled. */
-    spi0_init.MasterOrSlaveMode = 1;         /* SPI is in master mode. */
-    spi0_init.CPOL = 1;                      /* Active-low clocks selected. In idle state SCK is high. */
-    spi0_init.CPHA = 1;                      /* Sampling of data occurs at even edges (2,4,6,...) of the SCK clock. */
-    spi0_init.LSBFE = 0;                  /* Data is transferred most significant bit first. */
-	spi0_init.Signal_Pins = SPI1_PortGPins;
+	spi_init.SPRF_MODF_INT_Enable = 0;   					/* Disable SPI interrupt. */
+    spi_init.Match_INT_Enable     = 0;                    	/* SPI System Enabled. */
+    spi_init.Transmit_INT_Enable  = 0;  					/* SPTEF interrupt disabled. */
+    spi_init.MasterOrSlaveMode    = 1;         				/* SPI is in master mode. */
+    spi_init.CPOL                 = 1;                      /* Active-low clocks selected. In idle state SCK is high. */
+    spi_init.CPHA                 = 1;                      /* Sampling of data occurs at even edges (2,4,6,...) of the SCK clock. */
+    spi_init.LSBFE                = 0;                  	/* Data is transferred most significant bit first. */
+	spi_init.Signal_Pins          = SPI1_PortGPins;			
 	
-    ret = SPI_Init(SPI1, &spi0_init, speedmode);
+    ret = SPI_Init(SPI1, &spi_init, speedmode);
     
     SD_CS_OUTPUT();
-    SD_CS_HIGH();                               /* Pull PTP3 pin high and disable SD Card select pin */
+    SD_CS_HIGH();                               			/* Pull PTG7 pin high and disable SD Card select pin */
     
     return (ret);
 }
@@ -244,7 +241,7 @@ static int16_t SDCard_SignalLine_Init(SPIxSpeed_Typedef speedmode)
   */
 int SDCard_Init(void) 
 {
-    int16_t ret;
+    int ret;
     uint8_t r1,i;
 	uint32_t retry;
 	uint8_t buff[4] = {0};
@@ -255,14 +252,14 @@ int SDCard_Init(void)
 	if (ret == -1)return (SDCARD_PORTINIT_ERROR);
     
     /* Power on and delay some times to wait stable */
-//    Delay1ms(20);           
+    Delay1ms(20);           
     	
 	for(retry = 0; retry < 0x1000; retry++);
 	
 	/* Start send 74 clocks at least */
 	for(retry = 0; retry < 10; retry++)
 	{
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+		ret = SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 		
 		if (ret == -1)return (SDCARD_TRANSMIT_ERROR);
 	}	
@@ -297,7 +294,7 @@ int SDCard_Init(void)
 			/* The four bytes of OCR register value should be 0x00,0x00,0x01,0xAA */
 			for (i = 0; i < 4; i++)
 			{
-				ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &buff[i]);
+				ret = SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &buff[i]);
 				
 				if (ret == -1)
 				{
@@ -312,7 +309,7 @@ int SDCard_Init(void)
 			SD_CS_HIGH();
 			
 			/* Generate the other 8 clocks to enable SD card finish the transfer */
-			ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+			ret = SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 			
 			if (ret == -1)return (SDCARD_TRANSMIT_ERROR);
 			
@@ -339,7 +336,7 @@ int SDCard_Init(void)
 	            
 				for (i = 0; i < 4; i++)
 				{
-					ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &buff[i]);
+					ret = SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &buff[i]);
 					
 					if (ret == -1)
 					{
@@ -353,7 +350,7 @@ int SDCard_Init(void)
 				/* Chip select disable */
 				SD_CS_HIGH();
 				/* Generate the other 8 clocks to enable SD card finish the transfer and be stable */
-	           	ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+	           	ret = SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 				
 				if (ret == -1)return (SDCARD_TRANSMIT_ERROR);
 	           	
@@ -381,7 +378,7 @@ int SDCard_Init(void)
 			SD_CS_HIGH();
 			
 			/* Send another 8 clocks to end of CMD8 and enable SD card stable */
-			ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+			ret = SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 			
 			if (ret == -1)return (SDCARD_TRANSMIT_ERROR);
 			
@@ -452,7 +449,7 @@ int SDCard_Init(void)
 }
 
 
-#if 1
+
 /**
   * @brief   Read data from SD disk.
   * @param   *R_buf: Data buffer which store The received data.
@@ -526,7 +523,7 @@ int SDCard_ReadDisk(uint8_t* R_buf, uint32_t sector, uint8_t count)
 		SD_CS_HIGH();
 		
 		/* Generate another 8 clocks to enable SD card finish the transfer and be stable */
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &dummy_crc);
+		(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &dummy_crc);
 	}
 	
 	return (SDCARD_READDISK_SUCCESS);
@@ -568,12 +565,12 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		/* SD Card select pin enable, send 3 bytes dummy data for Preparing to write data to SD Card */
 		SD_CS_LOW();
 		
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 
 		/* Start send data write token: 0xFE */
-		ret = SPI_WriteByteData(SPI1, 0xFEu);
+		ret = SPI_WriteByteData(SDCARD_PORT, 0xFEu);
 
 		if (ret == -1)
 		{
@@ -586,7 +583,7 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		/* Start single block write the data buffer */
 		for (i = 0; i < 512; i++)
 		{
-			ret = SPI_WriteByteData(SPI1, *W_Buf++);
+			ret = SPI_WriteByteData(SDCARD_PORT, *W_Buf++);
 
 			if (ret == -1)
 			{
@@ -598,11 +595,11 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		}
 		
 		/* Send 2 Bytes dummy CRC */
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 		
 		/* Receive SD Card response data */
-		ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+		(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 		
 		if ((r1 & 0x1F) != 0x05)
 		{
@@ -617,7 +614,7 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		
 		do
 		{
-			ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+			(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 			
 			if (retry++ == 0x40000)
 			{
@@ -632,14 +629,14 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		SD_CS_HIGH();
 
 		/* Generate another 8 clocks to enable SD card finish the transfer and be stable */
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 	}
 	else								/* Write Multiple sector data */
 	{
 	    /* Send command ACMD23 before multi write if is not a MMC card */
 		if (g_SDCard_Type != SD_TYPE_MMC)
 		{
-			r1 = SDCard_SendCommand(ACMD23, count, 0x01);   
+			(void)SDCard_SendCommand(ACMD23, count, 0x01);   
 		}
 		
 		/* Write Multi block data command */
@@ -650,16 +647,16 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		/* Chip select enable */
 		SD_CS_LOW();
 		
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 		
 		for (n = 0; n < count; n++)
 		{
 			/* Start multi block write token: 0xFC */
-			ret = SPI_WriteByteData(SPI1, 0xFC);
+			(void)SPI_WriteByteData(SDCARD_PORT, 0xFC);
 			
 			for (i = 0; i < 512; i++)
 			{
-				ret = SPI_WriteByteData(SPI1, *W_Buf++);
+				ret = SPI_WriteByteData(SDCARD_PORT, *W_Buf++);
 
 				if (ret == -1)
 				{
@@ -671,11 +668,11 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 			}
 			
 			/* Send 2 Bytes dummy CRC */
-			ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
-			ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+			(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
+			(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 			
 			/* Receive SD Card response data */
-			ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+			(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 			
 			if ((r1 & 0x1F) != 0x05)
 			{
@@ -690,7 +687,7 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 			
 			do
 			{
-				ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+				(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 				
 				if (retry ++ == 0x40000)
 				{
@@ -703,7 +700,7 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		}
 		
 		/* Send end of transmit token: 0xFD */
-		ret = SPI_ReadByteData(SPI1, 0xFDu, &r1);
+		(void)SPI_ReadByteData(SDCARD_PORT, 0xFDu, &r1);
 		
 		if (r1 == 0x00)return (SDCARD_WRITEDISK_ERROR);
 		
@@ -712,7 +709,7 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		
 		do
 		{
-			ret = SPI_ReadByteData(SPI1, DUMMY_BYTE, &r1);
+			(void)SPI_ReadByteData(SDCARD_PORT, DUMMY_BYTE, &r1);
 			
 			if (retry ++ == 0x40000)
 			{
@@ -727,10 +724,10 @@ int SDCard_WriteDisk(uint8_t* W_Buf, uint32_t sector, uint8_t count)
 		SD_CS_HIGH();
 		
 		/* Generate another 8 clocks to enable SD card finish the transfer and be stable */
-		ret = SPI_WriteByteData(SPI1, DUMMY_BYTE);
+		(void)SPI_WriteByteData(SDCARD_PORT, DUMMY_BYTE);
 	}
 	
 	return (SDCARD_WRITEDISK_SUCCESS);
 }
-#endif
+
 /*****************************END OF FILE**************************************/

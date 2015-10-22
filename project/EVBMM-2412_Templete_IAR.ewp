@@ -2018,11 +2018,17 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\..\device_drivers\inc\LTC6804_Driver.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\device_drivers\inc\M95160_Driver.h</name>
       </file>
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\device_drivers\src\LTC6804_Driver.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\device_drivers\src\M95160_Driver.c</name>
       </file>
@@ -2090,22 +2096,40 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\..\users\inc\CAN_Buffer.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\..\users\inc\Filter_LTC6804.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\users\inc\ISR.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\users\inc\System_Init.h</name>
       </file>
     </group>
     <group>
       <name>src</name>
       <file>
+        <name>$PROJ_DIR$\..\users\src\CAN_Buffer.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\users\src\Filter_LTC6804.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\ISR.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\main.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\users\src\System_Init.c</name>
       </file>
     </group>
   </group>

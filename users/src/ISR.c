@@ -31,10 +31,10 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "ISR.h"
-#include "Systick_Driver.h"
+#include "Delay.h"
 #include "MSCAN_Driver.h"
 #include "GPIO_Driver.h"
-#include "CAN_Buffer.h"
+#include "CAN_SoftBuffer.h"
 #include "System_Init.h"
 #include "LTC6804_Driver.h"
 #include "CAN_Message.h"
@@ -150,7 +150,7 @@ void PIT_CH1_Handler(void)
 */
 void KBI0_Handler(void)
 {
-#if 0
+#if 1
 	uint32_t ret_val;
 
 	ret_val = KBI0->SP;
@@ -183,4 +183,4 @@ void KBI1_Handler(void)
 	
 }
 
-/*****************************END OF FILE**************************************/
+/***************************** END OF FILE ************************************/

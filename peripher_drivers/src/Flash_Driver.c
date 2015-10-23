@@ -30,7 +30,7 @@
 /* Includes ------------------------------------------------------------------*/
 
 #include "Flash_Driver.h"
-
+#include "system_SKEAZ1284.h"
 
 
 
@@ -44,7 +44,59 @@ void Flash_Init(void)
 {
 	/* Set the Flash clock divider */
 	FTMRE->FCLKDIV &= ~FTMRE_FCLKDIV_FDIV_MASK;
-	FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x13);
+
+	if ((SystemBusClock >= 1000000u) && (SystemBusClock <= 1600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x00u);
+	else if ((SystemBusClock > 1600000u) && (SystemBusClock <= 2600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x01u);
+	else if ((SystemBusClock > 2600000u) && (SystemBusClock <= 3600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x02u);
+	else if ((SystemBusClock > 3600000u) && (SystemBusClock <= 4600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x03u);
+	else if ((SystemBusClock > 4600000u) && (SystemBusClock <= 5600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x04u);
+	else if ((SystemBusClock > 5600000u) && (SystemBusClock <= 6600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x05u);
+	else if ((SystemBusClock > 6600000u) && (SystemBusClock <= 7600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x06u);
+	else if ((SystemBusClock > 7600000u) && (SystemBusClock <= 8600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x07u);
+	else if ((SystemBusClock > 8600000u) && (SystemBusClock <= 9600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x08u);
+	else if ((SystemBusClock > 9600000u) && (SystemBusClock <= 10600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x09u);
+	else if ((SystemBusClock > 10600000u) && (SystemBusClock <= 11600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x0Au);
+	else if ((SystemBusClock > 11600000u) && (SystemBusClock <= 12600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x0Bu);
+	else if ((SystemBusClock > 12600000u) && (SystemBusClock <= 13600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x0Cu);
+	else if ((SystemBusClock > 13600000u) && (SystemBusClock <= 14600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x0Du);
+	else if ((SystemBusClock > 14600000u) && (SystemBusClock <= 15600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x0Eu);
+	else if ((SystemBusClock > 15600000u) && (SystemBusClock <= 16600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x0Fu);
+	else if ((SystemBusClock > 16600000u) && (SystemBusClock <= 17600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x10u);
+	else if ((SystemBusClock > 17600000u) && (SystemBusClock <= 18600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x11u);
+	else if ((SystemBusClock > 18600000u) && (SystemBusClock <= 19600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x12u);
+	else if ((SystemBusClock > 19600000u) && (SystemBusClock <= 20600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x13u);
+	else if ((SystemBusClock > 20600000u) && (SystemBusClock <= 21600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x14u);
+	else if ((SystemBusClock > 21600000u) && (SystemBusClock <= 22600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x15u);
+	else if ((SystemBusClock > 22600000u) && (SystemBusClock <= 23600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x16u);
+	else if ((SystemBusClock > 23600000u) && (SystemBusClock <= 24600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x17u);
+	else if ((SystemBusClock > 24600000u) && (SystemBusClock <= 25600000u))
+		FTMRE->FCLKDIV |= FTMRE_FCLKDIV_FDIV(0x18u);
+	else 
+		return;
 
 	/* Enables the Stalling Flash Controller and the Flash Data Speculation */
 	MCM->PLACR = MCM_PLACR_ESFC_MASK | MCM_PLACR_EFDS_MASK;
@@ -64,7 +116,7 @@ int Flash_EarseSector(uint32_t StartAddrOfSector)
 	int ret_val = -1;
 
 	/* Ensures the given address of the sector which will be erased is within the writable area. */
-	if ((StartAddrOfSector >= ((__StartOfAppArea))) && (StartAddrOfSector <= ((__EndOfFlash)))) 
+	if (StartAddrOfSector <= __EndOfFlash) 
 	{
 		/* According to the RM of the KEA128, ensures the 2 LSB is */
 		/* clear, otherwise the operation will cause error. */
@@ -121,7 +173,7 @@ int Flash_ProgramUnit(uint32_t StartAddrOfSector, uint8_t *data)
 	int ret_val = -1;
 
 	/* Ensures the given address of the sector which will be erased is within the writable area. */
-	if ((StartAddrOfSector >= ((uint32_t)(__StartOfAppArea))) && (StartAddrOfSector <= ((uint32_t)(__EndOfFlash)))) 
+	if (StartAddrOfSector <= __EndOfFlash) 
 	{
 		/* According to the RM of the KEA128, ensures the 2 LSB is */
 		/* clear, otherwise the operation will cause error. */
@@ -224,7 +276,7 @@ int Flash_ProgramSector(uint32_t StartAddrOfSector, uint8_t *data)
 	int i;
 
 	/* Ensures the given address of the sector which will be erased is within the writable area. */
-	if ((StartAddrOfSector >= ((uint32_t)(__StartOfAppArea))) && (StartAddrOfSector <= ((uint32_t)(__EndOfFlash)))) 
+	if (StartAddrOfSector <= __EndOfFlash) 
 	{
 		/* According to the RM of the KEA128, ensures the 2 LSB is */
 		/* clear, otherwise the operation will cause error. */

@@ -63,7 +63,7 @@ typedef struct
 	uint8_t MSCAN_StopInWaitMode          :1;  /* 0:MSCAN module is normal in wait mode; 1:MSCAN module is stop in wait mode. */
 	uint8_t MSCAN_TimeStampEnable         :1;  /* 0:Disable internal MSCAN timer; 1:Enable internal MSCAN timer. */
 	uint8_t MSCAN_WakeUpEnable            :1;  /* 0:Wake-up disabled; 1:Wake-up enabled. If MSCAN wake-up enabled,MSCAN_WakeUpINTEnable must be set. */
-    uint8_t MSCAN_ClockSource             :1;  /* 0:MSCAN clock source is the oscillator clock; 1:MSCAN clock is the bus clock. */
+//    uint8_t MSCAN_ClockSource             :1;  /* 0:MSCAN clock source is the oscillator clock; 1:MSCAN clock is the bus clock. */
     uint8_t MSCAN_LoopbackMode            :1;  /* 0:Loop back self test disabled. 1:Loop back self test enabled. */
     uint8_t MSCAN_ListenOnlyMode          :1;  /* 0:Normal operation;1:Listen only mode. */
     uint8_t MSCAN_BusoffRecoveryMode      :1;  /* 0:Automatic bus-off recovery; 1:bus-off recovery upon user request. */
@@ -141,16 +141,16 @@ extern "C" {
 
 /* Exported functions ------------------------------------------------------- */
 		
-int32_t MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Filter_Config);
+int MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Filter_Config);
 
 
-int32_t MSCAN_SendFrame(MSCAN_Message_TypeDef* W_Framebuff);
+int MSCAN_SendFrame(MSCAN_Message_TypeDef* W_Framebuff);
 
 
-int32_t MSCAN_ReceiveFrame(MSCAN_Message_TypeDef* R_Framebuff);
+int MSCAN_ReceiveFrame(MSCAN_Message_TypeDef* R_Framebuff);
 
 
-int32_t MSCAN_HardTxBufferCheck(void);
+int MSCAN_HardTxBufferCheck(void);
 
 
 #ifdef __cplusplus

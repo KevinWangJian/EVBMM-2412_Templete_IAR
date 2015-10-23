@@ -42,9 +42,10 @@
 * @return   none
 *
 * @Note
-*   . High-current drive function is disabled, if the pin is configured as an input
+*   . High-current drive function is disabled, if the pin is configured as an input.
 *   . Internal pullup is disabled if the pin is configured as an output
-*
+*   . u32PinMask parameter must be matched with pGPIO parameter.Users should check 
+*     over GPIO_Driver.h file to find enumeration.
 * @ Pass/ Fail criteria: none
 *****************************************************************************/
 void GPIO_Init(GPIO_Type *pGPIO, GPIO_PinMaskType u32PinMask, GPIO_PinConfigType sGpioType)
@@ -127,6 +128,9 @@ void GPIO_Init(GPIO_Type *pGPIO, GPIO_PinMaskType u32PinMask, GPIO_PinConfigType
 * @param[in] u32PinMask  Specify GPIO pin need to be toggled
 *
 * @return  None.
+* @note
+*          u32PinMask parameter must be matched with pGPIO parameter.Users should check 
+*          over GPIO_Driver.h file to find enumeration.
 *
 * @ Pass/ Fail criteria: none
 *****************************************************************************/
@@ -140,7 +144,7 @@ void GPIO_Toggle(GPIO_Type *pGPIO, GPIO_PinMaskType u32PinMask)
 /*****************************************************************************//*!
 * @brief Read input data from GPIO which is specified by pGPIO
 *        
-* @param[in] pGPIO       Pointer to GPIO module, can be GPIOA/GPIOB.
+* @param[in] pGPIO  Pointer to GPIO module, can be GPIOA/GPIOB.
 *
 * @return   GPIO input value unsigned int 32-bit
 *
@@ -189,22 +193,22 @@ void GPIO_PinInit(GPIO_PinType GPIO_Pin, GPIO_PinConfigType GPIO_PinConfig)
 	  case GPIO_PinOutput:
 		  GPIOA->PDDR |= (1<<GPIO_Pin);      /* Enable Port Data Direction Register */
 		  GPIOA->PIDR |= (1<<GPIO_Pin);      /* Set Port Input Disable Register */
-		  PORT->PUE0 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE0 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  case GPIO_PinInput:
 		  GPIOA->PDDR &= ~(1<<GPIO_Pin);     /* Disable Port Data Direction Register */
 		  GPIOA->PIDR &= ~(1<<GPIO_Pin);     /* Clear Port Input Disable Register */
-		  PORT->PUE0 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE0 &= ~(1<<GPIO_Pin);    	 /* Disable Pullup */
 		break;
 	  case GPIO_PinInput_InternalPullup:
 		  GPIOA->PDDR &= ~(1<<GPIO_Pin);     /* Disable Port Data Direction Register */
 		  GPIOA->PIDR &= ~(1<<GPIO_Pin);     /* Clear Port Input Disable Register */
-		  PORT->PUE0 |= (1<<GPIO_Pin);    /* Enable Pullup */
+		  PORT->PUE0 |= (1<<GPIO_Pin);       /* Enable Pullup */
 		break;
 	  case GPIO_PinOutput_HighCurrent:
 		  GPIOA->PDDR |= (1<<GPIO_Pin);      /* Enable Port Data Direction Register */
 		  GPIOA->PIDR |= (1<<GPIO_Pin);      /* Set Port Input Disable Register */
-		  PORT->PUE0 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE0 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  }
 	}
@@ -216,22 +220,22 @@ void GPIO_PinInit(GPIO_PinType GPIO_Pin, GPIO_PinConfigType GPIO_PinConfig)
 	  case GPIO_PinOutput:
 		  GPIOB->PDDR |= (1<<GPIO_Pin);      /* Enable Port Data Direction Register */
 		  GPIOB->PIDR |= (1<<GPIO_Pin);      /* Set Port Input Disable Register */
-		  PORT->PUE1 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE1 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  case GPIO_PinInput:
 		  GPIOB->PDDR &= ~(1<<GPIO_Pin);     /* Disable Port Data Direction Register */
 		  GPIOB->PIDR &= ~(1<<GPIO_Pin);     /* Clear Port Input Disable Register */
-		  PORT->PUE1 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE1 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  case GPIO_PinInput_InternalPullup:
 		  GPIOB->PDDR &= ~(1<<GPIO_Pin);     /* Disable Port Data Direction Register */
 		  GPIOB->PIDR &= ~(1<<GPIO_Pin);     /* Clear Port Input Disable Register */
-		  PORT->PUE1 |= (1<<GPIO_Pin);    /* Enable Pullup */
+		  PORT->PUE1 |= (1<<GPIO_Pin);       /* Enable Pullup */
 		break;
 	  case GPIO_PinOutput_HighCurrent:
 		  GPIOB->PDDR |= (1<<GPIO_Pin);      /* Enable Port Data Direction Register */
 		  GPIOB->PIDR |= (1<<GPIO_Pin);      /* Set Port Input Disable Register */
-		  PORT->PUE1 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE1 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  }
 	}
@@ -243,22 +247,22 @@ void GPIO_PinInit(GPIO_PinType GPIO_Pin, GPIO_PinConfigType GPIO_PinConfig)
 	  case GPIO_PinOutput:
 		  GPIOC->PDDR |= (1<<GPIO_Pin);      /* Enable Port Data Direction Register */
 		  GPIOC->PIDR |= (1<<GPIO_Pin);      /* Set Port Input Disable Register */
-		  PORT->PUE2 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE2 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  case GPIO_PinInput:
 		  GPIOC->PDDR &= ~(1<<GPIO_Pin);     /* Disable Port Data Direction Register */
 		  GPIOC->PIDR &= ~(1<<GPIO_Pin);     /* Clear Port Input Disable Register */
-		  PORT->PUE2 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE2 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  case GPIO_PinInput_InternalPullup:
 		  GPIOC->PDDR &= ~(1<<GPIO_Pin);     /* Disable Port Data Direction Register */
 		  GPIOC->PIDR &= ~(1<<GPIO_Pin);     /* Clear Port Input Disable Register */
-		  PORT->PUE2 |= (1<<GPIO_Pin);    /* Enable Pullup */
+		  PORT->PUE2 |= (1<<GPIO_Pin);       /* Enable Pullup */
 		break;
 	  case GPIO_PinOutput_HighCurrent:
 		  GPIOC->PDDR |= (1<<GPIO_Pin);      /* Enable Port Data Direction Register */
 		  GPIOC->PIDR |= (1<<GPIO_Pin);      /* Set Port Input Disable Register */
-		  PORT->PUE2 &= ~(1<<GPIO_Pin);    /* Disable Pullup */
+		  PORT->PUE2 &= ~(1<<GPIO_Pin);      /* Disable Pullup */
 		break;
 	  }
 	}
@@ -303,7 +307,7 @@ void GPIO_PinInit(GPIO_PinType GPIO_Pin, GPIO_PinConfigType GPIO_PinConfig)
 /*****************************************************************************//*!
 * @brief    Read GPIO single pin input value.
 *        
-* @param[in] GPIO_Pin        GPIO pin name, can be GPIO_PTA0,1 ...
+* @param[in] GPIO_Pin,  GPIO pin name, can be GPIO_PTA0,1 ...
 *
 * @return   none
 *
@@ -348,7 +352,7 @@ uint8_t GPIO_PinRead(GPIO_PinType GPIO_Pin)
 /*****************************************************************************//*!
 * @brief    Toggle GPIO single pin which is specified by GPIO_Pin
 *        
-* @param[in] GPIO_Pin        GPIO pin name, can be GPIO_PTA0,1 ...
+* @param[in] GPIO_Pin,  GPIO pin name, can be GPIO_PTA0,1 ...
 *
 * @return   none
 *
@@ -382,10 +386,12 @@ void GPIO_PinToggle(GPIO_PinType GPIO_Pin)
 #endif
 }
 
+
+
 /*****************************************************************************//*!
 * @brief    Set GPIO single pin which is specified by GPIO_Pin
 *        
-* @param[in] GPIO_Pin        GPIO pin name, can be GPIO_PTA0,1 ...
+* @param[in] GPIO_Pin,  GPIO pin name, can be GPIO_PTA0,1 ...
 *
 * @return   none
 *
@@ -419,10 +425,12 @@ void GPIO_PinSet(GPIO_PinType GPIO_Pin)
 #endif
 }
 
+
+
 /*****************************************************************************//*!
 * @brief    Clear GPIO single pin which is specified by GPIO_Pin
 *        
-* @param[in] GPIO_Pin        GPIO pin name, can be GPIO_PTA0,1 ...
+* @param[in] GPIO_Pin,  GPIO pin name, can be GPIO_PTA0,1 ...
 *
 * @return   none
 *

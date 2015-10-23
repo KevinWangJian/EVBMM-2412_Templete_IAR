@@ -26,7 +26,6 @@
   *
   ******************************************************************************
   */
-
 #include "arm_cm0.h"
 #include "PIT_Driver.h"
 
@@ -38,14 +37,14 @@
  * @returns  0: Calling succeeded.
  * 			-1: Calling failed.
  */
-int32_t PIT_Init(PIT_TimebaseInitTypeDef* TimConfig)
+int PIT_Init(PIT_TimebaseInitTypeDef* TimConfig)
 {
 	if (TimConfig == NULL)return -1;
 
 	/* PIT peripheral module clock is enabled. */
 	SIM->SCGC |= SIM_SCGC_PIT_MASK;
 
-	/* First,clock for PIT timers is desabled.This field must be enabled before any other setup is done */
+	/* First,clock for standard PIT timers is disabled.This field must be set before any other setup is done */
 	PIT->MCR |= PIT_MCR_MDIS_MASK;
 
 	if (TimConfig->freeze == PIT_FreezeEnable)

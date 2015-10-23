@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V7.40.5.9725/W32 for ARM                 22/Oct/2015  18:25:56
+# IAR ELF Linker V7.40.5.9725/W32 for ARM                 23/Oct/2015  16:10:50
 # Copyright 2007-2015 IAR Systems AB.
 #
 #    Output file  =  
@@ -17,11 +17,13 @@
 #        "D:\My
 #        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj\assert.o"
 #        "D:\My
-#        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj\CAN_Buffer.o"
-#        "D:\My
 #        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj\CAN_Message.o"
 #        "D:\My
+#        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\library\CAN_SoftBuffer.a"
+#        "D:\My
 #        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj\crt0.o"
+#        "D:\My
+#        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj\Delay.o"
 #        "D:\My
 #        Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj\Filter_LTC6804.o"
 #        "D:\My
@@ -104,7 +106,7 @@ __SystemLibrary = DLib
                               - 0x000000c0    0xc0
 
 "P1", part 1 of 2:                             0x0
-  .rodata              const    0x000000c0     0x0  zero_init3.o [5]
+  .rodata              const    0x000000c0     0x0  zero_init3.o [6]
   CodeRelocate                  0x000000c0     0x0  <Block>
 
 Absolute sections:                            0x10
@@ -115,113 +117,117 @@ Absolute sections:                            0x10
   .noinit              ro code  0x00000410    0x18  crt0.o [1]
                               - 0x00000428    0x18
 
-"P1", part 2 of 2:                          0x66fe
+"P1", part 2 of 2:                          0x6adc
   .text                ro code  0x00000428  0x12c4  LTC6804_Driver.o [1]
   .text                ro code  0x000016ec   0x290  SPI_Driver.o [1]
-  .text                ro code  0x0000197c   0x1cc  Systick_Driver.o [1]
-  .text                ro code  0x00001b48   0x448  GPIO_Driver.o [1]
-  .text                ro code  0x00001f90    0xe0  I32DivModFast.o [5]
-  .text                ro code  0x00002070    0x28  FltCmpGe.o [4]
-  .text                ro code  0x00002098   0x116  FltAddSub.o [4]
-  .text                ro code  0x000021ae     0x2  vectors.o [1]
-  .text                ro code  0x000021b0    0x32  FltToDbl.o [4]
-  .text                ro code  0x000021e2    0x62  DblToFlt.o [4]
-  .text                ro code  0x00002244    0x26  FltCmpLe.o [4]
-  .text                ro code  0x0000226c    0x1e  I32ToFlt.o [4]
-  .text                ro code  0x0000228a    0xaa  FltDiv.o [4]
-  .text                ro code  0x00002334    0xb0  FltMul.o [4]
-  .text                ro code  0x000023e4   0x120  system_SKEAZ1284.o [1]
-  .text                ro code  0x00002504    0x38  arm_cm0.o [1]
-  .text                ro code  0x0000253c     0x2  IntDivZer.o [5]
-  .text                ro code  0x00002540    0x30  assert.o [1]
-  .text                ro code  0x00002570    0x24  printf.o [3]
-  .text                ro code  0x00002594   0xeba  xprintffull_nomb.o [3]
-  .text                ro code  0x0000344e    0x14  strchr.o [5]
-  .text                ro code  0x00003462    0x24  stdlib.o [1]
-  .text                ro code  0x00003486    0x18  memchr.o [5]
-  .text                ro code  0x0000349e    0x6a  I64DivMod.o [5]
-  .text                ro code  0x00003508    0x5c  ABImemcpy.o [5]
-  .text                ro code  0x00003564    0x44  xdnorm.o [4]
-  .text                ro code  0x000035a8    0x32  DblCmpLe.o [4]
-  .text                ro code  0x000035da    0x32  DblCmpGe.o [4]
-  .text                ro code  0x0000360c   0x11c  xdscale.o [4]
-  .text                ro code  0x00003728    0x52  DblToI32.o [4]
-  .text                ro code  0x0000377c    0x34  I32ToDbl.o [4]
-  .text                ro code  0x000037b0   0x1a8  DblAddSub.o [4]
-  .text                ro code  0x00003958   0x184  DblMul.o [4]
-  .text                ro code  0x00003adc    0xc2  DblDiv.o [4]
-  .text                ro code  0x00003b9e    0x20  div.o [3]
-  .text                ro code  0x00003bc0     0x2  I64DivZer.o [5]
-  .text                ro code  0x00003bc4  0x1134  CAN_Message.o [1]
-  .text                ro code  0x00004cf8   0x320  CAN_Buffer.o [1]
-  .text                ro code  0x00005018   0x1ec  M95160_Driver.o [1]
-  .text                ro code  0x00005204   0x1fc  Flash_Driver.o [1]
-  .text                ro code  0x00005400   0x9f0  MSCAN_Driver.o [1]
-  .text                ro code  0x00005df0   0x120  PIT_Driver.o [1]
-  .rodata              const    0x00005f10   0x284  LTC6804_Driver.o [1]
-  .data_init                    0x00006194   0x218  <Block>
-    Initializer bytes  const    0x00006194   0x218  <for .data-1>
-  .rodata              const    0x000063ac   0x200  LTC6804_Driver.o [1]
-  .text                ro code  0x000065ac   0x14a  System_Init.o [1]
-  .text                ro code  0x000066f8    0xc4  ISR.o [1]
-  .text                ro code  0x000067bc    0xb0  startup.o [1]
-  .text                ro code  0x0000686c    0x6c  iarttio.o [6]
-  .text                ro code  0x000068d8     0x8  XShttio.o [3]
-  .rodata              const    0x000068e0    0x54  arm_cm0.o [1]
-  .text                ro code  0x00006934    0x3c  zero_init3.o [5]
-  .text                ro code  0x00006970    0x34  start.o [1]
-  .text                ro code  0x000069a4    0x10  main.o [1]
-  .text                ro code  0x000069b4    0x28  data_init.o [5]
-  .rodata              const    0x000069dc    0x24  assert.o [1]
-  .text                ro code  0x00006a00    0x24  putchar.o [3]
-  .text                ro code  0x00006a24    0x10  write.o [6]
-  .text                ro code  0x00006a34    0x1e  dwrite.o [6]
-  .text                ro code  0x00006a52    0x20  iarwstd.o [6]
-  .text                ro code  0x00006a72    0x22  iarwrite.o [6]
-  .iar.init_table      const    0x00006a94    0x10  - Linker created -
-  .text                ro code  0x00006aa4    0x1a  cmain.o [5]
-  .text                ro code  0x00006abe     0x4  low_level_init.o [3]
-  .text                ro code  0x00006ac2     0x8  exit.o [3]
-  .text                ro code  0x00006acc     0xa  cexit.o [5]
-  .text                ro code  0x00006ad8    0x14  exit.o [6]
-  .rodata              const    0x00006aec    0x18  xprintffull_nomb.o [3]
-  .text                ro code  0x00006b04    0x16  xprout.o [3]
-  .text                ro code  0x00006b1a     0xc  cstartup_M.o [5]
-                              - 0x00006b26  0x66fe
+  .text                ro code  0x0000197c    0x2c  Delay.o [1]
+  .text                ro code  0x000019a8   0x448  GPIO_Driver.o [1]
+  .text                ro code  0x00001df0    0xe0  I32DivModFast.o [6]
+  .text                ro code  0x00001ed0    0x28  FltCmpGe.o [5]
+  .text                ro code  0x00001ef8   0x116  FltAddSub.o [5]
+  .text                ro code  0x0000200e     0x2  vectors.o [1]
+  .text                ro code  0x00002010    0x32  FltToDbl.o [5]
+  .text                ro code  0x00002042    0x62  DblToFlt.o [5]
+  .text                ro code  0x000020a4    0x26  FltCmpLe.o [5]
+  .text                ro code  0x000020cc    0x1e  I32ToFlt.o [5]
+  .text                ro code  0x000020ea    0xaa  FltDiv.o [5]
+  .text                ro code  0x00002194    0xb0  FltMul.o [5]
+  .text                ro code  0x00002244     0x2  IntDivZer.o [6]
+  .text                ro code  0x00002248  0x1170  CAN_Message.o [1]
+  .text                ro code  0x000033b8   0x320  CAN_Buffer.o [3]
+  .text                ro code  0x000036d8   0x1ec  M95160_Driver.o [1]
+  .text                ro code  0x000038c4   0x5a8  Flash_Driver.o [1]
+  .text                ro code  0x00003e6c   0x9d0  MSCAN_Driver.o [1]
+  .text                ro code  0x0000483c    0x38  arm_cm0.o [1]
+  .text                ro code  0x00004874   0x120  PIT_Driver.o [1]
+  .text                ro code  0x00004994    0x30  assert.o [1]
+  .text                ro code  0x000049c4    0x24  printf.o [4]
+  .text                ro code  0x000049e8   0xeba  xprintffull_nomb.o [4]
+  .text                ro code  0x000058a2    0x14  strchr.o [6]
+  .text                ro code  0x000058b6    0x24  stdlib.o [1]
+  .text                ro code  0x000058da    0x18  memchr.o [6]
+  .text                ro code  0x000058f2    0x6a  I64DivMod.o [6]
+  .text                ro code  0x0000595c    0x5c  ABImemcpy.o [6]
+  .text                ro code  0x000059b8    0x44  xdnorm.o [5]
+  .text                ro code  0x000059fc    0x32  DblCmpLe.o [5]
+  .text                ro code  0x00005a2e    0x32  DblCmpGe.o [5]
+  .text                ro code  0x00005a60   0x11c  xdscale.o [5]
+  .text                ro code  0x00005b7c    0x52  DblToI32.o [5]
+  .text                ro code  0x00005bd0    0x34  I32ToDbl.o [5]
+  .text                ro code  0x00005c04   0x1a8  DblAddSub.o [5]
+  .text                ro code  0x00005dac   0x184  DblMul.o [5]
+  .text                ro code  0x00005f30    0xc2  DblDiv.o [5]
+  .text                ro code  0x00005ff2    0x20  div.o [4]
+  .text                ro code  0x00006014     0x2  I64DivZer.o [6]
+  .rodata              const    0x00006018   0x284  LTC6804_Driver.o [1]
+  .rodata              const    0x0000629c   0x200  LTC6804_Driver.o [1]
+  .text                ro code  0x0000649c   0x1a0  Systick_Driver.o [1]
+  .text                ro code  0x0000663c   0x12c  system_SKEAZ1284.o [1]
+  .text                ro code  0x00006768   0x14a  System_Init.o [1]
+  .rodata              const    0x000068b4   0x100  CAN_Message.o [1]
+  .rodata              const    0x000069b4   0x100  CAN_Message.o [1]
+  .text                ro code  0x00006ab4    0xc4  ISR.o [1]
+  .text                ro code  0x00006b78    0xb0  startup.o [1]
+  .text                ro code  0x00006c28    0x6c  iarttio.o [7]
+  .text                ro code  0x00006c94     0x8  XShttio.o [4]
+  .rodata              const    0x00006c9c    0x54  arm_cm0.o [1]
+  .text                ro code  0x00006cf0    0x3c  zero_init3.o [6]
+  .text                ro code  0x00006d2c    0x34  start.o [1]
+  .text                ro code  0x00006d60    0x10  main.o [1]
+  .text                ro code  0x00006d70    0x28  data_init.o [6]
+  .rodata              const    0x00006d98    0x24  assert.o [1]
+  .text                ro code  0x00006dbc    0x24  putchar.o [4]
+  .text                ro code  0x00006de0    0x10  write.o [7]
+  .text                ro code  0x00006df0    0x1e  dwrite.o [7]
+  .text                ro code  0x00006e0e    0x20  iarwstd.o [7]
+  .text                ro code  0x00006e2e    0x22  iarwrite.o [7]
+  .iar.init_table      const    0x00006e50    0x10  - Linker created -
+  .data_init                    0x00006e60    0x1c  <Block>
+    Initializer bytes  const    0x00006e60    0x1c  <for .data-1>
+  .text                ro code  0x00006e7c    0x1a  cmain.o [6]
+  .text                ro code  0x00006e96     0x4  low_level_init.o [4]
+  .text                ro code  0x00006e9a     0x8  exit.o [4]
+  .text                ro code  0x00006ea4     0xa  cexit.o [6]
+  .text                ro code  0x00006eb0    0x14  exit.o [7]
+  .rodata              const    0x00006ec4    0x18  xprintffull_nomb.o [4]
+  .text                ro code  0x00006edc    0x16  xprout.o [4]
+  .text                ro code  0x00006ef2     0xc  cstartup_M.o [6]
+  .rodata              const    0x00006f00     0x4  CAN_Message.o [1]
+                              - 0x00006f04  0x6adc
 
-"P2":                                       0x1748
-  .data                         0x20000000   0x218  <Block>
-    .data-1                     0x20000000   0x218  <Init block>
-      .data            inited   0x20000000   0x200  CAN_Message.o [1]
-      .data            inited   0x20000200     0xc  LTC6804_Driver.o [1]
-      .data            inited   0x2000020c     0x4  system_SKEAZ1284.o [1]
-      .data            inited   0x20000210     0x8  XShttio.o [3]
-  .bss                          0x20000218  0x1530  <Block>
-    .bss               zero     0x20000218   0x7d4  CAN_Buffer.o [1]
-    .bss               zero     0x200009ec   0x7d4  CAN_Buffer.o [1]
-    .bss               zero     0x200011c0   0x404  CAN_Message.o [1]
-    .bss               zero     0x200015c4    0x10  CAN_Message.o [1]
-    .bss               zero     0x200015d4    0x1c  CAN_Message.o [1]
-    .bss               zero     0x200015f0    0x90  LTC6804_Driver.o [1]
-    .bss               zero     0x20001680     0xc  LTC6804_Driver.o [1]
-    .bss               zero     0x2000168c    0x18  LTC6804_Driver.o [1]
-    .bss               zero     0x200016a4     0x4  LTC6804_Driver.o [1]
-    .bss               zero     0x200016a8    0x30  LTC6804_Driver.o [1]
-    .bss               zero     0x200016d8    0x18  LTC6804_Driver.o [1]
-    .bss               zero     0x200016f0     0xc  LTC6804_Driver.o [1]
-    .bss               zero     0x200016fc    0x30  LTC6804_Driver.o [1]
-    .bss               zero     0x2000172c     0xc  LTC6804_Driver.o [1]
-    .bss               zero     0x20001738     0x4  Systick_Driver.o [1]
-    .bss               zero     0x2000173c     0x2  ISR.o [1]
-    .bss               zero     0x2000173e     0x1  CAN_Message.o [1]
-    .bss               zero     0x2000173f     0x1  LTC6804_Driver.o [1]
-    .bss               zero     0x20001740     0x1  LTC6804_Driver.o [1]
-    .bss               zero     0x20001741     0x1  LTC6804_Driver.o [1]
-    .bss               zero     0x20001742     0x1  LTC6804_Driver.o [1]
-    .bss               zero     0x20001743     0x1  LTC6804_Driver.o [1]
-    .bss               zero     0x20001744     0x1  LTC6804_Driver.o [1]
-  CodeRelocateRam               0x20001748     0x0  <Block>
-                              - 0x20001748  0x1748
+"P2":                                       0x154c
+  .data                         0x20000000    0x1c  <Block>
+    .data-1                     0x20000000    0x1c  <Init block>
+      .data            inited   0x20000000     0xc  LTC6804_Driver.o [1]
+      .data            inited   0x2000000c     0x4  system_SKEAZ1284.o [1]
+      .data            inited   0x20000010     0x4  system_SKEAZ1284.o [1]
+      .data            inited   0x20000014     0x8  XShttio.o [4]
+  .bss                          0x2000001c  0x1530  <Block>
+    .bss               zero     0x2000001c   0x404  CAN_Message.o [1]
+    .bss               zero     0x20000420    0x10  CAN_Message.o [1]
+    .bss               zero     0x20000430    0x1c  CAN_Message.o [1]
+    .bss               zero     0x2000044c     0x4  Delay.o [1]
+    .bss               zero     0x20000450    0x90  LTC6804_Driver.o [1]
+    .bss               zero     0x200004e0     0xc  LTC6804_Driver.o [1]
+    .bss               zero     0x200004ec    0x18  LTC6804_Driver.o [1]
+    .bss               zero     0x20000504     0x4  LTC6804_Driver.o [1]
+    .bss               zero     0x20000508    0x30  LTC6804_Driver.o [1]
+    .bss               zero     0x20000538    0x18  LTC6804_Driver.o [1]
+    .bss               zero     0x20000550     0xc  LTC6804_Driver.o [1]
+    .bss               zero     0x2000055c    0x30  LTC6804_Driver.o [1]
+    .bss               zero     0x2000058c     0xc  LTC6804_Driver.o [1]
+    .bss               zero     0x20000598   0x7d4  CAN_Buffer.o [3]
+    .bss               zero     0x20000d6c   0x7d4  CAN_Buffer.o [3]
+    .bss               zero     0x20001540     0x2  ISR.o [1]
+    .bss               zero     0x20001542     0x1  CAN_Message.o [1]
+    .bss               zero     0x20001543     0x1  LTC6804_Driver.o [1]
+    .bss               zero     0x20001544     0x1  LTC6804_Driver.o [1]
+    .bss               zero     0x20001545     0x1  LTC6804_Driver.o [1]
+    .bss               zero     0x20001546     0x1  LTC6804_Driver.o [1]
+    .bss               zero     0x20001547     0x1  LTC6804_Driver.o [1]
+    .bss               zero     0x20001548     0x1  LTC6804_Driver.o [1]
+  CodeRelocateRam               0x2000154c     0x0  <Block>
+                              - 0x2000154c  0x154c
 
 
 *******************************************************************************
@@ -232,7 +238,7 @@ Absolute sections:                            0x10
           -------     ----
 Zero (__iar_zero_init3)
     1 destination range, total size 0x152d:
-          0x20000218  0x152d
+          0x2000001c  0x152d
 
 
 
@@ -244,18 +250,18 @@ Zero (__iar_zero_init3)
                                                     (abs)
     ------              -------  -------  -------  -------
 D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj: [1]
-    CAN_Buffer.o            800             4 008
-    CAN_Message.o         4 404      512    1 585
-    Flash_Driver.o          508
+    CAN_Message.o         4 464      516    1 073
+    Delay.o                  44                 4
+    Flash_Driver.o        1 448
     GPIO_Driver.o         1 096
     ISR.o                   196                 2
     LTC6804_Driver.o      4 804    1 168      346
     M95160_Driver.o         492
-    MSCAN_Driver.o        2 544
+    MSCAN_Driver.o        2 512
     PIT_Driver.o            288
     SPI_Driver.o            656
     System_Init.o           330
-    Systick_Driver.o        460                 4
+    Systick_Driver.o        416
     arm_cm0.o                56       84
     assert.o                 48       36
     crt0.o                   24
@@ -263,16 +269,21 @@ D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debu
     start.o                  52
     startup.o               176
     stdlib.o                 36
-    system_SKEAZ1284.o      288        4        4
+    system_SKEAZ1284.o      300        8        8
     vectors.o                 2      192                16
     ------------------------------------------------------
-    Total:               17 276    1 996    5 949       16
+    Total:               17 456    2 004    1 433       16
 
 command line: [2]
     ------------------------------------------------------
     Total:
 
-dl6M_tln.a: [3]
+CAN_SoftBuffer.a: [3]
+    CAN_Buffer.o            800             4 008
+    ------------------------------------------------------
+    Total:                  800             4 008
+
+dl6M_tln.a: [4]
     XShttio.o                 8        8        8
     div.o                    32
     exit.o                    8
@@ -284,7 +295,7 @@ dl6M_tln.a: [3]
     ------------------------------------------------------
     Total:                3 916       32        8
 
-m6M_tl.a: [4]
+m6M_tl.a: [5]
     DblAddSub.o             424
     DblCmpGe.o               50
     DblCmpLe.o               50
@@ -305,7 +316,7 @@ m6M_tl.a: [4]
     ------------------------------------------------------
     Total:                2 472
 
-rt6M_tl.a: [5]
+rt6M_tl.a: [6]
     ABImemcpy.o              92
     I32DivModFast.o         224
     I64DivMod.o             106
@@ -321,7 +332,7 @@ rt6M_tl.a: [5]
     ------------------------------------------------------
     Total:                  618
 
-shb_l.a: [6]
+shb_l.a: [7]
     dwrite.o                 30
     exit.o                   20
     iarttio.o               108
@@ -331,10 +342,10 @@ shb_l.a: [6]
     ------------------------------------------------------
     Total:                  240
 
-    Gaps                     16
+    Gaps                     12        6
     Linker created                    16
 ----------------------------------------------------------
-    Grand Total:         24 538    2 044    5 957       16
+    Grand Total:         25 514    2 058    5 449       16
 
 
 *******************************************************************************
@@ -343,68 +354,68 @@ shb_l.a: [6]
 
 Entry                      Address   Size  Type      Object
 -----                      -------   ----  ----      ------
-.bss$$Base              0x20000218          --   Gb  - Linker created -
-.bss$$Limit             0x20001748          --   Gb  - Linker created -
+.bss$$Base              0x2000001c          --   Gb  - Linker created -
+.bss$$Limit             0x2000154c          --   Gb  - Linker created -
 .data$$Base             0x20000000          --   Gb  - Linker created -
-.data$$Limit            0x20000218          --   Gb  - Linker created -
-.data_init$$Base        0x00006194          --   Gb  - Linker created -
-.data_init$$Limit       0x000063ac          --   Gb  - Linker created -
-.iar.init_table$$Base   0x00006a94          --   Gb  - Linker created -
-.iar.init_table$$Limit  0x00006aa4          --   Gb  - Linker created -
-?main                   0x00006aa5         Code  Gb  cmain.o [5]
-ASSERT_FAILED_STR       0x000069dc   0x24  Data  Gb  assert.o [1]
-CAN_Transmission_Init   0x0000494d  0x12e  Code  Gb  CAN_Message.o [1]
-CRC16_Calc              0x00003c57   0x2e  Code  Lc  CAN_Message.o [1]
-CRC16_table             0x20000000  0x200  Data  Lc  CAN_Message.o [1]
-CellInfoSampling_Init   0x0000663f   0x44  Code  Lc  System_Init.o [1]
-Check_CANReceiveBuffer  0x00004d85   0xf2  Code  Gb  CAN_Buffer.o [1]
-Check_CANSendBuffer     0x00004f1d   0xf2  Code  Gb  CAN_Buffer.o [1]
+.data$$Limit            0x2000001c          --   Gb  - Linker created -
+.data_init$$Base        0x00006e60          --   Gb  - Linker created -
+.data_init$$Limit       0x00006e7c          --   Gb  - Linker created -
+.iar.init_table$$Base   0x00006e50          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x00006e60          --   Gb  - Linker created -
+?main                   0x00006e7d         Code  Gb  cmain.o [6]
+ASSERT_FAILED_STR       0x00006d98   0x24  Data  Gb  assert.o [1]
+CAN_Transmission_Init   0x0000301d  0x122  Code  Gb  CAN_Message.o [1]
+CRC16_Calc              0x000022db   0x38  Code  Lc  CAN_Message.o [1]
+CellInfoSampling_Init   0x000067fb   0x44  Code  Lc  System_Init.o [1]
+Check_CANReceiveBuffer  0x00003445   0xf2  Code  Gb  CAN_Buffer.o [3]
+Check_CANSendBuffer     0x000035dd   0xf2  Code  Gb  CAN_Buffer.o [3]
 CodeRelocate$$Base      0x000000c0          --   Gb  - Linker created -
 CodeRelocate$$Limit     0x000000c0          --   Gb  - Linker created -
-CodeRelocateRam$$Base   0x20001748          --   Gb  - Linker created -
-CodeRelocateRam$$Limit  0x20001748          --   Gb  - Linker created -
-Collect_Data            0x200015f0   0x90  Data  Gb  LTC6804_Driver.o [1]
-Delay10us               0x00001b05   0x12  Code  Gb  Systick_Driver.o [1]
-EVBCM_ReadDIStatus      0x000046c1   0x3c  Code  Lc  CAN_Message.o [1]
+CodeRelocateRam$$Base   0x2000154c          --   Gb  - Linker created -
+CodeRelocateRam$$Limit  0x2000154c          --   Gb  - Linker created -
+Collect_Data            0x20000450   0x90  Data  Gb  LTC6804_Driver.o [1]
+Delay10us               0x00001993   0x12  Code  Gb  Delay.o [1]
+EVBCM_ReadDIStatus      0x00002d89   0x3c  Code  Lc  CAN_Message.o [1]
 EVBCM_ReplyAddressMatch
-                        0x0000487f   0xbc  Code  Lc  CAN_Message.o [1]
-EVBCM_RequestCellInfo   0x00004065   0x44  Code  Lc  CAN_Message.o [1]
+                        0x00002f4f   0xbe  Code  Lc  CAN_Message.o [1]
+EVBCM_RequestCellInfo   0x000026f9   0x44  Code  Lc  CAN_Message.o [1]
 EVBCM_RequestConfigTable
-                        0x000044cd  0x194  Code  Lc  CAN_Message.o [1]
-EVBCM_RequestIOControl  0x00004661   0x60  Code  Lc  CAN_Message.o [1]
+                        0x00002b95  0x194  Code  Lc  CAN_Message.o [1]
+EVBCM_RequestIOControl  0x00002d29   0x60  Code  Lc  CAN_Message.o [1]
 EVBCM_RequestSlaverVersion
-                        0x00004029   0x36  Code  Lc  CAN_Message.o [1]
+                        0x000026b9   0x3c  Code  Lc  CAN_Message.o [1]
 EVBCM_SendAllConfigTableData
-                        0x000042b1  0x212  Code  Lc  CAN_Message.o [1]
-EVBCM_SendUpdateData    0x00004741   0x32  Code  Lc  CAN_Message.o [1]
+                        0x00002955  0x23c  Code  Lc  CAN_Message.o [1]
+EVBCM_SendUpdateData    0x00002e09   0x32  Code  Lc  CAN_Message.o [1]
 EVBCM_SendUpdateData_Done
-                        0x00004779  0x106  Code  Lc  CAN_Message.o [1]
-EVBCM_StartUpdating     0x000046fd   0x44  Code  Lc  CAN_Message.o [1]
+                        0x00002e49  0x106  Code  Lc  CAN_Message.o [1]
+EVBCM_StartUpdating     0x00002dc5   0x44  Code  Lc  CAN_Message.o [1]
 EVBMM_CANReceiveBufferParsing
-                        0x00004a8d   0x9a  Code  Gb  CAN_Message.o [1]
+                        0x0000314d   0x9a  Code  Gb  CAN_Message.o [1]
 EVBMM_PreparePartialConfigTableData
-                        0x00004c11   0xc6  Code  Gb  CAN_Message.o [1]
+                        0x000032d5   0xc6  Code  Gb  CAN_Message.o [1]
 EVBMM_ReadPartialConfigTableData
-                        0x00004b27   0xe4  Code  Gb  CAN_Message.o [1]
+                        0x000031e7   0xe4  Code  Gb  CAN_Message.o [1]
 EVBMM_ReadSendConfigTable
-                        0x000041cd   0xca  Code  Lc  CAN_Message.o [1]
-EVBMM_ReplyCellCurrent  0x00003fc9   0x36  Code  Lc  CAN_Message.o [1]
+                        0x00002869   0xca  Code  Lc  CAN_Message.o [1]
+EVBMM_ReplyCellCurrent  0x00002659   0x36  Code  Lc  CAN_Message.o [1]
 EVBMM_ReplyCellInfoFinished
-                        0x00004005   0x24  Code  Lc  CAN_Message.o [1]
+                        0x00002695   0x24  Code  Lc  CAN_Message.o [1]
 EVBMM_ReplyCellTemperature
-                        0x00003e45  0x176  Code  Lc  CAN_Message.o [1]
-EVBMM_ReplyCellVoltage  0x00003c85  0x1ae  Code  Lc  CAN_Message.o [1]
-EVBMM_WriteConfigTable  0x000040a9  0x124  Code  Lc  CAN_Message.o [1]
-Fill_CANReceiveBuffer   0x00004cf9   0x8c  Code  Gb  CAN_Buffer.o [1]
-Fill_CANSendBuffer      0x00004e77   0xa6  Code  Gb  CAN_Buffer.o [1]
-Flash_EarseSector       0x00005227   0x78  Code  Gb  Flash_Driver.o [1]
-Flash_Init              0x00005205   0x22  Code  Gb  Flash_Driver.o [1]
-Flash_ProgramSector     0x000052a5  0x146  Code  Gb  Flash_Driver.o [1]
-GPIO_PinClear           0x00001f19   0x36  Code  Gb  GPIO_Driver.o [1]
-GPIO_PinInit            0x00001b49  0x2fe  Code  Gb  GPIO_Driver.o [1]
-GPIO_PinRead            0x00001e55   0x4c  Code  Gb  GPIO_Driver.o [1]
-GPIO_PinSet             0x00001ed7   0x36  Code  Gb  GPIO_Driver.o [1]
-GPIO_PinToggle          0x00001ea1   0x36  Code  Gb  GPIO_Driver.o [1]
+                        0x000024d5  0x176  Code  Lc  CAN_Message.o [1]
+EVBMM_ReplyCellVoltage  0x00002313  0x1ae  Code  Lc  CAN_Message.o [1]
+EVBMM_SoftWare_Version  0x00006f00    0x4  Data  Lc  CAN_Message.o [1]
+EVBMM_WriteConfigTable  0x0000273d  0x12c  Code  Lc  CAN_Message.o [1]
+Fill_CANReceiveBuffer   0x000033b9   0x8c  Code  Gb  CAN_Buffer.o [3]
+Fill_CANSendBuffer      0x00003537   0xa6  Code  Gb  CAN_Buffer.o [3]
+Flash_EarseSector       0x00003c69   0x74  Code  Gb  Flash_Driver.o [1]
+Flash_Init              0x000038c5  0x384  Code  Gb  Flash_Driver.o [1]
+Flash_ProgramSector     0x00003d19  0x140  Code  Gb  Flash_Driver.o [1]
+GPIO_PinClear           0x00001d79   0x36  Code  Gb  GPIO_Driver.o [1]
+GPIO_PinInit            0x000019a9  0x2fe  Code  Gb  GPIO_Driver.o [1]
+GPIO_PinRead            0x00001cb5   0x4c  Code  Gb  GPIO_Driver.o [1]
+GPIO_PinSet             0x00001d37   0x36  Code  Gb  GPIO_Driver.o [1]
+GPIO_PinToggle          0x00001d01   0x36  Code  Gb  GPIO_Driver.o [1]
 LTC6804_ADAX            0x00000667   0x76  Code  Gb  LTC6804_Driver.o [1]
 LTC6804_ADCV            0x000005dd   0x8a  Code  Gb  LTC6804_Driver.o [1]
 LTC6804_ClearRawData_Reg
@@ -433,166 +444,170 @@ LTC6820_SPI_WriteNByteData
                         0x00000545   0x22  Code  Lc  LTC6804_Driver.o [1]
 LTC6820_SPIx_Config_Initial
                         0x0000049d   0xa8  Code  Gb  LTC6804_Driver.o [1]
-LoadInt                 0x00002b51   0x68  Code  Lc  xprintffull_nomb.o [3]
-M95160_Init             0x00005019   0x76  Code  Gb  M95160_Driver.o [1]
+LoadInt                 0x00004fa5   0x68  Code  Lc  xprintffull_nomb.o [4]
+M95160_Init             0x000036d9   0x76  Code  Gb  M95160_Driver.o [1]
 M95160_ReadSequenceBytesData
-                        0x00005177   0x84  Code  Gb  M95160_Driver.o [1]
+                        0x00003837   0x84  Code  Gb  M95160_Driver.o [1]
 M95160_ReadStatusRegister
-                        0x0000508f   0x4c  Code  Gb  M95160_Driver.o [1]
+                        0x0000374f   0x4c  Code  Gb  M95160_Driver.o [1]
 M95160_WriteSingleByteData
-                        0x000050db   0x9c  Code  Gb  M95160_Driver.o [1]
-MSCAN_ConfigIDFilter    0x00005401  0x304  Code  Lc  MSCAN_Driver.o [1]
+                        0x0000379b   0x9c  Code  Gb  M95160_Driver.o [1]
+MSCAN_ConfigIDFilter    0x00003e6d  0x304  Code  Lc  MSCAN_Driver.o [1]
 MSCAN_HardTxBufferCheck
-                        0x00005d97   0x1c  Code  Gb  MSCAN_Driver.o [1]
-MSCAN_Init              0x00005749  0x332  Code  Gb  MSCAN_Driver.o [1]
-MSCAN_RX_Handler        0x00006701   0x18  Code  Gb  ISR.o [1]
-MSCAN_ReceiveFrame      0x00005c21  0x176  Code  Gb  MSCAN_Driver.o [1]
-MSCAN_SendFrame         0x00005a9d  0x17a  Code  Gb  MSCAN_Driver.o [1]
-NVIC_EnableIRQ          0x00003bc5    0xe  Code  Lc  CAN_Message.o [1]
-NVIC_EnableIRQ          0x000065ad    0xe  Code  Lc  System_Init.o [1]
-NVIC_EnableIRQ          0x0000197d    0xe  Code  Lc  Systick_Driver.o [1]
-NVIC_SetPriority        0x00003bd3   0x84  Code  Lc  CAN_Message.o [1]
-NVIC_SetPriority        0x000065bb   0x84  Code  Lc  System_Init.o [1]
-NVIC_SetPriority        0x0000198b   0x84  Code  Lc  Systick_Driver.o [1]
-PIT_CH0_Handler         0x00006719   0x32  Code  Gb  ISR.o [1]
-PIT_CH1_Handler         0x0000674b   0x5c  Code  Gb  ISR.o [1]
-PIT_EnableModule        0x00005ed1   0x1e  Code  Gb  PIT_Driver.o [1]
-PIT_Init                0x00005df1   0xe0  Code  Gb  PIT_Driver.o [1]
-Para_Struct             0x20001680    0xc  Data  Gb  LTC6804_Driver.o [1]
-R_NTC_zengbo            0x200016a4    0x4  Data  Gb  LTC6804_Driver.o [1]
-Region$$Table$$Base     0x00006a94          --   Gb  - Linker created -
-Region$$Table$$Limit    0x00006aa4          --   Gb  - Linker created -
+                        0x000047e3   0x1c  Code  Gb  MSCAN_Driver.o [1]
+MSCAN_Init              0x000041b5  0x314  Code  Gb  MSCAN_Driver.o [1]
+MSCAN_RX_Handler        0x00006abd   0x18  Code  Gb  ISR.o [1]
+MSCAN_ReceiveFrame      0x0000466d  0x176  Code  Gb  MSCAN_Driver.o [1]
+MSCAN_SendFrame         0x000044e9  0x17a  Code  Gb  MSCAN_Driver.o [1]
+NVIC_EnableIRQ          0x00002249    0xe  Code  Lc  CAN_Message.o [1]
+NVIC_EnableIRQ          0x00006769    0xe  Code  Lc  System_Init.o [1]
+NVIC_EnableIRQ          0x0000649d    0xe  Code  Lc  Systick_Driver.o [1]
+NVIC_SetPriority        0x00002257   0x84  Code  Lc  CAN_Message.o [1]
+NVIC_SetPriority        0x00006777   0x84  Code  Lc  System_Init.o [1]
+NVIC_SetPriority        0x000064ab   0x84  Code  Lc  Systick_Driver.o [1]
+PIT_CH0_Handler         0x00006ad5   0x32  Code  Gb  ISR.o [1]
+PIT_CH1_Handler         0x00006b07   0x5c  Code  Gb  ISR.o [1]
+PIT_EnableModule        0x00004955   0x1e  Code  Gb  PIT_Driver.o [1]
+PIT_Init                0x00004875   0xe0  Code  Gb  PIT_Driver.o [1]
+Para_Struct             0x200004e0    0xc  Data  Gb  LTC6804_Driver.o [1]
+R_NTC_zengbo            0x20000504    0x4  Data  Gb  LTC6804_Driver.o [1]
+Region$$Table$$Base     0x00006e50          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00006e60          --   Gb  - Linker created -
 SPI_Init                0x000016ed  0x1d2  Code  Gb  SPI_Driver.o [1]
 SPI_ReadByteData        0x00001909   0x56  Code  Gb  SPI_Driver.o [1]
 SPI_WriteByteData       0x000018bf   0x4a  Code  Gb  SPI_Driver.o [1]
-Set_Vector_Handler      0x0000250b   0x24  Code  Gb  arm_cm0.o [1]
-SysTick_Config          0x00001a0f   0x32  Code  Lc  Systick_Driver.o [1]
-SysTick_Handler         0x000066f9    0x8  Code  Gb  ISR.o [1]
-SystemCoreClock         0x2000020c    0x4  Data  Gb  system_SKEAZ1284.o [1]
-SystemCoreClockUpdate   0x00002439   0x9a  Code  Gb  system_SKEAZ1284.o [1]
-SystemInit              0x000023e5   0x54  Code  Gb  system_SKEAZ1284.o [1]
-System_Initialization   0x00006699   0x5e  Code  Gb  System_Init.o [1]
-Systick_Init            0x00001a41   0xae  Code  Gb  Systick_Driver.o [1]
-TableNTC_10K            0x00005f10  0x284  Data  Gb  LTC6804_Driver.o [1]
-TimeDelay_Decrement     0x00001aef   0x16  Code  Gb  Systick_Driver.o [1]
+Set_Vector_Handler      0x00004843   0x24  Code  Gb  arm_cm0.o [1]
+SysTick_Config          0x0000652f   0x32  Code  Lc  Systick_Driver.o [1]
+SysTick_Handler         0x00006ab5    0x8  Code  Gb  ISR.o [1]
+SystemBusClock          0x20000010    0x4  Data  Gb  system_SKEAZ1284.o [1]
+SystemCoreClock         0x2000000c    0x4  Data  Gb  system_SKEAZ1284.o [1]
+SystemCoreClockUpdate   0x00006697   0x9a  Code  Gb  system_SKEAZ1284.o [1]
+SystemInit              0x0000663d   0x5a  Code  Gb  system_SKEAZ1284.o [1]
+System_Initialization   0x00006855   0x5e  Code  Gb  System_Init.o [1]
+Systick_Init            0x00006561   0xae  Code  Gb  Systick_Driver.o [1]
+TableNTC_10K            0x00006018  0x284  Data  Gb  LTC6804_Driver.o [1]
+TimeDelay_Decrement     0x0000197d   0x16  Code  Gb  Delay.o [1]
 Vol_Temp_Conversion_And_Read
                         0x0000123b   0xba  Code  Gb  LTC6804_Driver.o [1]
-_GenldFullNoMb          0x00003181  0x29a  Code  Lc  xprintffull_nomb.o [3]
-_LdtobFullNoMb          0x00002ced  0x480  Code  Lc  xprintffull_nomb.o [3]
-_LitobFullNoMb          0x00002bb9  0x12e  Code  Lc  xprintffull_nomb.o [3]
-_PrintfFullNoMb         0x00002595  0x5bc  Code  Gb  xprintffull_nomb.o [3]
-_Prout                  0x00006b05   0x16  Code  Gb  xprout.o [3]
-_PutcharsFullNoMb       0x0000341b   0x30  Code  Lc  xprintffull_nomb.o [3]
+_GenldFullNoMb          0x000055d5  0x29a  Code  Lc  xprintffull_nomb.o [4]
+_LdtobFullNoMb          0x00005141  0x480  Code  Lc  xprintffull_nomb.o [4]
+_LitobFullNoMb          0x0000500d  0x12e  Code  Lc  xprintffull_nomb.o [4]
+_PrintfFullNoMb         0x000049e9  0x5bc  Code  Gb  xprintffull_nomb.o [4]
+_Prout                  0x00006edd   0x16  Code  Gb  xprout.o [4]
+_PutcharsFullNoMb       0x0000586f   0x30  Code  Lc  xprintffull_nomb.o [4]
 __BOOT_STACK_ADDRESS {Abs}
                         0x20002ff8          --   Gb  command line/config [2]
 __VECTOR_RAM {Abs}      0x1ffff000          --   Gb  command line/config [2]
 __VECTOR_TABLE {Abs}    0x00000000          --   Gb  command line/config [2]
-__aeabi_cdcmple         0x000035a9         Code  Gb  DblCmpLe.o [4]
-__aeabi_cdrcmple        0x000035db         Code  Gb  DblCmpGe.o [4]
-__aeabi_cfcmple         0x00002245         Code  Gb  FltCmpLe.o [4]
-__aeabi_cfrcmple        0x00002071         Code  Gb  FltCmpGe.o [4]
-__aeabi_d2f             0x000021e3         Code  Gb  DblToFlt.o [4]
-__aeabi_d2iz            0x00003729         Code  Gb  DblToI32.o [4]
-__aeabi_d2uiz           0x0000374d         Code  Gb  DblToI32.o [4]
-__aeabi_ddiv            0x00003add         Code  Gb  DblDiv.o [4]
-__aeabi_dmul            0x00003959         Code  Gb  DblMul.o [4]
-__aeabi_dsub            0x0000386b         Code  Gb  DblAddSub.o [4]
-__aeabi_f2d             0x000021b1         Code  Gb  FltToDbl.o [4]
-__aeabi_fdiv            0x0000228b         Code  Gb  FltDiv.o [4]
-__aeabi_fmul            0x00002335         Code  Gb  FltMul.o [4]
-__aeabi_fsub            0x000020ff         Code  Gb  FltAddSub.o [4]
-__aeabi_i2d             0x0000377d         Code  Gb  I32ToDbl.o [4]
-__aeabi_idiv            0x00001fbd         Code  Gb  I32DivModFast.o [5]
-__aeabi_idiv0           0x0000253d         Code  Gb  IntDivZer.o [5]
-__aeabi_idivmod         0x00001fbd         Code  Gb  I32DivModFast.o [5]
-__aeabi_ldiv0           0x00003bc1         Code  Gb  I64DivZer.o [5]
-__aeabi_memcpy          0x00003509         Code  Gb  ABImemcpy.o [5]
-__aeabi_ui2d            0x00003791         Code  Gb  I32ToDbl.o [4]
-__aeabi_ui2f            0x0000226d         Code  Gb  I32ToFlt.o [4]
-__aeabi_uidiv           0x00001fc3         Code  Gb  I32DivModFast.o [5]
-__aeabi_uidivmod        0x00001fc3         Code  Gb  I32DivModFast.o [5]
-__aeabi_uldivmod        0x0000349f         Code  Gb  I64DivMod.o [5]
-__cmain                 0x00006aa5         Code  Gb  cmain.o [5]
-__dwrite                0x00006a35   0x1e  Code  Gb  dwrite.o [6]
-__exit                  0x00006ad9   0x14  Code  Gb  exit.o [6]
+__aeabi_cdcmple         0x000059fd         Code  Gb  DblCmpLe.o [5]
+__aeabi_cdrcmple        0x00005a2f         Code  Gb  DblCmpGe.o [5]
+__aeabi_cfcmple         0x000020a5         Code  Gb  FltCmpLe.o [5]
+__aeabi_cfrcmple        0x00001ed1         Code  Gb  FltCmpGe.o [5]
+__aeabi_d2f             0x00002043         Code  Gb  DblToFlt.o [5]
+__aeabi_d2iz            0x00005b7d         Code  Gb  DblToI32.o [5]
+__aeabi_d2uiz           0x00005ba1         Code  Gb  DblToI32.o [5]
+__aeabi_ddiv            0x00005f31         Code  Gb  DblDiv.o [5]
+__aeabi_dmul            0x00005dad         Code  Gb  DblMul.o [5]
+__aeabi_dsub            0x00005cbf         Code  Gb  DblAddSub.o [5]
+__aeabi_f2d             0x00002011         Code  Gb  FltToDbl.o [5]
+__aeabi_fdiv            0x000020eb         Code  Gb  FltDiv.o [5]
+__aeabi_fmul            0x00002195         Code  Gb  FltMul.o [5]
+__aeabi_fsub            0x00001f5f         Code  Gb  FltAddSub.o [5]
+__aeabi_i2d             0x00005bd1         Code  Gb  I32ToDbl.o [5]
+__aeabi_idiv            0x00001e1d         Code  Gb  I32DivModFast.o [6]
+__aeabi_idiv0           0x00002245         Code  Gb  IntDivZer.o [6]
+__aeabi_idivmod         0x00001e1d         Code  Gb  I32DivModFast.o [6]
+__aeabi_ldiv0           0x00006015         Code  Gb  I64DivZer.o [6]
+__aeabi_memcpy          0x0000595d         Code  Gb  ABImemcpy.o [6]
+__aeabi_ui2d            0x00005be5         Code  Gb  I32ToDbl.o [5]
+__aeabi_ui2f            0x000020cd         Code  Gb  I32ToFlt.o [5]
+__aeabi_uidiv           0x00001e23         Code  Gb  I32DivModFast.o [6]
+__aeabi_uidivmod        0x00001e23         Code  Gb  I32DivModFast.o [6]
+__aeabi_uldivmod        0x000058f3         Code  Gb  I64DivMod.o [6]
+__cmain                 0x00006e7d         Code  Gb  cmain.o [6]
+__dwrite                0x00006df1   0x1e  Code  Gb  dwrite.o [7]
+__exit                  0x00006eb1   0x14  Code  Gb  exit.o [7]
 __flash_config          0x00000400   0x10  Data  Gb  vectors.o [1]
-__iar_Dnorm             0x00003565   0x44  Code  Gb  xdnorm.o [4]
-__iar_Dscale            0x0000360d  0x11c  Code  Gb  xdscale.o [4]
-__iar_Memchr            0x00003487   0x18  Code  Gb  memchr.o [5]
-__iar_Strchr            0x0000344f   0x14  Code  Gb  strchr.o [5]
-__iar_close_ttio        0x0000686d   0x2e  Code  Gb  iarttio.o [6]
-__iar_d2uiz             0x00003751         Code  Gb  DblToI32.o [4]
-__iar_data_init3        0x000069b5   0x28  Code  Gb  data_init.o [5]
-__iar_get_ttio          0x0000689d   0x38  Code  Gb  iarttio.o [6]
-__iar_lookup_ttioh      0x000068d9    0x8  Code  Gb  XShttio.o [3]
-__iar_program_start     0x00006b1b         Code  Gb  cstartup_M.o [5]
-__iar_sh_stdout         0x00006a53   0x20  Code  Gb  iarwstd.o [6]
-__iar_sh_write          0x00006a73   0x22  Code  Gb  iarwrite.o [6]
-__iar_ttio_handles      0x20000210    0x8  Data  Lc  XShttio.o [3]
-__iar_ui2d              0x00003795         Code  Gb  I32ToDbl.o [4]
-__iar_ui2f              0x00002271         Code  Gb  I32ToFlt.o [4]
-__iar_zero_init3        0x00006935   0x3c  Code  Gb  zero_init3.o [5]
-__low_level_init        0x00006abf    0x4  Code  Gb  low_level_init.o [3]
+__iar_Dnorm             0x000059b9   0x44  Code  Gb  xdnorm.o [5]
+__iar_Dscale            0x00005a61  0x11c  Code  Gb  xdscale.o [5]
+__iar_Memchr            0x000058db   0x18  Code  Gb  memchr.o [6]
+__iar_Strchr            0x000058a3   0x14  Code  Gb  strchr.o [6]
+__iar_close_ttio        0x00006c29   0x2e  Code  Gb  iarttio.o [7]
+__iar_d2uiz             0x00005ba5         Code  Gb  DblToI32.o [5]
+__iar_data_init3        0x00006d71   0x28  Code  Gb  data_init.o [6]
+__iar_get_ttio          0x00006c59   0x38  Code  Gb  iarttio.o [7]
+__iar_lookup_ttioh      0x00006c95    0x8  Code  Gb  XShttio.o [4]
+__iar_program_start     0x00006ef3         Code  Gb  cstartup_M.o [6]
+__iar_sh_stdout         0x00006e0f   0x20  Code  Gb  iarwstd.o [7]
+__iar_sh_write          0x00006e2f   0x22  Code  Gb  iarwrite.o [7]
+__iar_ttio_handles      0x20000014    0x8  Data  Lc  XShttio.o [4]
+__iar_ui2d              0x00005be9         Code  Gb  I32ToDbl.o [5]
+__iar_ui2f              0x000020d1         Code  Gb  I32ToFlt.o [5]
+__iar_zero_init3        0x00006cf1   0x3c  Code  Gb  zero_init3.o [6]
+__low_level_init        0x00006e97    0x4  Code  Gb  low_level_init.o [4]
 __startup               0x00000411         Code  Gb  crt0.o [1]
 __vector_table          0x00000000   0xc0  Data  Gb  vectors.o [1]
-__write                 0x00006a25   0x10  Code  Gb  write.o [6]
-_call_main              0x00006ab1         Code  Gb  cmain.o [5]
-_exit                   0x00006acd         Code  Gb  cexit.o [5]
-_main                   0x00006abb         Code  Gb  cmain.o [5]
-assert_failed           0x00002541   0x30  Code  Gb  assert.o [1]
-common_startup          0x000067bd   0xb0  Code  Gb  startup.o [1]
-crc15Table              0x000063ac  0x200  Data  Lc  LTC6804_Driver.o [1]
-default_isr             0x000021af    0x2  Code  Gb  vectors.o [1]
-div                     0x00003b9f   0x20  Code  Gb  div.o [3]
-exit                    0x00006ac3    0x8  Code  Gb  exit.o [3]
-g_AddressMatchFlag      0x2000173e    0x1  Data  Lc  CAN_Message.o [1]
-g_CANx_RecBuffer        0x200009ec  0x7d4  Data  Lc  CAN_Buffer.o [1]
-g_CANx_SendBuffer       0x20000218  0x7d4  Data  Lc  CAN_Buffer.o [1]
+__write                 0x00006de1   0x10  Code  Gb  write.o [7]
+_call_main              0x00006e89         Code  Gb  cmain.o [6]
+_exit                   0x00006ea5         Code  Gb  cexit.o [6]
+_main                   0x00006e93         Code  Gb  cmain.o [6]
+assert_failed           0x00004995   0x30  Code  Gb  assert.o [1]
+auchCRCHi               0x000068b4  0x100  Data  Gb  CAN_Message.o [1]
+auchCRCLo               0x000069b4  0x100  Data  Gb  CAN_Message.o [1]
+common_startup          0x00006b79   0xb0  Code  Gb  startup.o [1]
+crc15Table              0x0000629c  0x200  Data  Lc  LTC6804_Driver.o [1]
+default_isr             0x0000200f    0x2  Code  Gb  vectors.o [1]
+div                     0x00005ff3   0x20  Code  Gb  div.o [4]
+exit                    0x00006e9b    0x8  Code  Gb  exit.o [4]
+g_AddressMatchFlag      0x20001542    0x1  Data  Lc  CAN_Message.o [1]
+g_CANx_RecBuffer        0x20000d6c  0x7d4  Data  Lc  CAN_Buffer.o [3]
+g_CANx_SendBuffer       0x20000598  0x7d4  Data  Lc  CAN_Buffer.o [3]
 g_ConfigurationTable_Data
-                        0x200015c4   0x10  Data  Lc  CAN_Message.o [1]
+                        0x20000420   0x10  Data  Lc  CAN_Message.o [1]
 g_LTC6804_Conversion_Finish_Flag
-                        0x20001744    0x1  Data  Gb  LTC6804_Driver.o [1]
-g_LTC6804_STAR_Data     0x2000168c   0x18  Data  Lc  LTC6804_Driver.o [1]
+                        0x20001548    0x1  Data  Gb  LTC6804_Driver.o [1]
+g_LTC6804_STAR_Data     0x200004ec   0x18  Data  Lc  LTC6804_Driver.o [1]
 g_LTC6804_Temp_Conversion_Start_Flag
-                        0x20001742    0x1  Data  Gb  LTC6804_Driver.o [1]
+                        0x20001546    0x1  Data  Gb  LTC6804_Driver.o [1]
 g_LTC6804_Temp_Read_Finish_Flag
-                        0x20001741    0x1  Data  Gb  LTC6804_Driver.o [1]
-g_LTC6804_Time_Count    0x20001743    0x1  Data  Gb  LTC6804_Driver.o [1]
+                        0x20001545    0x1  Data  Gb  LTC6804_Driver.o [1]
+g_LTC6804_Time_Count    0x20001547    0x1  Data  Gb  LTC6804_Driver.o [1]
 g_LTC6804_Vol_Conversion_Start_Flag
-                        0x20001740    0x1  Data  Gb  LTC6804_Driver.o [1]
+                        0x20001544    0x1  Data  Gb  LTC6804_Driver.o [1]
 g_LTC6804_Vol_Read_Finish_Flag
-                        0x2000173f    0x1  Data  Gb  LTC6804_Driver.o [1]
+                        0x20001543    0x1  Data  Gb  LTC6804_Driver.o [1]
 g_LTC6804_original_temp
-                        0x200016d8   0x18  Data  Lc  LTC6804_Driver.o [1]
+                        0x20000538   0x18  Data  Lc  LTC6804_Driver.o [1]
 g_LTC6804_original_temp_buff
-                        0x200016f0    0xc  Data  Gb  LTC6804_Driver.o [1]
-g_LTC6804_original_vol  0x200016fc   0x30  Data  Lc  LTC6804_Driver.o [1]
+                        0x20000550    0xc  Data  Gb  LTC6804_Driver.o [1]
+g_LTC6804_original_vol  0x2000055c   0x30  Data  Lc  LTC6804_Driver.o [1]
 g_LTC6804_original_vol_buff
-                        0x200016a8   0x30  Data  Lc  LTC6804_Driver.o [1]
-g_PartialConfigData     0x200015d4   0x1c  Data  Lc  CAN_Message.o [1]
-g_TimingDelay           0x20001738    0x4  Data  Lc  Systick_Driver.o [1]
-g_Update_Data           0x200011c0  0x404  Data  Lc  CAN_Message.o [1]
-g_Write_ConfigRegister  0x20000200    0xc  Data  Gb  LTC6804_Driver.o [1]
+                        0x20000508   0x30  Data  Lc  LTC6804_Driver.o [1]
+g_PartialConfigData     0x20000430   0x1c  Data  Lc  CAN_Message.o [1]
+g_TimingDelay           0x2000044c    0x4  Data  Lc  Delay.o [1]
+g_Update_Data           0x2000001c  0x404  Data  Lc  CAN_Message.o [1]
+g_Write_ConfigRegister  0x20000000    0xc  Data  Gb  LTC6804_Driver.o [1]
 g_Write_ConfigRegister_buff
-                        0x2000172c    0xc  Data  Gb  LTC6804_Driver.o [1]
-main                    0x000069a5   0x10  Code  Gb  main.o [1]
-printf                  0x00002571   0x24  Code  Gb  printf.o [3]
-putchar                 0x00006a01   0x24  Code  Gb  putchar.o [3]
-start                   0x00006971   0x22  Code  Gb  start.o [1]
-strlen                  0x00003463   0x24  Code  Gb  stdlib.o [1]
-write_vtor              0x00002505    0x6  Code  Gb  arm_cm0.o [1]
+                        0x2000058c    0xc  Data  Gb  LTC6804_Driver.o [1]
+main                    0x00006d61   0x10  Code  Gb  main.o [1]
+printf                  0x000049c5   0x24  Code  Gb  printf.o [4]
+putchar                 0x00006dbd   0x24  Code  Gb  putchar.o [4]
+start                   0x00006d2d   0x22  Code  Gb  start.o [1]
+strlen                  0x000058b7   0x24  Code  Gb  stdlib.o [1]
+write_vtor              0x0000483d    0x6  Code  Gb  arm_cm0.o [1]
 
 
 [1] = D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\Debug\Obj
 [2] = command line
-[3] = dl6M_tln.a
-[4] = m6M_tl.a
-[5] = rt6M_tl.a
-[6] = shb_l.a
+[3] = CAN_SoftBuffer.a
+[4] = dl6M_tln.a
+[5] = m6M_tl.a
+[6] = rt6M_tl.a
+[7] = shb_l.a
 
-  24 538 bytes of readonly  code memory
-   2 044 bytes of readonly  data memory (+ 16 absolute)
-   5 957 bytes of readwrite data memory
+  25 514 bytes of readonly  code memory
+   2 058 bytes of readonly  data memory (+ 16 absolute)
+   5 449 bytes of readwrite data memory
 
 Errors: none
 Warnings: none

@@ -1,4 +1,4 @@
-/**
+/*
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
   * @file name: main.c
@@ -8,7 +8,7 @@
   * @History: 1. Created by Wangjian.
   * @version: V1.0.0
   * @date:    05-Nov-2015
-
+  *
   ******************************************************************************
   * @attention
   *
@@ -26,9 +26,9 @@
   *
   ******************************************************************************
   */
-
 #include <stdint.h>
-
+#include "arm_cm0.h"
+#include "isr.h"
 #include "System_Init.h"
 #include "CAN_Message.h"
 #include "M95160_Driver.h"
@@ -55,5 +55,4 @@ int main(void)
 		EVBMM_CANReceiveBufferParsing();
 	}
 }
-
-/***********************************  End Of File  *****************************/
+/***************************** END OF FILE ************************************/

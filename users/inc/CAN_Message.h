@@ -128,6 +128,9 @@
 #define   EXTENDEDCONFIG_PARA_CODE9		   (0x18u)
 #define   EXTENDEDCONFIG_PARA_CODE10	   (0x19u)
 
+#define   MODIFY_PARA_CODE1                (0x1Au)
+
+
 
 
 typedef struct

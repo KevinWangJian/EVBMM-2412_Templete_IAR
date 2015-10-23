@@ -2209,6 +2209,15 @@
     </group>
   </group>
   <group>
+    <name>library</name>
+    <file>
+      <name>$PROJ_DIR$\..\library\CAN_SoftBuffer.a</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\library\CAN_SoftBuffer.h</name>
+    </file>
+  </group>
+  <group>
     <name>linker_files</name>
     <file>
       <name>$PROJ_DIR$\..\linker_files\128KB_Pflash.icf</name>
@@ -2270,10 +2279,10 @@
     <group>
       <name>inc</name>
       <file>
-        <name>$PROJ_DIR$\..\users\inc\CAN_Buffer.h</name>
+        <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
+        <name>$PROJ_DIR$\..\users\inc\Delay.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\users\inc\Filter_LTC6804.h</name>
@@ -2288,10 +2297,10 @@
     <group>
       <name>src</name>
       <file>
-        <name>$PROJ_DIR$\..\users\src\CAN_Buffer.c</name>
+        <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
+        <name>$PROJ_DIR$\..\users\src\Delay.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\Filter_LTC6804.c</name>

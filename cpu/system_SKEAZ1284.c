@@ -102,6 +102,7 @@
    ---------------------------------------------------------------------------- */
 
 uint32_t SystemCoreClock = DEFAULT_SYSTEM_CLOCK;
+uint32_t SystemBusClock  = (DEFAULT_SYSTEM_CLOCK / 2);
 
 /* ----------------------------------------------------------------------------
    -- SystemInit()
@@ -147,6 +148,8 @@ void SystemInit(void)
 	/* Wait until output of the FLL is selected */
 	while((ICS->S & 0x0CU) != 0x00U){;}
   
+	SystemBusClock = (DEFAULT_SYSTEM_CLOCK / 2);
+	
 	
 #elif (CLOCK_SETUP == 1)
 	/* SIM->CLKDIV: OUTDIV1=0, OUTDIV2=1, OUTDIV3=1, core clock = ICSOUTCLK = 40MHz, bus/flash clock = 20MHz, FTM clock = 20MHz */
@@ -171,6 +174,8 @@ void SystemInit(void)
 	/* Wait until output of the FLL is selected */
 	while((ICS->S & ICS_S_CLKST_MASK) != 0x00U){;}
   
+	SystemBusClock = (DEFAULT_SYSTEM_CLOCK / 2);
+	
 	
 #elif (CLOCK_SETUP == 2)
 	/* SIM->CLKDIV: ??=0,??=0,OUTDIV1=0,??=0,??=0,??=0,OUTDIV2=0,??=0,??=0,??=0,OUTDIV3=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
@@ -206,6 +211,8 @@ void SystemInit(void)
 	/* Check that the source of the FLL reference clock is the internal reference clock. */
 	while((ICS->S & ICS_S_IREFST_MASK) == 0x00U){;}
   
+	SystemBusClock = DEFAULT_SYSTEM_CLOCK;
+	
 	
 #elif (CLOCK_SETUP == 3)
 	/* SIM->CLKDIV: ??=0,??=0,OUTDIV1=0,??=0,??=0,??=0,OUTDIV2=0,??=0,??=0,??=0,OUTDIV3=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0,??=0 */
@@ -233,6 +240,8 @@ void SystemInit(void)
 
 	/* Wait until external reference clock is selected as ICS output */
 	while((ICS->S & 0x0CU) != 0x08U){;}
+	
+	SystemBusClock = DEFAULT_SYSTEM_CLOCK;
 #endif
 }
 

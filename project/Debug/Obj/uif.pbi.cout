@@ -16,6 +16,8 @@ D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\..\d
 -I
 D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\..\peripher_drivers\inc
 -I
+D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\project\..\library
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.2\arm\inc\c
@@ -33,6 +35,8 @@ D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\users\inc
 D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\device_drivers\inc
 -I
 D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\peripher_drivers\inc
+-I
+D:\My Work\gold_project\Sorftware\EVBCM_V3.8\EVBMM2412_Templete_IAR\library
 -DTRK_KEA128=1
 -DCPU_KEA128=1
 -DIAR=1

@@ -56,6 +56,8 @@ extern "C" {
  */
 extern uint32_t SystemCoreClock;
 
+extern uint32_t SystemBusClock;
+
 /**
  * @brief Setup the microcontroller system.
  *

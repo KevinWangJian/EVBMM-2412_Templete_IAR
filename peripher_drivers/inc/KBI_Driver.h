@@ -122,7 +122,7 @@ extern "C" {
 /* Exported functions ------------------------------------------------------- */
 
 
-int32_t KBI_Init(KBI_Type* KBIx, KBI_Configuration_TypeDef* KBIx_Config);
+int KBI_Init(KBI_Type* KBIx, KBI_Configuration_TypeDef* KBIx_Config);
 
 
 

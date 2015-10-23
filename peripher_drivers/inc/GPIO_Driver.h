@@ -266,9 +266,6 @@ void GPIO_PinSet(GPIO_PinType GPIO_Pin);
 void GPIO_PinClear(GPIO_PinType GPIO_Pin);
 
 
-
-
-
 #ifdef __cplusplus
 }
 #endif

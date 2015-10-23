@@ -41,7 +41,7 @@
  * @returns 0: Calling succeeded.
  * 			-1: Calling failed.
  */
-int32_t KBI_Init(KBI_Type* KBIx, KBI_Configuration_TypeDef* KBIx_Config)
+int KBI_Init(KBI_Type* KBIx, KBI_Configuration_TypeDef* KBIx_Config)
 {
 	if ((KBIx != KBI0) && (KBIx != KBI1))return -1;
 	
@@ -52,102 +52,56 @@ int32_t KBI_Init(KBI_Type* KBIx, KBI_Configuration_TypeDef* KBIx_Config)
 	if (KBIx == KBI0)
 	{
 		SIM->SCGC |= SIM_SCGC_KBI0_MASK;
-		
-		/* KBI interrupt disabled first. */
-		KBI0->SC &= ~KBI_SC_KBIE_MASK;
-		
-		if (KBIx_Config->Trigger_Mode == FallingEdge_LowLevel)
-		{
-			KBI0->ES &= ~KBI_ES_KBEDG_MASK;
-		}
-		else if (KBIx_Config->Trigger_Mode == RisingEdge_HighLevel)
-		{
-			KBI0->ES |= KBI_ES_KBEDG_MASK;
-		}
-		else 
-		{
-			return -1;
-		}
-		
-		/* Enable the specified KBI pins. */
-		KBI0->PE &= ~KBI_PE_KBIPE_MASK;
-		KBI0->PE |= KBIx_Config->Pin_Num;
-		
-		/* Writing a 1 to KBACK is part of the flag clearing mechanism. */
-		KBI0->SC |= KBI_SC_KBACK_MASK;
-		
-		/* Writing a 1 to RSTKBSP is to clear the KBIxSP Register. This bit always reads as 0. */
-		KBI0->SC |= KBI_SC_RSTKBSP_MASK;
-		
-		/* The latched value in KBxSP register while interrupt flag occur to be read. */
-		KBI0->SC |= KBI_SC_KBSPEN_MASK;
-		
-		if (KBIx_Config->Detection_Mode == 0)
-		{
-			/* Keyboard detects edges only. */
-			KBI0->SC &= ~KBI_SC_KBMOD_MASK;
-		}
-		else
-		{
-			/* Keyboard detects both edges and levels. */
-			KBI0->SC |= KBI_SC_KBMOD_MASK;
-		}
-		
-		if (KBIx_Config->KBI_Interrupt_Enable != 0)
-		{
-			/* KBI interrupt enabled. */
-			KBI0->SC |= KBI_SC_KBIE_MASK;		
-		}
 	}
 	else if (KBIx == KBI1)
 	{
-		SIM->SCGC |= SIM_SCGC_KBI1_MASK;
-		
-		/* KBI interrupt disabled first. */
-		KBI1->SC &= ~KBI_SC_KBIE_MASK;
-		
-		if (KBIx_Config->Trigger_Mode == FallingEdge_LowLevel)
-		{
-			KBI1->ES &= ~KBI_ES_KBEDG_MASK;
-		}
-		else if (KBIx_Config->Trigger_Mode == RisingEdge_HighLevel)
-		{
-			KBI1->ES |= KBI_ES_KBEDG_MASK;
-		}
-		else 
-		{
-			return -1;
-		}
-		
-		/* Enable the specified KBI pins. */
-		KBI1->PE &= ~KBI_PE_KBIPE_MASK;
-		KBI1->PE |= KBIx_Config->Pin_Num;
-		
-		/* Writing a 1 to KBACK is part of the flag clearing mechanism. */
-		KBI1->SC |= KBI_SC_KBACK_MASK;
-		
-		/* Writing a 1 to RSTKBSP is to clear the KBIxSP Register. This bit always reads as 0. */
-		KBI1->SC |= KBI_SC_RSTKBSP_MASK;
-		
-		/* The latched value in KBxSP register while interrupt flag occur to be read. */
-		KBI1->SC |= KBI_SC_KBSPEN_MASK;
-		
-		if (KBIx_Config->Detection_Mode == 0)
-		{
-			/* Keyboard detects edges only. */
-			KBI1->SC &= ~KBI_SC_KBMOD_MASK;
-		}
-		else
-		{
-			/* Keyboard detects both edges and levels. */
-			KBI1->SC |= KBI_SC_KBMOD_MASK;
-		}
-		
-		if (KBIx_Config->KBI_Interrupt_Enable != 0)
-		{
-			/* KBI interrupt enabled. */
-			KBI1->SC |= KBI_SC_KBIE_MASK;		
-		}		
+		SIM->SCGC |= SIM_SCGC_KBI1_MASK;		
+	}
+	
+	/* KBI interrupt disabled first. */
+	KBIx->SC &= ~KBI_SC_KBIE_MASK;
+	
+	if (KBIx_Config->Trigger_Mode == FallingEdge_LowLevel)
+	{
+		KBIx->ES &= ~KBI_ES_KBEDG_MASK;
+	}
+	else if (KBIx_Config->Trigger_Mode == RisingEdge_HighLevel)
+	{
+		KBIx->ES |= KBI_ES_KBEDG_MASK;
+	}
+	else 
+	{
+		return -1;
+	}
+	
+	/* Enable the specified KBI pins. */
+	KBIx->PE &= ~KBI_PE_KBIPE_MASK;
+	KBIx->PE |= KBIx_Config->Pin_Num;
+	
+	/* Writing a 1 to KBACK is part of the flag clearing mechanism. */
+	KBIx->SC |= KBI_SC_KBACK_MASK;
+	
+	/* Writing a 1 to RSTKBSP is to clear the KBIxSP Register. This bit always reads as 0. */
+	KBIx->SC |= KBI_SC_RSTKBSP_MASK;
+	
+	/* The latched value in KBxSP register while interrupt flag occur to be read. */
+	KBIx->SC |= KBI_SC_KBSPEN_MASK;
+	
+	if (KBIx_Config->Detection_Mode == 0)
+	{
+		/* Keyboard detects edges only. */
+		KBIx->SC &= ~KBI_SC_KBMOD_MASK;
+	}
+	else
+	{
+		/* Keyboard detects both edges and levels. */
+		KBIx->SC |= KBI_SC_KBMOD_MASK;
+	}
+	
+	if (KBIx_Config->KBI_Interrupt_Enable != 0)
+	{
+		/* KBI interrupt enabled. */
+		KBIx->SC |= KBI_SC_KBIE_MASK;		
 	}
 	
 	return 0;

@@ -254,7 +254,7 @@ static int32_t MSCAN_ConfigIDFilter(MSCAN_FilterConfigure* filter_config)
  * @returns 0: Calling succeeded.
  * 			-1: Calling failed.
  */
-int32_t MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Filter_Config)
+int MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Filter_Config)
 {
 	uint16_t Timeout_Count = 0;
 	
@@ -307,16 +307,8 @@ int32_t MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Fi
 	
 	Timeout_Count = 0;
 	
-	if (CAN_Config->MSCAN_ClockSource == 0)
-	{
-		/* MSCAN clock source is oscillator clock(8MHz) */
-		MSCAN->CANCTL1 &= ~MSCAN_CANCTL1_CLKSRC_MASK;
-	}
-	else
-	{
-		/* MSCAN clock source is system BUS clock(20MHz) */
-		MSCAN->CANCTL1 |= MSCAN_CANCTL1_CLKSRC_MASK;
-	}
+	/* Select MSCAN clock source is system BUS clock(20MHz) */
+	MSCAN->CANCTL1 |= MSCAN_CANCTL1_CLKSRC_MASK;
 	
 	if (CAN_Config->MSCAN_LoopbackMode == 0)
 	{
@@ -403,10 +395,6 @@ int32_t MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Fi
 
 				MSCAN->CANBTR1 = MSCAN_CANBTR1_SAMP_MASK | MSCAN_CANBTR1_TSEG2(0x03)
 				    	  | MSCAN_CANBTR1_TSEG1(0x04);
-//				MSCAN->CANBTR0 = MSCAN_CANBTR0_SJW(0x01) | MSCAN_CANBTR0_BRP(0x05);
-
-//				MSCAN->CANBTR1 = MSCAN_CANBTR1_SAMP_MASK | MSCAN_CANBTR1_TSEG2(0x06)
-//				    	  | MSCAN_CANBTR1_TSEG1(0x07);
 		}
 		break;
 
@@ -525,7 +513,7 @@ int32_t MSCAN_Init(MSCAN_ParametersConfig* CAN_Config, MSCAN_FilterConfigure* Fi
  * @returns 0: Calling succeeded.
  * 			-1: Calling failed.
  */
-int32_t MSCAN_SendFrame(MSCAN_Message_TypeDef* W_Framebuff)
+int MSCAN_SendFrame(MSCAN_Message_TypeDef* W_Framebuff)
 {
 	uint8_t reg_val, i;
 
@@ -672,7 +660,7 @@ int32_t MSCAN_SendFrame(MSCAN_Message_TypeDef* W_Framebuff)
  * @returns 0: Calling succeeded.
  * 			-1: Calling failed.
  */
-int32_t MSCAN_ReceiveFrame(MSCAN_Message_TypeDef* R_Framebuff)
+int MSCAN_ReceiveFrame(MSCAN_Message_TypeDef* R_Framebuff)
 {
 	uint8_t i;
 	uint8_t temp1, temp2, temp3, temp4;
@@ -788,16 +776,20 @@ int32_t MSCAN_ReceiveFrame(MSCAN_Message_TypeDef* R_Framebuff)
  * @returns 0: Calling succeeded.User can load CAN messages to send.
  * 			-1: Calling failed.User can not load CAN messages to send.
  */
-int32_t MSCAN_HardTxBufferCheck(void)
+int MSCAN_HardTxBufferCheck(void)
 {
 	uint8_t ret_val;
 	
 	ret_val = MSCAN->CANTFLG & MSCAN_CANTFLG_TXE_MASK;
 	
-	if (ret_val == 0)return -1;  /* All the TX buffer is full,that means user can not load CAN messages to send. */
+	/* All the TX buffer is full,that means user can not load CAN messages to 
+	   send. */
+	if (ret_val == 0)
+		return -1;  
+	/* If CANTFLG register value is not zero,that means there is at least one 
+	   empty TX buffer, user can load CAN messages to send. */
 	else 
-		return 0;  /* If CANTFLG register value is not zero,that means there is at least one empty TX buffer,user 
-	                  can load CAN messages to send. */
+		return 0;  	
 }
 
 /*****************************END OF FILE**************************************/

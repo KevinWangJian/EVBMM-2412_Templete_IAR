@@ -28,15 +28,13 @@
   ******************************************************************************
   */
 #include <stdint.h>
-#include <stdlib.h>
+
 #include "arm_cm0.h"
 #include "Systick_Driver.h"
 #include "system_SKEAZ1284.h"
 #include "ISR.h"
 
 
-/* Global variable which store the systick timer count value */
-static volatile uint32_t g_TimingDelay = 0;
 
 
 
@@ -47,7 +45,7 @@ static volatile uint32_t g_TimingDelay = 0;
  * @returns 0: Calling succeeded.
  * 			-1: Calling failed.
  */
-int32_t Systick_Init(CountPeriodPerTicks Cycle)
+int Systick_Init(CountPeriodPerTicks Cycle)
 {
 	if ((Cycle < _1ms_perticks) || (Cycle > _1us_perticks))return -1;
 
@@ -98,64 +96,5 @@ int32_t Systick_Init(CountPeriodPerTicks Cycle)
 	return 0;
 }
 
-
-
- /**
- * @brief   Global time delay variable decrement function.  
- * @param   None
- * @returns None
- */
-void TimeDelay_Decrement(void)
-{
-	if (g_TimingDelay != 0)
-	{
-		g_TimingDelay--;
-	}
-}
-
-
-
-/**
- * @brief   Delay functions.
- * @param   Cycle: User specified over flow cycle time value.
- * @attention If user wants to use the following three delay functions,user
- *            must add RTI_ISR function to your project!
- * @returns None
- */
-#ifdef _1MS_PERTICKS
-void Delay1ms(volatile uint32_t nTime)
-{
-	g_TimingDelay = nTime;
-	
-	while (g_TimingDelay != 0);
-}
-#endif
-
-#ifdef  _100US_PERTICKS
-void Delay100us(volatile uint32_t nTime)
-{
-	g_TimingDelay = nTime;
-	
-	while (g_TimingDelay != 0);
-}
-#endif
-
-#ifdef _10US_PERTICKS
-void Delay10us(volatile uint32_t nTime)
-{
-	g_TimingDelay = nTime;
-	
-	while (g_TimingDelay != 0);
-}
-#endif
-
-#ifdef _1US_PERTICKS
-void Delay1us(volatile uint32_t nTime)
-{
-	g_TimingDelay = nTime;
-	
-	while (g_TimingDelay != 0);
-}
-#endif
 
 /*****************************END OF FILE**************************************/

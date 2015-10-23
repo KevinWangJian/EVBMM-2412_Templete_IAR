@@ -857,7 +857,7 @@
         <option>
           <name>CCJLinkResetList</name>
           <version>6</version>
-          <state>7</state>
+          <state>9</state>
         </option>
         <option>
           <name>CCJLinkInterfaceCmdLine</name>
@@ -918,7 +918,7 @@
         </option>
         <option>
           <name>CCCpuClockEdit</name>
-          <state>48.0</state>
+          <state>40.0</state>
         </option>
         <option>
           <name>CCSwoClockAuto</name>

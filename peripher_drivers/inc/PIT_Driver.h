@@ -97,7 +97,7 @@ extern "C" {
 /* Exported functions ------------------------------------------------------- */
 
 
-int32_t PIT_Init(PIT_TimebaseInitTypeDef* TimConfig);
+int PIT_Init(PIT_TimebaseInitTypeDef* TimConfig);
 
 
 void PIT_EnableModule(uint8_t ch);

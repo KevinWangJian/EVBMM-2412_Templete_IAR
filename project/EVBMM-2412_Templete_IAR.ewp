@@ -223,7 +223,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state></state>
+          <state>Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -319,6 +319,7 @@
           <state>$PROJ_DIR$\..\users\inc</state>
           <state>$PROJ_DIR$\..\device_drivers\inc</state>
           <state>$PROJ_DIR$\..\peripher_drivers\inc</state>
+          <state>$PROJ_DIR$\..\library</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -373,7 +374,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -401,7 +402,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -2035,6 +2036,15 @@
     </group>
   </group>
   <group>
+    <name>library</name>
+    <file>
+      <name>$PROJ_DIR$\..\library\CAN_SoftBuffer.a</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\library\CAN_SoftBuffer.h</name>
+    </file>
+  </group>
+  <group>
     <name>linker_files</name>
     <file>
       <name>$PROJ_DIR$\..\linker_files\128KB_Pflash.icf</name>
@@ -2096,10 +2106,10 @@
     <group>
       <name>inc</name>
       <file>
-        <name>$PROJ_DIR$\..\users\inc\CAN_Buffer.h</name>
+        <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
+        <name>$PROJ_DIR$\..\users\inc\Delay.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\users\inc\Filter_LTC6804.h</name>
@@ -2114,10 +2124,10 @@
     <group>
       <name>src</name>
       <file>
-        <name>$PROJ_DIR$\..\users\src\CAN_Buffer.c</name>
+        <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
+        <name>$PROJ_DIR$\..\users\src\Delay.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\Filter_LTC6804.c</name>

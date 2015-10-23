@@ -1,14 +1,14 @@
 /**
   ******************************************************************************
   * @Copyright (C), 1997-2015, Hangzhou Gold Electronic Equipment Co., Ltd.
-  * @file name: Systick_Driver.h
+  * @file name: Delay.c
   * @author: Wangjian
-  * @Descriptiuon: Provides a set of functions about systick timer initialization.
-  *                Users can use systick for RTOS and delay functions.
+  * @Descriptiuon: Provides a set of delay functions which is 1ms, 100us, 10us 
+  *                and 1us base delay time.
   * @Others: None
   * @History: 1. Created by Wangjian.
   * @version: V1.0.0
-  * @date:    30-Sep-2015
+  * @date:    23-Nov-2015
 
   ******************************************************************************
   * @attention
@@ -28,26 +28,24 @@
   ******************************************************************************
   */
 
-#ifndef  __SYSTICK_DRIVER_H
-#define  __SYSTICK_DRIVER_H
+#ifndef  __DELAY_H
+#define  __DELAY_H
 
 #include <stdint.h>
-#include "SKEAZ1284.h"
 
 
 /* Exported types ------------------------------------------------------------*/
 
-/* Declaration Systick timer driver version */
-#define   SYSTICK_DRIVER_VERSION     (100)		/* Rev1.0.0 */
+/* Declaration delay driver version */
+#define   DELAY_DRIVER_VERSION     (100)		/* Rev1.0.0 */
 
 
-typedef enum
-{
-	_1ms_perticks = 1,
-	_100us_perticks,
-	_10us_perticks,
-	_1us_perticks,
-}CountPeriodPerTicks;
+/* Time ticks macro which can chose different delay function */
+//#define   _1MS_PERTICKS
+//#define   _100US_PERTICKS
+#define   _10US_PERTICKS
+//define    _1US_PERTICKS
+
 
 
 
@@ -57,9 +55,19 @@ extern "C" {
 
 /* Exported functions ------------------------------------------------------- */
 
-int Systick_Init(CountPeriodPerTicks Cycle);
+void TimeDelay_Decrement(void);
 
 
+void Delay1ms(volatile uint32_t nTime);
+
+
+void Delay100us(volatile uint32_t nTime);
+
+
+void Delay10us(volatile uint32_t nTime);
+
+
+void Delay1us(volatile uint32_t nTime);
 
 
 #ifdef __cplusplus

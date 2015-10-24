@@ -521,33 +521,33 @@ void Filter_Prevent_Temp_Jump(uint16_t * NewTemp,uint16_t * LastTemp)
     
     for(i=0;i<8;i++)
     {
-         if(NewTemp[i] > LastTemp[i])
-         {                 
-              Temp_buff = NewTemp[i] - LastTemp[i];
-              if(Temp_buff > 1)
-              {
-                   LastTemp[i] = LastTemp[i] + 1;                      
-              } 
-              else 
-              {
-                   LastTemp[i] = NewTemp[i];
-              }
-          } 
-          else if(NewTemp[i] < LastTemp[i])
-          {
-                  Temp_buff = LastTemp[i] - NewTemp[i];
-                  if(Temp_buff > 1)
-                  {
-                      LastTemp[i] = LastTemp[i] - 1;
-                  } 
-                  else 
-                  {
-                       LastTemp[i] = NewTemp[i];
-                  }
-           } 
-           else 
-           {
-                LastTemp[i] = NewTemp[i];
-           }            
-        } 
+		if(NewTemp[i] > LastTemp[i])
+		{                 
+			Temp_buff = NewTemp[i] - LastTemp[i];
+			if(Temp_buff > 1)
+			{
+				 LastTemp[i] = LastTemp[i] + 1;                      
+			} 
+			else 
+			{
+				 LastTemp[i] = NewTemp[i];
+			}
+		} 
+		else if(NewTemp[i] < LastTemp[i])
+		{
+				Temp_buff = LastTemp[i] - NewTemp[i];
+				if(Temp_buff > 1)
+				{
+					LastTemp[i] = LastTemp[i] - 1;
+				} 
+				else 
+				{
+					 LastTemp[i] = NewTemp[i];
+				}
+		 } 
+		 else 
+		 {
+			  LastTemp[i] = NewTemp[i];
+		 }            
+	} 
 }

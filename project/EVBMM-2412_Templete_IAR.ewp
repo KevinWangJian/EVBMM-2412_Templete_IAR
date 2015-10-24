@@ -2106,6 +2106,9 @@
     <group>
       <name>inc</name>
       <file>
+        <name>$PROJ_DIR$\..\users\inc\Active_Equalize.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\..\users\inc\CAN_Message.h</name>
       </file>
       <file>
@@ -2123,6 +2126,9 @@
     </group>
     <group>
       <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\users\src\Active_Equalize.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\users\src\CAN_Message.c</name>
       </file>

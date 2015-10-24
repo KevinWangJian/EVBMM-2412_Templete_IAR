@@ -1029,6 +1029,60 @@ static void EVBCM_ReplyAddressMatch(MSCAN_Message_TypeDef* Rd_Message)
 
 
 /**
+ * @brief   EVBCM master send balance control command to EVBMM slaver and slaver reply
+ *          with corresponding CAN message to master.
+ * @param   *Rd_Messag, Data buffer which store the received CAN message.
+ * @returns None
+ */
+static void EVBCM_SendBalanceControl(MSCAN_Message_TypeDef* Rd_Message)
+{
+	MSCAN_Message_TypeDef Sd_Message;
+
+	Sd_Message.frame_type = DataFrameWithExtendedId;
+
+	Sd_Message.frame_id = (((uint32_t)(TAGWORD) << 24) 
+						  |((uint32_t)(S_REPLY_BALANCECONTROL_CMD) << 16) 
+						  |((uint16_t)(EVBCM_ADDRESS) << 8) 
+						  |(g_PartialConfigData.EVBMM_Address));
+	
+	Sd_Message.data_length = 0;
+	
+	/* Fill the prepared CAN message into sent CAN message buffers. */
+	Fill_CANSendBuffer(&Sd_Message);
+}
+
+
+
+/**
+ * @brief   EVBCM master request EVBMM slaver to send fault code.
+ * @param   None
+ * @returns None
+ */
+static void EVBCM_RequestFaultCode(void)
+{
+	MSCAN_Message_TypeDef Sd_Message;
+
+	Sd_Message.frame_type = DataFrameWithExtendedId;
+
+	Sd_Message.frame_id = (((uint32_t)(TAGWORD) << 24) 
+						  |((uint32_t)(S_REPLY_FAULTINQUIRY_CMD) << 16) 
+						  |((uint16_t)(EVBCM_ADDRESS) << 8) 
+						  |(g_PartialConfigData.EVBMM_Address));
+	
+	for (int i = 0; i < 8; ++i)
+	{
+		Sd_Message.data[i] = 0x00u;
+	}
+
+	Sd_Message.data_length = 8;
+	
+	/* Fill the prepared CAN message into sent CAN message buffers. */
+	Fill_CANSendBuffer(&Sd_Message);
+}
+
+
+
+/**
  * @brief   Configure CAN0 bus for communicatting with master.
  * @param   None
  * @returns None
@@ -1039,7 +1093,7 @@ void CAN_Transmission_Init(void)
 	
 	MSCAN_ParametersConfig CAN_Module_Config;
 	MSCAN_FilterConfigure CAN_Filter_Config;
-	
+
 	CAN_Module_Config.baudrate                   = MSCAN_Baudrate_250K;		/* Baud rate 250Kbps */
 	CAN_Module_Config.MSCAN_SignalPinsRemap      = 0;                    	/* MSCAN signal pins remap on PTC7(TX) and PTC6(RX) */
 	CAN_Module_Config.MSCAN_StopInWaitMode       = 1;						/* MSCAN module is normal in wait mode */
@@ -1122,8 +1176,10 @@ void EVBMM_CANReceiveBufferParsing(void)
 			case M_START_UPDATE_CMD:           EVBCM_StartUpdating(); 				       break;
 			case M_SEND_UPDATEDATA_CMD:        EVBCM_SendUpdateData(&Rec_Message); 	       break;
 			case M_SEND_UPDATEDATA_DONE_CMD:   EVBCM_SendUpdateData_Done(&Rec_Message);    break;
+			case M_SEND_BALANCECONTROL_CMD:    EVBCM_SendBalanceControl(&Rec_Message);	   break;
 			case M_SEND_IOCONTROL_CMD:         EVBCM_RequestIOControl(&Rec_Message);       break;
 			case M_REQUEST_DISTATUS_CMD:       EVBCM_ReadDIStatus(); 				       break;
+			case M_SEND_FAULTINQUIRY_CMD:      EVBCM_RequestFaultCode();				   break;
 			default: break;
 			}
 		}

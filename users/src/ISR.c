@@ -38,7 +38,7 @@
 #include "System_Init.h"
 #include "LTC6804_Driver.h"
 #include "CAN_Message.h"
-
+#include "Active_Equalize.h"
 
 
 
@@ -92,6 +92,46 @@ void PIT_CH0_Handler(void)
         {
             g_LTC6804_Conversion_Finish_Flag = 1;
         }
+
+        if (Getting_EqualizingStatusValue(Module_1) == 0xCCu)
+        {
+        	if (EqualizationModule_GetFaultSignalValue(Module_1) == 0)
+        	{
+        		_8V5Voltage_Disable();
+
+        		Settiing_EqualizingStatusValue(Module_1, 0);
+        	}
+        }
+        
+        if (Getting_EqualizingStatusValue(Module_2) == 0xCCu)
+        {
+        	if (EqualizationModule_GetFaultSignalValue(Module_2) == 0)
+        	{
+        		_8V5Voltage_Disable();
+
+        		Settiing_EqualizingStatusValue(Module_1, 0);
+        	}
+        }
+        
+        if (Getting_EqualizingStatusValue(Module_3) == 0xCCu)
+        {
+        	if (EqualizationModule_GetFaultSignalValue(Module_3) == 0)
+        	{
+        		_8V5Voltage_Disable();
+
+        		Settiing_EqualizingStatusValue(Module_1, 0);
+        	}
+        }
+        
+        if (Getting_EqualizingStatusValue(Module_4) == 0xCCu)
+        {
+        	if (EqualizationModule_GetFaultSignalValue(Module_4) == 0)
+        	{
+        		_8V5Voltage_Disable();
+
+        		Settiing_EqualizingStatusValue(Module_1, 0);
+        	}
+        }
 	}
 }
 
@@ -117,7 +157,7 @@ void PIT_CH1_Handler(void)
 
 		Time_Count++;
 		
-		if (Time_Count >= 1000)
+		if (Time_Count >= 500)
 		{
 			Time_Count = 0;
 			

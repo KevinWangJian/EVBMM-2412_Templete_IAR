@@ -4448,6 +4448,34 @@ USE_FEE_OSC	platforms\kea8_config.h	80;"	d
 _KExx_CONFIG_H_	platforms\kea8_config.h	41;"	d
 debugFile	project\settings\EVBMM-2412_Templete_IAR.Debug.cspy.bat	/^:debugFile $/;"	l
 end	project\settings\EVBMM-2412_Templete_IAR.Debug.cspy.bat	/^:end/;"	l
+Cell_Channel_1	users\inc\Active_Equalize.h	/^    Cell_Channel_1 = 1,$/;"	e	enum:__anon103
+Cell_Channel_10	users\inc\Active_Equalize.h	/^    Cell_Channel_10,$/;"	e	enum:__anon103
+Cell_Channel_11	users\inc\Active_Equalize.h	/^    Cell_Channel_11,$/;"	e	enum:__anon103
+Cell_Channel_12	users\inc\Active_Equalize.h	/^    Cell_Channel_12,$/;"	e	enum:__anon103
+Cell_Channel_13	users\inc\Active_Equalize.h	/^    Cell_Channel_13,$/;"	e	enum:__anon103
+Cell_Channel_14	users\inc\Active_Equalize.h	/^    Cell_Channel_14,$/;"	e	enum:__anon103
+Cell_Channel_15	users\inc\Active_Equalize.h	/^    Cell_Channel_15,$/;"	e	enum:__anon103
+Cell_Channel_16	users\inc\Active_Equalize.h	/^    Cell_Channel_16,$/;"	e	enum:__anon103
+Cell_Channel_17	users\inc\Active_Equalize.h	/^    Cell_Channel_17,$/;"	e	enum:__anon103
+Cell_Channel_18	users\inc\Active_Equalize.h	/^    Cell_Channel_18,$/;"	e	enum:__anon103
+Cell_Channel_19	users\inc\Active_Equalize.h	/^    Cell_Channel_19,$/;"	e	enum:__anon103
+Cell_Channel_2	users\inc\Active_Equalize.h	/^    Cell_Channel_2,$/;"	e	enum:__anon103
+Cell_Channel_20	users\inc\Active_Equalize.h	/^    Cell_Channel_20,$/;"	e	enum:__anon103
+Cell_Channel_21	users\inc\Active_Equalize.h	/^    Cell_Channel_21,$/;"	e	enum:__anon103
+Cell_Channel_22	users\inc\Active_Equalize.h	/^    Cell_Channel_22,$/;"	e	enum:__anon103
+Cell_Channel_23	users\inc\Active_Equalize.h	/^    Cell_Channel_23,$/;"	e	enum:__anon103
+Cell_Channel_24	users\inc\Active_Equalize.h	/^    Cell_Channel_24,$/;"	e	enum:__anon103
+Cell_Channel_3	users\inc\Active_Equalize.h	/^    Cell_Channel_3,$/;"	e	enum:__anon103
+Cell_Channel_4	users\inc\Active_Equalize.h	/^    Cell_Channel_4,$/;"	e	enum:__anon103
+Cell_Channel_5	users\inc\Active_Equalize.h	/^    Cell_Channel_5,$/;"	e	enum:__anon103
+Cell_Channel_6	users\inc\Active_Equalize.h	/^    Cell_Channel_6,$/;"	e	enum:__anon103
+Cell_Channel_7	users\inc\Active_Equalize.h	/^    Cell_Channel_7,$/;"	e	enum:__anon103
+Cell_Channel_8	users\inc\Active_Equalize.h	/^    Cell_Channel_8,$/;"	e	enum:__anon103
+Cell_Channel_9	users\inc\Active_Equalize.h	/^    Cell_Channel_9,$/;"	e	enum:__anon103
+Charge_Equalize	users\inc\Active_Equalize.h	/^    Charge_Equalize = 1,$/;"	e	enum:__anon102
+Discharge_Equalize	users\inc\Active_Equalize.h	/^    Discharge_Equalize,$/;"	e	enum:__anon102
+EqualizeChannel_TypeDef	users\inc\Active_Equalize.h	/^}EqualizeChannel_TypeDef;$/;"	t	typeref:enum:__anon103
+EqualizeMode_TypeDef	users\inc\Active_Equalize.h	/^}EqualizeMode_TypeDef;$/;"	t	typeref:enum:__anon102
 ModuleNumber_TypeDef	users\inc\Active_Equalize.h	/^}ModuleNumber_TypeDef;$/;"	t	typeref:enum:__anon101
 Module_1	users\inc\Active_Equalize.h	/^    Module_1 = 1,$/;"	e	enum:__anon101
 Module_2	users\inc\Active_Equalize.h	/^    Module_2,$/;"	e	enum:__anon101
@@ -4471,14 +4499,14 @@ BASECONFIG_PARA_CODE8	users\inc\CAN_Message.h	111;"	d
 BASECONFIG_PARA_CODE9	users\inc\CAN_Message.h	112;"	d
 CAN_MESSAGE_VERSION	users\inc\CAN_Message.h	46;"	d
 CONFIGTABLE_BUF_SIZE	users\inc\CAN_Message.h	52;"	d
-Cell_Num	users\inc\CAN_Message.h	/^	uint8_t Cell_Num;$/;"	m	struct:__anon104
-ConfigTable_Buffer	users\inc\CAN_Message.h	/^	uint8_t ConfigTable_Buffer[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon103
-ConfigTable_WPointer	users\inc\CAN_Message.h	/^	uint8_t ConfigTable_WPointer;$/;"	m	struct:__anon103
+Cell_Num	users\inc\CAN_Message.h	/^	uint8_t Cell_Num;$/;"	m	struct:__anon106
+ConfigTable_Buffer	users\inc\CAN_Message.h	/^	uint8_t ConfigTable_Buffer[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon105
+ConfigTable_WPointer	users\inc\CAN_Message.h	/^	uint8_t ConfigTable_WPointer;$/;"	m	struct:__anon105
 EVBCM_ADDRESS	users\inc\CAN_Message.h	63;"	d
-EVBMM_Address	users\inc\CAN_Message.h	/^	uint8_t EVBMM_Address;$/;"	m	struct:__anon104
-EVBMM_ConfigTable_TypeDef	users\inc\CAN_Message.h	/^}EVBMM_ConfigTable_TypeDef;$/;"	t	typeref:struct:__anon103
-EVBMM_PartialConfigTable_TypeDef	users\inc\CAN_Message.h	/^}EVBMM_PartialConfigTable_TypeDef;$/;"	t	typeref:struct:__anon104
-EVBMM_UpdateProperty_TypeDef	users\inc\CAN_Message.h	/^}EVBMM_UpdateProperty_TypeDef;$/;"	t	typeref:struct:__anon102
+EVBMM_Address	users\inc\CAN_Message.h	/^	uint8_t EVBMM_Address;$/;"	m	struct:__anon106
+EVBMM_ConfigTable_TypeDef	users\inc\CAN_Message.h	/^}EVBMM_ConfigTable_TypeDef;$/;"	t	typeref:struct:__anon105
+EVBMM_PartialConfigTable_TypeDef	users\inc\CAN_Message.h	/^}EVBMM_PartialConfigTable_TypeDef;$/;"	t	typeref:struct:__anon106
+EVBMM_UpdateProperty_TypeDef	users\inc\CAN_Message.h	/^}EVBMM_UpdateProperty_TypeDef;$/;"	t	typeref:struct:__anon104
 EXTENDEDCONFIG_PARA_CODE1	users\inc\CAN_Message.h	120;"	d
 EXTENDEDCONFIG_PARA_CODE10	users\inc\CAN_Message.h	129;"	d
 EXTENDEDCONFIG_PARA_CODE2	users\inc\CAN_Message.h	121;"	d
@@ -4489,7 +4517,7 @@ EXTENDEDCONFIG_PARA_CODE6	users\inc\CAN_Message.h	125;"	d
 EXTENDEDCONFIG_PARA_CODE7	users\inc\CAN_Message.h	126;"	d
 EXTENDEDCONFIG_PARA_CODE8	users\inc\CAN_Message.h	127;"	d
 EXTENDEDCONFIG_PARA_CODE9	users\inc\CAN_Message.h	128;"	d
-Hardware_Version	users\inc\CAN_Message.h	/^	uint8_t Hardware_Version[3];$/;"	m	struct:__anon104
+Hardware_Version	users\inc\CAN_Message.h	/^	uint8_t Hardware_Version[3];$/;"	m	struct:__anon106
 MODIFY_PARA_CODE1	users\inc\CAN_Message.h	131;"	d
 M_REPLY_ADDRESSMATCH_CMD	users\inc\CAN_Message.h	73;"	d
 M_REQUEST_CELLINFO_CMD	users\inc\CAN_Message.h	75;"	d
@@ -4504,8 +4532,8 @@ M_SEND_UPDATEDATA_CMD	users\inc\CAN_Message.h	86;"	d
 M_SEND_UPDATEDATA_DONE_CMD	users\inc\CAN_Message.h	87;"	d
 M_START_UPDATE_CMD	users\inc\CAN_Message.h	84;"	d
 PROGRAM_BACKUP_BASEADDRESS	users\inc\CAN_Message.h	56;"	d
-Product_ID	users\inc\CAN_Message.h	/^	uint8_t Product_ID[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon104
-Product_Name	users\inc\CAN_Message.h	/^	uint16_t Product_Name;$/;"	m	struct:__anon104
+Product_ID	users\inc\CAN_Message.h	/^	uint8_t Product_ID[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon106
+Product_Name	users\inc\CAN_Message.h	/^	uint16_t Product_Name;$/;"	m	struct:__anon106
 S_CONFIRM_CONFIGTABLE_CMD	users\inc\CAN_Message.h	68;"	d
 S_REPLY_BALANCECONTROL_CMD	users\inc\CAN_Message.h	90;"	d
 S_REPLY_CELLCURRENT_CMD	users\inc\CAN_Message.h	78;"	d
@@ -4519,15 +4547,15 @@ S_REPLY_IOCONTROL_CMD	users\inc\CAN_Message.h	93;"	d
 S_REPLY_SLAVER_VERSION_CMD	users\inc\CAN_Message.h	82;"	d
 S_REQUEST_UPDATEDATA_CMD	users\inc\CAN_Message.h	85;"	d
 S_SEND_ADDRESSMATCH_CMD	users\inc\CAN_Message.h	72;"	d
-StartUpdating_Flag	users\inc\CAN_Message.h	/^	uint8_t StartUpdating_Flag;$/;"	m	struct:__anon102
+StartUpdating_Flag	users\inc\CAN_Message.h	/^	uint8_t StartUpdating_Flag;$/;"	m	struct:__anon104
 TAGWORD	users\inc\CAN_Message.h	60;"	d
-Temp_Num	users\inc\CAN_Message.h	/^	uint8_t Temp_Num;$/;"	m	struct:__anon104
+Temp_Num	users\inc\CAN_Message.h	/^	uint8_t Temp_Num;$/;"	m	struct:__anon106
 UPDATE_BUF_SIZE	users\inc\CAN_Message.h	49;"	d
-UpdatedPacket_Buffer	users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Buffer[UPDATE_BUF_SIZE];$/;"	m	struct:__anon102
-UpdatedPacket_Length	users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Length;$/;"	m	struct:__anon102
-UpdatedPacket_WPointer	users\inc\CAN_Message.h	/^	uint16_t UpdatedPacket_WPointer;$/;"	m	struct:__anon102
-Voltage_Downthreshold	users\inc\CAN_Message.h	/^	uint16_t Voltage_Downthreshold;$/;"	m	struct:__anon104
-Voltage_Upthreshold	users\inc\CAN_Message.h	/^	uint16_t Voltage_Upthreshold;$/;"	m	struct:__anon104
+UpdatedPacket_Buffer	users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Buffer[UPDATE_BUF_SIZE];$/;"	m	struct:__anon104
+UpdatedPacket_Length	users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Length;$/;"	m	struct:__anon104
+UpdatedPacket_WPointer	users\inc\CAN_Message.h	/^	uint16_t UpdatedPacket_WPointer;$/;"	m	struct:__anon104
+Voltage_Downthreshold	users\inc\CAN_Message.h	/^	uint16_t Voltage_Downthreshold;$/;"	m	struct:__anon106
+Voltage_Upthreshold	users\inc\CAN_Message.h	/^	uint16_t Voltage_Upthreshold;$/;"	m	struct:__anon106
 __CAN_MESSAGE_H	users\inc\CAN_Message.h	33;"	d
 DELAY_DRIVER_VERSION	users\inc\Delay.h	40;"	d
 _10US_PERTICKS	users\inc\Delay.h	46;"	d
@@ -4555,11 +4583,13 @@ READ_DI_VALUE	users\inc\System_Init.h	50;"	d
 __SYSTEM_INIT_H	users\inc\System_Init.h	30;"	d
 __SYSTEM_TIMER_H	users\inc\System_Timer.h	32;"	d
 EqualizationModulePins_Initial	users\src\Active_Equalize.c	/^  int EqualizationModulePins_Initial(void)$/;"	f
+EqualizationModule_Close	users\src\Active_Equalize.c	/^  int EqualizationModule_Close(EqualizeChannel_TypeDef Eq_Ch)$/;"	f
 EqualizationModule_DirectionPins_Init	users\src\Active_Equalize.c	/^  static int EqualizationModule_DirectionPins_Init(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_EnterChargeMode	users\src\Active_Equalize.c	/^  static int EqualizationModule_EnterChargeMode(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_EnterDischargeMode	users\src\Active_Equalize.c	/^  static int EqualizationModule_EnterDischargeMode(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_FaultSignalPins_Init	users\src\Active_Equalize.c	/^  static int EqualizationModule_FaultSignalPins_Init(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_GetFaultSignalValue	users\src\Active_Equalize.c	/^  static uint8_t EqualizationModule_GetFaultSignalValue(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
+EqualizationModule_Open	users\src\Active_Equalize.c	/^  int EqualizationModule_Open(EqualizeMode_TypeDef Eq_Mode, EqualizeChannel_TypeDef Eq_Ch)$/;"	f
 _74HC138_ABCInputPins_Init	users\src\Active_Equalize.c	/^  static int _74HC138_ABCInputPins_Init(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 _74HC138_ChannelSelect	users\src\Active_Equalize.c	/^  static int _74HC138_ChannelSelect(ModuleNumber_TypeDef Module_Num, uint8_t channel)$/;"	f	file:
 _74HC138_Disable	users\src\Active_Equalize.c	/^  static int _74HC138_Disable(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
@@ -4592,8 +4622,8 @@ EVBMM_ReplyCellTemperature	users\src\CAN_Message.c	/^static void EVBMM_ReplyCell
 EVBMM_ReplyCellVoltage	users\src\CAN_Message.c	/^static void EVBMM_ReplyCellVoltage(void)$/;"	f	file:
 EVBMM_SoftWare_Version	users\src\CAN_Message.c	/^static const uint8_t EVBMM_SoftWare_Version[3] = {0x01u, 0x00u, 0x00u};$/;"	v	file:
 EVBMM_WriteConfigTable	users\src\CAN_Message.c	/^static void EVBMM_WriteConfigTable(uint8_t Bytes_Count, uint16_t W_MemoryAddress, $/;"	f	file:
-auchCRCHi	users\src\CAN_Message.c	/^const uint8_t auchCRCHi[]={$/;"	v
-auchCRCLo	users\src\CAN_Message.c	/^const uint8_t auchCRCLo[]={$/;"	v
+auchCRCHi	users\src\CAN_Message.c	/^const uint8_t auchCRCHi[] = $/;"	v
+auchCRCLo	users\src\CAN_Message.c	/^const uint8_t auchCRCLo[] = $/;"	v
 g_AddressMatchFlag	users\src\CAN_Message.c	/^static volatile uint8_t g_AddressMatchFlag = 0;$/;"	v	file:
 g_ConfigurationTable_Data	users\src\CAN_Message.c	/^static volatile EVBMM_ConfigTable_TypeDef g_ConfigurationTable_Data;$/;"	v	file:
 g_PartialConfigData	users\src\CAN_Message.c	/^static volatile EVBMM_PartialConfigTable_TypeDef g_PartialConfigData;$/;"	v	file:

@@ -467,13 +467,38 @@ CellTemp	.\device_drivers\inc\LTC6804_Driver.h	/^      uint8_t CellTemp[DTEMPNUM
 CellTemp_Buff	.\device_drivers\inc\LTC6804_Driver.h	/^     uint8_t CellTemp_Buff[DTEMPNUM]; $/;"	m	struct:__anon71
 CellTemp_Buff_Zengbo	.\device_drivers\src\LTC6804_Driver.c	/^uint8_t CellTemp_Buff_Zengbo[12];$/;"	v
 CellTemp_Flag	.\device_drivers\inc\LTC6804_Driver.h	/^      uint8_t CellTemp_Flag[DTEMPNUM];$/;"	m	struct:__anon71
-Cell_Num	.\users\inc\CAN_Message.h	/^	uint8_t Cell_Num;$/;"	m	struct:__anon104
+Cell_Channel_1	.\users\inc\Active_Equalize.h	/^    Cell_Channel_1 = 1,$/;"	e	enum:__anon103
+Cell_Channel_10	.\users\inc\Active_Equalize.h	/^    Cell_Channel_10,$/;"	e	enum:__anon103
+Cell_Channel_11	.\users\inc\Active_Equalize.h	/^    Cell_Channel_11,$/;"	e	enum:__anon103
+Cell_Channel_12	.\users\inc\Active_Equalize.h	/^    Cell_Channel_12,$/;"	e	enum:__anon103
+Cell_Channel_13	.\users\inc\Active_Equalize.h	/^    Cell_Channel_13,$/;"	e	enum:__anon103
+Cell_Channel_14	.\users\inc\Active_Equalize.h	/^    Cell_Channel_14,$/;"	e	enum:__anon103
+Cell_Channel_15	.\users\inc\Active_Equalize.h	/^    Cell_Channel_15,$/;"	e	enum:__anon103
+Cell_Channel_16	.\users\inc\Active_Equalize.h	/^    Cell_Channel_16,$/;"	e	enum:__anon103
+Cell_Channel_17	.\users\inc\Active_Equalize.h	/^    Cell_Channel_17,$/;"	e	enum:__anon103
+Cell_Channel_18	.\users\inc\Active_Equalize.h	/^    Cell_Channel_18,$/;"	e	enum:__anon103
+Cell_Channel_19	.\users\inc\Active_Equalize.h	/^    Cell_Channel_19,$/;"	e	enum:__anon103
+Cell_Channel_2	.\users\inc\Active_Equalize.h	/^    Cell_Channel_2,$/;"	e	enum:__anon103
+Cell_Channel_20	.\users\inc\Active_Equalize.h	/^    Cell_Channel_20,$/;"	e	enum:__anon103
+Cell_Channel_21	.\users\inc\Active_Equalize.h	/^    Cell_Channel_21,$/;"	e	enum:__anon103
+Cell_Channel_22	.\users\inc\Active_Equalize.h	/^    Cell_Channel_22,$/;"	e	enum:__anon103
+Cell_Channel_23	.\users\inc\Active_Equalize.h	/^    Cell_Channel_23,$/;"	e	enum:__anon103
+Cell_Channel_24	.\users\inc\Active_Equalize.h	/^    Cell_Channel_24,$/;"	e	enum:__anon103
+Cell_Channel_3	.\users\inc\Active_Equalize.h	/^    Cell_Channel_3,$/;"	e	enum:__anon103
+Cell_Channel_4	.\users\inc\Active_Equalize.h	/^    Cell_Channel_4,$/;"	e	enum:__anon103
+Cell_Channel_5	.\users\inc\Active_Equalize.h	/^    Cell_Channel_5,$/;"	e	enum:__anon103
+Cell_Channel_6	.\users\inc\Active_Equalize.h	/^    Cell_Channel_6,$/;"	e	enum:__anon103
+Cell_Channel_7	.\users\inc\Active_Equalize.h	/^    Cell_Channel_7,$/;"	e	enum:__anon103
+Cell_Channel_8	.\users\inc\Active_Equalize.h	/^    Cell_Channel_8,$/;"	e	enum:__anon103
+Cell_Channel_9	.\users\inc\Active_Equalize.h	/^    Cell_Channel_9,$/;"	e	enum:__anon103
+Cell_Num	.\users\inc\CAN_Message.h	/^	uint8_t Cell_Num;$/;"	m	struct:__anon106
+Charge_Equalize	.\users\inc\Active_Equalize.h	/^    Charge_Equalize = 1,$/;"	e	enum:__anon102
 CnSC	.\cpu\headers\SKEAZ1284.h	/^    __IO uint32_t CnSC;                              \/**< Channel (n) Status And Control, array offset: 0xC, array step: 0x8 *\/$/;"	m	struct:__anon31::__anon32
 CnV	.\cpu\headers\SKEAZ1284.h	/^    __IO uint32_t CnV;                               \/**< Channel (n) Value, array offset: 0x10, array step: 0x8 *\/$/;"	m	struct:__anon31::__anon32
 CollectData	.\device_drivers\inc\LTC6804_Driver.h	/^}CollectData;$/;"	t	typeref:struct:__anon71
 Collect_Data	.\device_drivers\src\LTC6804_Driver.c	/^CollectData  Collect_Data;$/;"	v
-ConfigTable_Buffer	.\users\inc\CAN_Message.h	/^	uint8_t ConfigTable_Buffer[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon103
-ConfigTable_WPointer	.\users\inc\CAN_Message.h	/^	uint8_t ConfigTable_WPointer;$/;"	m	struct:__anon103
+ConfigTable_Buffer	.\users\inc\CAN_Message.h	/^	uint8_t ConfigTable_Buffer[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon105
+ConfigTable_WPointer	.\users\inc\CAN_Message.h	/^	uint8_t ConfigTable_WPointer;$/;"	m	struct:__anon105
 ContentProtectAppli	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  ContentProtectAppli;  \/* Content protection application *\/$/;"	m	struct:__anon74
 CopyFlag	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  CopyFlag;             \/* Copy flag (OTP) *\/$/;"	m	struct:__anon74
 CountPeriodPerTicks	.\peripher_drivers\inc\Systick_Driver.h	/^}CountPeriodPerTicks;$/;"	t	typeref:enum:__anon100
@@ -521,6 +546,7 @@ DeviceSizeMul	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  DeviceSizeMul;   
 Device_Address	.\device_drivers\inc\LTC6804_Driver.h	/^    uint8_t   Device_Address;             \/*设备地址*\/$/;"	m	struct:__anon72
 DisableInterrupts	.\cpu\arm_cm0.h	54;"	d
 DisableInterrupts	.\cpu\arm_cm0.h	56;"	d
+Discharge_Equalize	.\users\inc\Active_Equalize.h	/^    Discharge_Equalize,$/;"	e	enum:__anon102
 ECC	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  ECC;                  \/* ECC code *\/$/;"	m	struct:__anon74
 EEPROM_PORT	.\device_drivers\inc\M95160_Driver.h	81;"	d
 ENABLE	.\cpu\arm_cm0.h	93;"	d
@@ -541,10 +567,10 @@ EVBCM_SendUpdateData	.\users\src\CAN_Message.c	/^static void EVBCM_SendUpdateDat
 EVBCM_SendUpdateData_Done	.\users\src\CAN_Message.c	/^static void EVBCM_SendUpdateData_Done(MSCAN_Message_TypeDef* Rd_Message)$/;"	f	file:
 EVBCM_StartUpdating	.\users\src\CAN_Message.c	/^static void EVBCM_StartUpdating(void)$/;"	f	file:
 EVBMM_ADDRESS_BASEADDRESS	.\device_drivers\inc\M95160_Driver.h	94;"	d
-EVBMM_Address	.\users\inc\CAN_Message.h	/^	uint8_t EVBMM_Address;$/;"	m	struct:__anon104
+EVBMM_Address	.\users\inc\CAN_Message.h	/^	uint8_t EVBMM_Address;$/;"	m	struct:__anon106
 EVBMM_CANReceiveBufferParsing	.\users\src\CAN_Message.c	/^void EVBMM_CANReceiveBufferParsing(void)$/;"	f
-EVBMM_ConfigTable_TypeDef	.\users\inc\CAN_Message.h	/^}EVBMM_ConfigTable_TypeDef;$/;"	t	typeref:struct:__anon103
-EVBMM_PartialConfigTable_TypeDef	.\users\inc\CAN_Message.h	/^}EVBMM_PartialConfigTable_TypeDef;$/;"	t	typeref:struct:__anon104
+EVBMM_ConfigTable_TypeDef	.\users\inc\CAN_Message.h	/^}EVBMM_ConfigTable_TypeDef;$/;"	t	typeref:struct:__anon105
+EVBMM_PartialConfigTable_TypeDef	.\users\inc\CAN_Message.h	/^}EVBMM_PartialConfigTable_TypeDef;$/;"	t	typeref:struct:__anon106
 EVBMM_PreparePartialConfigTableData	.\users\src\CAN_Message.c	/^void EVBMM_PreparePartialConfigTableData(void)$/;"	f
 EVBMM_ReadPartialConfigTableData	.\users\src\CAN_Message.c	/^void EVBMM_ReadPartialConfigTableData(void)$/;"	f
 EVBMM_ReadSendConfigTable	.\users\src\CAN_Message.c	/^static void EVBMM_ReadSendConfigTable(uint8_t Bytes_Count, uint16_t R_MemoryAddress, uint8_t Para_Code)$/;"	f	file:
@@ -553,7 +579,7 @@ EVBMM_ReplyCellInfoFinished	.\users\src\CAN_Message.c	/^static void EVBMM_ReplyC
 EVBMM_ReplyCellTemperature	.\users\src\CAN_Message.c	/^static void EVBMM_ReplyCellTemperature(void)$/;"	f	file:
 EVBMM_ReplyCellVoltage	.\users\src\CAN_Message.c	/^static void EVBMM_ReplyCellVoltage(void)$/;"	f	file:
 EVBMM_SoftWare_Version	.\users\src\CAN_Message.c	/^static const uint8_t EVBMM_SoftWare_Version[3] = {0x01u, 0x00u, 0x00u};$/;"	v	file:
-EVBMM_UpdateProperty_TypeDef	.\users\inc\CAN_Message.h	/^}EVBMM_UpdateProperty_TypeDef;$/;"	t	typeref:struct:__anon102
+EVBMM_UpdateProperty_TypeDef	.\users\inc\CAN_Message.h	/^}EVBMM_UpdateProperty_TypeDef;$/;"	t	typeref:struct:__anon104
 EVBMM_WriteConfigTable	.\users\src\CAN_Message.c	/^static void EVBMM_WriteConfigTable(uint8_t Bytes_Count, uint16_t W_MemoryAddress, $/;"	f	file:
 EXTENDEDCONFIG_PARA_CODE1	.\users\inc\CAN_Message.h	120;"	d
 EXTENDEDCONFIG_PARA_CODE10	.\users\inc\CAN_Message.h	129;"	d
@@ -585,11 +611,15 @@ EXT_CLK_FREQ_KHZ	.\platforms\kea8_config.h	86;"	d
 EnableInterrupts	.\cpu\arm_cm0.h	47;"	d
 EnableInterrupts	.\cpu\arm_cm0.h	49;"	d
 EqualizationModulePins_Initial	.\users\src\Active_Equalize.c	/^  int EqualizationModulePins_Initial(void)$/;"	f
+EqualizationModule_Close	.\users\src\Active_Equalize.c	/^  int EqualizationModule_Close(EqualizeChannel_TypeDef Eq_Ch)$/;"	f
 EqualizationModule_DirectionPins_Init	.\users\src\Active_Equalize.c	/^  static int EqualizationModule_DirectionPins_Init(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_EnterChargeMode	.\users\src\Active_Equalize.c	/^  static int EqualizationModule_EnterChargeMode(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_EnterDischargeMode	.\users\src\Active_Equalize.c	/^  static int EqualizationModule_EnterDischargeMode(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_FaultSignalPins_Init	.\users\src\Active_Equalize.c	/^  static int EqualizationModule_FaultSignalPins_Init(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
 EqualizationModule_GetFaultSignalValue	.\users\src\Active_Equalize.c	/^  static uint8_t EqualizationModule_GetFaultSignalValue(ModuleNumber_TypeDef Module_Num)$/;"	f	file:
+EqualizationModule_Open	.\users\src\Active_Equalize.c	/^  int EqualizationModule_Open(EqualizeMode_TypeDef Eq_Mode, EqualizeChannel_TypeDef Eq_Ch)$/;"	f
+EqualizeChannel_TypeDef	.\users\inc\Active_Equalize.h	/^}EqualizeChannel_TypeDef;$/;"	t	typeref:enum:__anon103
+EqualizeMode_TypeDef	.\users\inc\Active_Equalize.h	/^}EqualizeMode_TypeDef;$/;"	t	typeref:enum:__anon102
 EraseGrMul	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  EraseGrMul;           \/* Erase group size multiplier *\/$/;"	m	struct:__anon74
 EraseGrSize	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  EraseGrSize;          \/* Erase group size *\/$/;"	m	struct:__anon74
 F	.\cpu\headers\SKEAZ1284.h	/^  __IO uint8_t F;                                  \/**< I2C Frequency Divider register, offset: 0x1 *\/$/;"	m	struct:__anon35
@@ -1625,7 +1655,7 @@ HELPFORMAT	.\common\uif.c	/^static const char HELPFORMAT[] = $/;"	v	file:
 HELPMSG	.\common\uif.c	/^const char HELPMSG[] =$/;"	v
 HardFault_IRQn	.\cpu\headers\SKEAZ1284.h	/^  HardFault_IRQn               = -13,              \/**< Cortex-M0 SV Hard Fault Interrupt *\/$/;"	e	enum:IRQn
 HardFault_VECTORn	.\cpu\arm_cm0.h	/^    HardFault_VECTORn               = 3 ,       \/*!< 3 Hard Fault                                                   *\/$/;"	e	enum:__anon6
-Hardware_Version	.\users\inc\CAN_Message.h	/^	uint8_t Hardware_Version[3];$/;"	m	struct:__anon104
+Hardware_Version	.\users\inc\CAN_Message.h	/^	uint8_t Hardware_Version[3];$/;"	m	struct:__anon106
 High_Speed	.\peripher_drivers\inc\SPI_Driver.h	/^	High_Speed = 1,                  \/* 1Mbps *\/$/;"	e	enum:__anon99
 I2C0	.\cpu\headers\SKEAZ1284.h	1956;"	d
 I2C0_A1	.\cpu\headers\SKEAZ1284.h	1978;"	d
@@ -3142,8 +3172,8 @@ ProdName1	.\device_drivers\inc\SDCard_Driver.h	/^	uint32_t ProdName1;           
 ProdName2	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  ProdName2;            \/* Product Name part2*\/$/;"	m	struct:__anon75
 ProdRev	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  ProdRev;              \/* Product Revision *\/$/;"	m	struct:__anon75
 ProdSN	.\device_drivers\inc\SDCard_Driver.h	/^	uint32_t ProdSN;               \/* Product Serial Number *\/$/;"	m	struct:__anon75
-Product_ID	.\users\inc\CAN_Message.h	/^	uint8_t Product_ID[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon104
-Product_Name	.\users\inc\CAN_Message.h	/^	uint16_t Product_Name;$/;"	m	struct:__anon104
+Product_ID	.\users\inc\CAN_Message.h	/^	uint8_t Product_ID[CONFIGTABLE_BUF_SIZE];$/;"	m	struct:__anon106
+Product_Name	.\users\inc\CAN_Message.h	/^	uint16_t Product_Name;$/;"	m	struct:__anon106
 Q	.\cpu\headers\core_cm0plus.h	/^    uint32_t Q:1;                        \/*!< bit:     27  Saturation condition flag          *\/$/;"	m	struct:__anon11::__anon12
 Q	.\cpu\headers\core_cm0plus.h	/^    uint32_t Q:1;                        \/*!< bit:     27  Saturation condition flag          *\/$/;"	m	struct:__anon7::__anon8
 QNODE	.\common\queue.h	/^} QNODE;$/;"	t	typeref:struct:NODE
@@ -3785,7 +3815,7 @@ Set_Vector_Handler	.\cpu\arm_cm0.c	/^void Set_Vector_Handler(VECTORn_t vector , 
 Signal_Pins	.\peripher_drivers\inc\SPI_Driver.h	/^	SPIx_PinsRemap Signal_Pins;$/;"	m	struct:__anon98
 SpaceFree	.\device_drivers\inc\SDCard_Driver.h	/^	uint32_t SpaceFree;          \/* Free space size in file system *\/$/;"	m	struct:__anon76
 SpaceTotal	.\device_drivers\inc\SDCard_Driver.h	/^	uint32_t SpaceTotal;         \/* Total space size in file system *\/$/;"	m	struct:__anon76
-StartUpdating_Flag	.\users\inc\CAN_Message.h	/^	uint8_t StartUpdating_Flag;$/;"	m	struct:__anon102
+StartUpdating_Flag	.\users\inc\CAN_Message.h	/^	uint8_t StartUpdating_Flag;$/;"	m	struct:__anon104
 SysSpecVersion	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  SysSpecVersion;       \/* System specification version *\/$/;"	m	struct:__anon74
 SysTick	.\cpu\headers\core_cm0plus.h	582;"	d
 SysTick_BASE	.\cpu\headers\core_cm0plus.h	577;"	d
@@ -3865,7 +3895,7 @@ TempNum	.\device_drivers\inc\LTC6804_Driver.h	/^    uint8_t   TempNum;          
 TempWrProtect	.\device_drivers\inc\SDCard_Driver.h	/^	uint8_t  TempWrProtect;        \/* Temporary write protection *\/$/;"	m	struct:__anon74
 Temp_Error_Count	.\users\src\Filter_LTC6804.c	/^uint8_t  Temp_Error_Count[DTEMPNUM];$/;"	v
 Temp_First_Filter_Buff	.\users\src\Filter_LTC6804.c	/^static uint8_t Temp_First_Filter_Buff[DTEMPNUM][TEMP_BUF_LENGTH];$/;"	v	file:
-Temp_Num	.\users\inc\CAN_Message.h	/^	uint8_t Temp_Num;$/;"	m	struct:__anon104
+Temp_Num	.\users\inc\CAN_Message.h	/^	uint8_t Temp_Num;$/;"	m	struct:__anon106
 Temp_Second_Filter_Buff	.\users\src\Filter_LTC6804.c	/^static uint8_t Temp_Second_Filter_Buff[DTEMPNUM][TEMP_BUF_LENGTH];$/;"	v	file:
 TimeDelay_Decrement	.\users\src\Delay.c	/^void TimeDelay_Decrement(void)$/;"	f
 Transmit_INT_Enable	.\peripher_drivers\inc\SPI_Driver.h	/^    uint8_t Transmit_INT_Enable       :1;       \/* SPI transport interrupt. 0, disable transport interrupt; 1, enable transport interrupt; *\/$/;"	m	struct:__anon98
@@ -4054,9 +4084,9 @@ UUIDL	.\cpu\headers\SKEAZ1284.h	/^  __I  uint32_t UUIDL;                        
 UUIDMH	.\cpu\headers\SKEAZ1284.h	/^  __I  uint32_t UUIDMH;                            \/**< Universally Unique Identifier Middle High Register, offset: 0x20 *\/$/;"	m	struct:__anon54
 UUIDML	.\cpu\headers\SKEAZ1284.h	/^  __I  uint32_t UUIDML;                            \/**< Universally Unique Identifier Middle Low Register, offset: 0x1C *\/$/;"	m	struct:__anon54
 Under_Vol_Threshold	.\device_drivers\inc\LTC6804_Driver.h	/^    uint16_t  Under_Vol_Threshold;                  \/*欠压门限*\/$/;"	m	struct:__anon72
-UpdatedPacket_Buffer	.\users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Buffer[UPDATE_BUF_SIZE];$/;"	m	struct:__anon102
-UpdatedPacket_Length	.\users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Length;$/;"	m	struct:__anon102
-UpdatedPacket_WPointer	.\users\inc\CAN_Message.h	/^	uint16_t UpdatedPacket_WPointer;$/;"	m	struct:__anon102
+UpdatedPacket_Buffer	.\users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Buffer[UPDATE_BUF_SIZE];$/;"	m	struct:__anon104
+UpdatedPacket_Length	.\users\inc\CAN_Message.h	/^	uint8_t UpdatedPacket_Length;$/;"	m	struct:__anon104
+UpdatedPacket_WPointer	.\users\inc\CAN_Message.h	/^	uint16_t UpdatedPacket_WPointer;$/;"	m	struct:__anon104
 V	.\cpu\headers\core_cm0plus.h	/^    uint32_t V:1;                        \/*!< bit:     28  Overflow condition code flag       *\/$/;"	m	struct:__anon11::__anon12
 V	.\cpu\headers\core_cm0plus.h	/^    uint32_t V:1;                        \/*!< bit:     28  Overflow condition code flag       *\/$/;"	m	struct:__anon7::__anon8
 VAL	.\cpu\headers\core_cm0plus.h	/^  __IO uint32_t VAL;                     \/*!< Offset: 0x008 (R\/W)  SysTick Current Value Register      *\/$/;"	m	struct:__anon17
@@ -4179,8 +4209,8 @@ Vol_Flag	.\device_drivers\inc\LTC6804_Driver.h	/^      uint8_t Vol_Flag[DCELLNUM
 Vol_Second_Filter_Buff	.\users\src\Filter_LTC6804.c	/^static uint16_t Vol_Second_Filter_Buff[DCELLNUM][VOL_BUF_LENGTH];$/;"	v	file:
 Vol_Temp_Conversion_And_Read	.\device_drivers\src\LTC6804_Driver.c	/^void Vol_Temp_Conversion_And_Read(void)$/;"	f
 Vol_Temp_Process	.\device_drivers\src\LTC6804_Driver.c	/^void Vol_Temp_Process(void)$/;"	f
-Voltage_Downthreshold	.\users\inc\CAN_Message.h	/^	uint16_t Voltage_Downthreshold;$/;"	m	struct:__anon104
-Voltage_Upthreshold	.\users\inc\CAN_Message.h	/^	uint16_t Voltage_Upthreshold;$/;"	m	struct:__anon104
+Voltage_Downthreshold	.\users\inc\CAN_Message.h	/^	uint16_t Voltage_Downthreshold;$/;"	m	struct:__anon106
+Voltage_Upthreshold	.\users\inc\CAN_Message.h	/^	uint16_t Voltage_Upthreshold;$/;"	m	struct:__anon106
 WDOG	.\cpu\headers\SKEAZ1284.h	5030;"	d
 WDOG_BASE	.\cpu\headers\SKEAZ1284.h	5028;"	d
 WDOG_BASES	.\cpu\headers\SKEAZ1284.h	5033;"	d
@@ -4467,8 +4497,8 @@ _reserved1	.\cpu\headers\core_cm0plus.h	/^    uint32_t _reserved1:4;            
 abort_isr	.\cpu\vectors.c	/^void abort_isr(void)$/;"	f
 align	.\common\alloc.c	/^    unsigned int align;$/;"	m	struct:ALLOC_HDR	file:
 assert_failed	.\common\assert.c	/^assert_failed(char *file, int line)$/;"	f
-auchCRCHi	.\users\src\CAN_Message.c	/^const uint8_t auchCRCHi[]={$/;"	v
-auchCRCLo	.\users\src\CAN_Message.c	/^const uint8_t auchCRCLo[]={$/;"	v
+auchCRCHi	.\users\src\CAN_Message.c	/^const uint8_t auchCRCHi[] = $/;"	v
+auchCRCLo	.\users\src\CAN_Message.c	/^const uint8_t auchCRCLo[] = $/;"	v
 b	.\cpu\headers\core_cm0plus.h	/^  } b;                                   \/*!< Structure used for bit  access                  *\/$/;"	m	union:__anon11	typeref:struct:__anon11::__anon12
 b	.\cpu\headers\core_cm0plus.h	/^  } b;                                   \/*!< Structure used for bit  access                  *\/$/;"	m	union:__anon13	typeref:struct:__anon13::__anon14
 b	.\cpu\headers\core_cm0plus.h	/^  } b;                                   \/*!< Structure used for bit  access                  *\/$/;"	m	union:__anon7	typeref:struct:__anon7::__anon8

@@ -39,6 +39,7 @@
 #include "Flash_Driver.h"
 #include "PIT_Driver.h"
 #include "LTC6804_Driver.h"
+#include "Active_Equalize.h"
 
 
 
@@ -100,8 +101,15 @@ void System_Initialization(void)
 	
 	CellInfoSampling_Init();
 
+	EqualizationModulePins_Initial();
+	
 	LED_OUTPUT();
 	LED_OFF();
+
+	EqualizationModule_Open(Charge_Equalize, Cell_Channel_1);
+	EqualizationModule_Open(Charge_Equalize, Cell_Channel_7);
+	EqualizationModule_Open(Charge_Equalize, Cell_Channel_13);
+	EqualizationModule_Open(Charge_Equalize, Cell_Channel_19);
 	
 	DI_INPUT();
 	

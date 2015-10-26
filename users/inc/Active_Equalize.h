@@ -41,48 +41,6 @@
 /* Exported types ------------------------------------------------------------*/
 
 
-/*
-#define     _8V5VOL_CONTROLPIN_OUTPUT()              GPIO_PinInit(GPIO_PTI1, GPIO_PinOutput)
-#define     _8V5VOL_ENABLE()                         GPIO_PinSet(GPIO_PTI1)
-#define     _8V5VOL_DISABLE()                        GPIO_PinClear(GPIO_PTI1)
-
-
-
-#define     EQUALIZATION_MODULE1_DIRPIN_OUTPUT()     GPIO_PinInit(GPIO_PTI0, GPIO_PinOutput)
-#define     EQUALIZATION_MODULE1_CHARGE_MODE()       GPIO_PinClear(GPIO_PTI0)
-#define     EQUALIZATION_MODULE1_DISCHARGE_MODE()    GPIO_PinSet(GPIO_PTI0)
-
-#define     EQUALIZATION_MODULE1_FAULTPIN_INPUT()    GPIO_PinInit(GPIO_PTH1, GPIO_PinInput)
-#define     EQUALIZATION_MODULE1_GETFAULT_STATUS()   GPIO_PinRead(GPIO_PTH1)
-
-
-
-#define     EQUALIZATION_MODULE2_DIRPIN_OUTPUT()     GPIO_PinInit(GPIO_PTH0, GPIO_PinOutput_HighCurrent)
-#define     EQUALIZATION_MODULE2_CHARGE_MODE()       GPIO_PinClear(GPIO_PTH0)
-#define     EQUALIZATION_MODULE2_DISCHARGE_MODE()    GPIO_PinSet(GPIO_PTH0) 
-
-#define     EQUALIZATION_MODULE2_FAULTPIN_INPUT()    GPIO_PinInit(GPIO_PTE6, GPIO_PinInput)
-#define     EQUALIZATION_MODULE2_GETFAULT_STATUS()   GPIO_PinRead(GPIO_PTE6)
-
-
-
-#define     EQUALIZATION_MODULE3_DIRPIN_OUTPUT()     GPIO_PinInit(GPIO_PTE5, GPIO_PinOutput)
-#define     EQUALIZATION_MODULE3_CHARGE_MODE()       GPIO_PinClear(GPIO_PTE5)
-#define     EQUALIZATION_MODULE3_DISCHARGE_MODE()    GPIO_PinSet(GPIO_PTE5) 
-
-#define     EQUALIZATION_MODULE3_FAULTPIN_INPUT()    GPIO_PinInit(GPIO_PTB5, GPIO_PinInput)
-#define     EQUALIZATION_MODULE3_GETFAULT_STATUS()   GPIO_PinRead(GPIO_PTB5)
-
-
-
-#define     EQUALIZATION_MODULE4_DIRPIN_OUTPUT()     GPIO_PinInit(GPIO_PTB4, GPIO_PinOutput_HighCurrent)
-#define     EQUALIZATION_MODULE4_CHARGE_MODE()       GPIO_PinClear(GPIO_PTB4)
-#define     EQUALIZATION_MODULE4_DISCHARGE_MODE()    GPIO_PinSet(GPIO_PTB4)
-
-#define     EQUALIZATION_MODULE4_FAULTPIN_INPUT()    GPIO_PinInit(GPIO_PTC3, GPIO_PinInput)
-#define     EQUALIZATION_MODULE4_GETFAULT_STATUS()   GPIO_PinRead(GPIO_PTC3)
-*/
-
 
 typedef enum 
 {
@@ -94,6 +52,54 @@ typedef enum
 
 
 
+typedef enum 
+{
+    Charge_Equalize = 1,
+    Discharge_Equalize,
+}EqualizeMode_TypeDef;
+
+
+
+typedef enum 
+{
+    Cell_Channel_1 = 1,
+    Cell_Channel_2,
+    Cell_Channel_3,
+    Cell_Channel_4,
+    Cell_Channel_5,
+    Cell_Channel_6,
+
+    Cell_Channel_7,
+    Cell_Channel_8,
+    Cell_Channel_9,
+    Cell_Channel_10,
+    Cell_Channel_11,
+    Cell_Channel_12,
+
+    Cell_Channel_13,
+    Cell_Channel_14,
+    Cell_Channel_15,
+    Cell_Channel_16,
+    Cell_Channel_17,
+    Cell_Channel_18,
+    
+    Cell_Channel_19,
+    Cell_Channel_20,
+    Cell_Channel_21,
+    Cell_Channel_22,
+    Cell_Channel_23,
+    Cell_Channel_24,
+}EqualizeChannel_TypeDef;
+
+
+
+typedef struct 
+{
+    uint8_t Module1_Status;
+    uint8_t Module2_Status;
+    uint8_t Module3_Status;
+    uint8_t Module4_Status; 
+}EqualizeModuleStatus_TypeDef;
 
 
 
@@ -103,7 +109,28 @@ extern "C" {
 
 /* Exported functions ------------------------------------------------------- */
 
+void _8V5Voltage_Enable(void);
 
+
+void _8V5Voltage_Disable(void);
+
+
+uint8_t EqualizationModule_GetFaultSignalValue(ModuleNumber_TypeDef Module_Num);
+
+
+int EqualizationModulePins_Initial(void);
+
+
+int EqualizationModule_Open(EqualizeMode_TypeDef Eq_Mode, EqualizeChannel_TypeDef Eq_Ch);
+
+
+int EqualizationModule_Close(EqualizeChannel_TypeDef Eq_Ch);
+
+
+uint8_t Getting_EqualizingStatusValue(ModuleNumber_TypeDef Eq_Num);
+
+
+void Settiing_EqualizingStatusValue(ModuleNumber_TypeDef Eq_Num, uint8_t val);
 
 
 #ifdef __cplusplus

@@ -56,7 +56,7 @@ void M95160_Init(void)
     spi_config.CPOL                      = 0;
     spi_config.LSBFE                     = 0;
     spi_config.MasterOrSlaveMode         = 1;
-	spi_config.Signal_Pins               = SPI0_PortEPins;
+	  spi_config.Signal_Pins               = SPI0_PortEPins;
     
     (void)SPI_Init(SPI0, &spi_config, High_Speed);
     

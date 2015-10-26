@@ -27,14 +27,10 @@
   ******************************************************************************
   */
 #include <stdint.h>
-#include "arm_cm0.h"
-#include "isr.h"
 #include "System_Init.h"
 #include "CAN_Message.h"
-#include "M95160_Driver.h"
-#include "MSCAN_Driver.h"
-#include "Systick_Driver.h"
 #include "LTC6804_Driver.h"
+
 
 
 
@@ -47,7 +43,7 @@
 int main(void)
 {		
 	System_Initialization();
-
+	
 	for (;;)
 	{	
 		Vol_Temp_Conversion_And_Read();
